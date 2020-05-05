@@ -1,0 +1,9 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@RenderSection("indexBody", required: false)
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

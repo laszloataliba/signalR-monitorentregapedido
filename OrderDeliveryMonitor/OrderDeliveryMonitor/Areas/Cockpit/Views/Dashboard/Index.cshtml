@@ -1,0 +1,55 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_CrudIndex.cshtml";
+}
+
+@section indexBody {
+
+    <h1>DASHBOARD</h1>
+
+    <div id="dvAjaxHead">
+        @await Html.PartialAsync("AwaitingContainer")
+    </div>
+
+    <script type="text/javascript">
+        //Campinho da publicação WebAPI contendo o HUB.
+        const signalRconn = SigalRConnection('http://localhost:55317/OrderDeliveryMonitorHub');
+        
+        signalRconn.on('TesteViaWebAPI', function (parametro) {
+            MontaPainel(parametro);
+        });
+
+        function CallSignalR(e) {
+            console.log(e);
+
+            signalRconn.invoke('TesteViaScript');
+
+            signalRconn.on('TesteViaJavaScript', function (parametro) {
+                MontaPainel(parametro);
+            });
+        }
+
+        function MontaPainel(parametro, chave) {
+            let container = document.getElementById('dvAjaxHead');
+            let textHtml = '';
+            let contador = 0;
+            
+            Array.from(parametro).forEach(postit => {
+                textHtml +=
+                    `
+                    <div class="quote-container ${((++contador) % 2 === 0 ? 'nova-promo' : 'promo-remove')}">
+                        <i class="pin"></i>
+                        <blockquote class="note yellow">
+                            We can't solve problems by using the same kind of thinking we used when we created them.
+                        <cite class="author">Albert Einstein</cite>
+                        </blockquote>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = textHtml;
+        }
+
+    </script>
+}
+

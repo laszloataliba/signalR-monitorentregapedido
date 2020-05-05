@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderDeliveryMonitor", "OrderDeliveryMonitor\OrderDeliveryMonitor.csproj", "{6360AB9A-8CFE-4FFF-A7FD-B08DB16359AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderDeliveryMonitor.Api", "OrderDeliveryMonitor.Api\OrderDeliveryMonitor.Api.csproj", "{0CD6B83C-6749-412F-9B61-F5D8BF7781A7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6360AB9A-8CFE-4FFF-A7FD-B08DB16359AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6360AB9A-8CFE-4FFF-A7FD-B08DB16359AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6360AB9A-8CFE-4FFF-A7FD-B08DB16359AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6360AB9A-8CFE-4FFF-A7FD-B08DB16359AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CD6B83C-6749-412F-9B61-F5D8BF7781A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CD6B83C-6749-412F-9B61-F5D8BF7781A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CD6B83C-6749-412F-9B61-F5D8BF7781A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CD6B83C-6749-412F-9B61-F5D8BF7781A7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {70C899BB-5039-4EDB-B37D-B933A50DA6D3}
+	EndGlobalSection
+EndGlobal
