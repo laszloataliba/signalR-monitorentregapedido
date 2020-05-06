@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OrderDeliveryMonitor.Api.Hubs;
+using OrderDeliveryMonitor.ApplicationConfig;
 
 namespace OrderDeliveryMonitor.Api
 {
@@ -39,6 +40,8 @@ namespace OrderDeliveryMonitor.Api
             services.AddSignalR(cfg => {
                 cfg.EnableDetailedErrors = true;
             });
+
+            AppConfig.ConfigureWebApi(services);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
