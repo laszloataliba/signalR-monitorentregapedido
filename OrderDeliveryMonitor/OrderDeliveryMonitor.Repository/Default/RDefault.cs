@@ -1,6 +1,7 @@
 ﻿using OrderDeliveryMonitor.DataAccessLibrary.Context;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace OrderDeliveryMonitor.Repository.Default
@@ -10,34 +11,81 @@ namespace OrderDeliveryMonitor.Repository.Default
     {
         private readonly OrderDeliveryMonitorDataContext _context;
 
+        protected OrderDeliveryMonitorDataContext Context => this._context;
+
         public RDefault()
         {
             this._context = new OrderDeliveryMonitorDataContext();
         }
 
-        public void Create(T pEntity)
+        public virtual void Create(T pEntity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                this._context.Set<T>().Add(pEntity);
+
+                this._context.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        public void Update(T pEntity)
+        public virtual void Update(T pEntity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                this._context.Set<T>().Update(pEntity);
+
+                this._context.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        public void Delete(T pEntity)
+        public virtual void Delete(T pEntity)
         {
-            throw new NotImplementedException();
-        }        
+            try
+            {
+                this._context.Set<T>().Remove(pEntity);
 
-        public T Get(T pEntity)
-        {
-            throw new NotImplementedException();
+                this._context.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        public IEnumerable<T> GetList(Expression<Func<T, bool>> pWhereClause)
+        public virtual T Get(Expression<Func<T, bool>> pEntity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                IQueryable<T> vQuery = this._context.Set<T>().AsQueryable().Where(pEntity);
+
+                var vEntity = vQuery.SingleOrDefault<T>();
+
+                return vEntity;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public virtual IEnumerable<T> GetList(Expression<Func<T, bool>> pWhereClause)
+        {
+            try
+            {
+                throw new Exception();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public void BeginTransaction()

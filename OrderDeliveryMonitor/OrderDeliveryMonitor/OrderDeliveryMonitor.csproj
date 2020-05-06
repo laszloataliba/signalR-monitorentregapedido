@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
   </ItemGroup>
 
 
@@ -18,11 +18,14 @@
     <Folder Include="Areas\Cockpit\Models\" />
     <Folder Include="Areas\Security\Data\" />
     <Folder Include="Areas\Security\Models\" />
+    <Folder Include="DataBase\" />
   </ItemGroup>
 
 
   <ItemGroup>
     <ProjectReference Include="..\OrderDeliveryMonitor.ApplicationConfig\OrderDeliveryMonitor.ApplicationConfig.csproj" />
+    <ProjectReference Include="..\OrderDeliveryMonitor.Facade\OrderDeliveryMonitor.Facade.csproj" />
+    <ProjectReference Include="..\OrderDeliveryMonitor.Resources\OrderDeliveryMonitor.Resources.csproj" />
   </ItemGroup>
 
 

@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace OrderDeliveryMonitor.Repository.Default
+namespace OrderDeliveryMonitor.Facade.Default
 {
-    public interface IRDefault<T>: IDisposable
+    public interface IFDefault<T>
     {
         void Create(T pEntity);
         T Get(Expression<Func<T, bool>> pEntity);
         void Update(T pEntity);
         void Delete(T pEntity);
         IEnumerable<T> GetList(Expression<Func<T, bool>> pWhereClause);
-        void BeginTransaction();
-        void CommitTransaction();
-        void RollbackTransaction();
     }
 }

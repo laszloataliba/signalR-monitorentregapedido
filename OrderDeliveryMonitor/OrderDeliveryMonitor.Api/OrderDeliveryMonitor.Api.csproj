@@ -15,4 +15,8 @@
     <ProjectReference Include="..\OrderDeliveryMonitor.ApplicationConfig\OrderDeliveryMonitor.ApplicationConfig.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DataBase\" />
+  </ItemGroup>
+
 </Project>
