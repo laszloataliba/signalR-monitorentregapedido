@@ -10,6 +10,8 @@ namespace OrderDeliveryMonitor.Model.Operation
         public int OrderId { get; set; }
         public string OrderNumber { get; set; }
         public string EstacaoVendaCaixa { get; set; }
+        public EOrderProcess Process { get; set; } = EOrderProcess.None;
+        public EOrderCommand Command { get; set; } = EOrderCommand.None;
         public DateTime? AwaitingStart { get; set; }
         public DateTime? AwaitingEnd { get; set; }
         public DateTime? PreparingStart { get; set; }
@@ -20,5 +22,22 @@ namespace OrderDeliveryMonitor.Model.Operation
 
         [NotMapped]
         public string TicketLayout { get; set; }
+    }
+
+    public enum EOrderCommand
+    {
+        None = 0,
+        Sent = 10,
+        Dragged = 20,
+        Received = 30,
+        Dropped = 40
+    }
+
+    public enum EOrderProcess
+    {
+        None = 0,
+        Awaiting = 10,
+        Preparing = 20,
+        Finished = 30
     }
 }

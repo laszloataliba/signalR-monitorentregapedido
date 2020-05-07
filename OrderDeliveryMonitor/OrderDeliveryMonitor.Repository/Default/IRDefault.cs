@@ -7,10 +7,10 @@ namespace OrderDeliveryMonitor.Repository.Default
     public interface IRDefault<T>: IDisposable
     {
         void Create(T pEntity);
-        T Get(Expression<Func<T, bool>> pEntity);
+        T Get(Expression<Func<T, bool>> pEntity = null, Expression<Func<T, bool>> pInclude = null);
         void Update(T pEntity);
         void Delete(T pEntity);
-        IEnumerable<T> GetList(Expression<Func<T, bool>> pWhereClause);
+        IEnumerable<T> GetList(Expression<Func<T, bool>> pWhereClause = null, Expression<Func<T, bool>> pInclude = null);
         void BeginTransaction();
         void CommitTransaction();
         void RollbackTransaction();

@@ -1,4 +1,5 @@
-﻿using OrderDeliveryMonitor.DataAccessLibrary.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using OrderDeliveryMonitor.DataAccessLibrary.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,11 +61,11 @@ namespace OrderDeliveryMonitor.Repository.Default
             }
         }
 
-        public virtual T Get(Expression<Func<T, bool>> pEntity)
+        public virtual T Get(Expression<Func<T, bool>> pEntity = null, Expression<Func<T, bool>> pInclude = null)
         {
             try
             {
-                IQueryable<T> vQuery = this._context.Set<T>().AsQueryable().Where(pEntity);
+                IQueryable<T> vQuery = this._context.Set<T>().AsQueryable().Where(pEntity).Include(pInclude);
 
                 var vEntity = vQuery.SingleOrDefault<T>();
 
@@ -76,11 +77,15 @@ namespace OrderDeliveryMonitor.Repository.Default
             }
         }
 
-        public virtual IEnumerable<T> GetList(Expression<Func<T, bool>> pWhereClause)
+        public virtual IEnumerable<T> GetList(Expression<Func<T, bool>> pWhereClause = null, Expression<Func<T, bool>> pInclude = null)
         {
             try
             {
-                throw new Exception();
+                IQueryable<T> vQuery = this._context.Set<T>().AsQueryable().Where(pWhereClause).Include(pInclude);
+
+                var vEntities = vQuery.ToList();
+
+                return vEntities;
             }
             catch(Exception ex)
             {

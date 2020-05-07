@@ -27,14 +27,14 @@ namespace OrderDeliveryMonitor.Facade.Implementation.Operation
             this._orderBusiness.Delete(pEntity);
         }
 
-        public Order Get(Expression<Func<Order, bool>> pEntity)
+        public Order Get(Expression<Func<Order, bool>> pEntity = null, Expression<Func<Order, bool>> pInclude = null)
         {
-            return this._orderBusiness.Get(pEntity);
+            return this._orderBusiness.Get(pEntity, pInclude);
         }
 
-        public IEnumerable<Order> GetList(Expression<Func<Order, bool>> pWhereClause)
+        public IEnumerable<Order> GetList(Expression<Func<Order, bool>> pWhereClause = null, Expression<Func<Order, bool>> pInclude = null)
         {
-            return this._orderBusiness.GetList(pWhereClause);
+            return this._orderBusiness.GetList(pWhereClause, pInclude);
         }
 
         public void Update(Order pEntity)

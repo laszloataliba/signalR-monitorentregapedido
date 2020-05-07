@@ -7,40 +7,40 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using OrderDeliveryMonitor.Api.Hubs;
 
-namespace OrderDeliveryMonitor.Api.Controllers.Operation.Order
+namespace OrderDeliveryMonitor.Api.Controllers.Security
 {
-    [Route("api/[controller]")]
+    [Route("Security/[controller]")]
     [ApiController]
-    public class OrderController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly IHubContext<OrderDeliveryMonitorHub> _hubContext;
 
-        public OrderController(IHubContext<OrderDeliveryMonitorHub> hubContext)
+        public UserController(IHubContext<OrderDeliveryMonitorHub> hubContext)
         {
             _hubContext = hubContext;
         }
 
-        // GET: api/Order
+        // GET: api/User
         [HttpGet]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET: api/Order/5
+        // GET: api/User/5
         [HttpGet("{id}", Name = "Get")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST: api/Order
+        // POST: api/User
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT: api/Order/5
+        // PUT: api/User/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {

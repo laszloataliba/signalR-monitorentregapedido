@@ -27,14 +27,14 @@ namespace OrderDeliveryMonitor.Facade.Implementation.Security
             this._userBusiness.Delete(pEntity);
         }
 
-        public User Get(Expression<Func<User, bool>> pEntity)
+        public User Get(Expression<Func<User, bool>> pEntity = null, Expression<Func<User, bool>> pInclude = null)
         {
-            return this._userBusiness.Get(pEntity);
+            return this._userBusiness.Get(pEntity, pInclude);
         }
 
-        public IEnumerable<User> GetList(Expression<Func<User, bool>> pWhereClause)
+        public IEnumerable<User> GetList(Expression<Func<User, bool>> pWhereClause = null, Expression<Func<User, bool>> pInclude = null)
         {
-            return this._userBusiness.GetList(pWhereClause);
+            return this._userBusiness.GetList(pWhereClause, pInclude);
         }
 
         public void Update(User pEntity)

@@ -24,14 +24,14 @@ namespace OrderDeliveryMonitor.Business.Implementation.Operation
             this._orderRepository.Delete(pEntity);
         }
 
-        public Order Get(Expression<Func<Order, bool>> pEntity)
+        public Order Get(Expression<Func<Order, bool>> pEntity = null, Expression<Func<Order, bool>> pInclude = null)
         {
-            return this._orderRepository.Get(pEntity);
+            return this._orderRepository.Get(pEntity, pInclude);
         }
 
-        public IEnumerable<Order> GetList(Expression<Func<Order, bool>> pWhereClause)
+        public IEnumerable<Order> GetList(Expression<Func<Order, bool>> pWhereClause = null, Expression<Func<Order, bool>> pInclude = null)
         {
-            return this._orderRepository.GetList(pWhereClause);
+            return this._orderRepository.GetList(pWhereClause, pInclude);
         }
 
         public void Update(Order pEntity)

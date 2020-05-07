@@ -24,14 +24,14 @@ namespace OrderDeliveryMonitor.Business.Implementation.Security
             _userRepository.Delete(pEntity);
         }
 
-        public User Get(Expression<Func<User, bool>> pEntity)
+        public User Get(Expression<Func<User, bool>> pEntity = null, Expression<Func<User, bool>> pInclude = null)
         {
-            return _userRepository.Get(pEntity);
+            return _userRepository.Get(pEntity, pInclude);
         }
 
-        public IEnumerable<User> GetList(Expression<Func<User, bool>> pWhereClause)
+        public IEnumerable<User> GetList(Expression<Func<User, bool>> pWhereClause = null, Expression<Func<User, bool>> pInclude = null)
         {
-            return _userRepository.GetList(pWhereClause);
+            return _userRepository.GetList(pWhereClause, pInclude);
         }
 
         public void Update(User pEntity)

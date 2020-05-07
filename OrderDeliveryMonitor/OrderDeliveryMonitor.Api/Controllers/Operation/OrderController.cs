@@ -6,41 +6,49 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using OrderDeliveryMonitor.Api.Hubs;
+using OrderDeliveryMonitor.Facade.Interface.Operation;
+using nsOrderModel = OrderDeliveryMonitor.Model.Operation;
 
-namespace OrderDeliveryMonitor.Api.Controllers.Security.User
+namespace OrderDeliveryMonitor.Api.Controllers.Operation
 {
-    [Route("api/[controller]")]
+    [Route("Operation/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class OrderController : ControllerBase
     {
         private readonly IHubContext<OrderDeliveryMonitorHub> _hubContext;
+        private readonly IFOrder fOrder;
 
-        public UserController(IHubContext<OrderDeliveryMonitorHub> hubContext)
+        public OrderController(IHubContext<OrderDeliveryMonitorHub> hubContext, IFOrder pfOrder)
         {
             _hubContext = hubContext;
+            fOrder = pfOrder;
         }
 
-        // GET: api/User
+        // GET: api/Order
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<nsOrderModel.Order> Get()
         {
-            return new string[] { "value1", "value2" };
+            var vOrders = fOrder.GetList();
+
+            return vOrders;
         }
 
-        // GET: api/User/5
+        // GET: api/Order/5
         [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        public nsOrderModel.Order Get(int id)
         {
-            return "value";
+            var vOrder = fOrder.Get(order => order.OrderId == id);
+
+            return vOrder;
         }
 
-        // POST: api/User
+        // POST: api/Order
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT: api/User/5
+        // PUT: api/Order/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
