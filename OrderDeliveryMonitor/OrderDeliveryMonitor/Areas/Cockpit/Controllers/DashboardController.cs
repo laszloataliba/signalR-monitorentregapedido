@@ -16,13 +16,6 @@ namespace OrderDeliveryMonitor.Areas.Cockpit.Controllers
             return View();
         }
 
-        public IActionResult AwaitingContainer()
-        {
-            ViewData["Texto"] = $"Conteúdo apresentado via Ajax às {DateTime.Now}";
-
-            return PartialView();
-        }
-
         // GET: Dashboard/Details/5
         public ActionResult Details(int id)
         {

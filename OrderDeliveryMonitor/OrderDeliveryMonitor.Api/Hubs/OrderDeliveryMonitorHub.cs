@@ -1,16 +1,17 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using OrderDeliveryMonitor.Facade.Interface.Operation;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace OrderDeliveryMonitor.Api.Hubs
 {
     public class OrderDeliveryMonitorHub: Hub
     {
-        public OrderDeliveryMonitorHub()
-        {
+        private readonly IFOrder fOrder;
 
+        public OrderDeliveryMonitorHub(IFOrder pFOrder)
+        {
+            fOrder = pFOrder;
         }
 
         public async Task TesteViaScript()

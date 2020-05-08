@@ -9,7 +9,7 @@ using OrderDeliveryMonitor.Api.Hubs;
 
 namespace OrderDeliveryMonitor.Api.Controllers.Security
 {
-    [Route("Security/[controller]")]
+    [Route("api/Security/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -28,7 +28,7 @@ namespace OrderDeliveryMonitor.Api.Controllers.Security
         }
 
         // GET: api/User/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";

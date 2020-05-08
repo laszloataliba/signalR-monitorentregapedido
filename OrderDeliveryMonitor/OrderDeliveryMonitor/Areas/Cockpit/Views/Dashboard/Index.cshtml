@@ -7,8 +7,14 @@
 
     <h1>DASHBOARD</h1>
 
-    <div id="dvAjaxHead">
-        @await Html.PartialAsync("Ticket")
+    <div id="AwaitingContainer">
+        @await Html.PartialAsync("AwaitingContainer")
+    </div>
+    <div id="PreparingContainer">
+        @await Html.PartialAsync("PreparingContainer")
+    </div>
+    <div id="FinishedContainer">
+        @await Html.PartialAsync("FinishedContainer")
     </div>
 
     <script type="text/javascript">
@@ -30,7 +36,7 @@
         }
 
         function MontaPainel(parametro, chave) {
-            let container = document.getElementById('dvAjaxHead');
+            let container = document.getElementById('AwaitingContainer');
             let textHtml = '';
             let contador = 0;
             

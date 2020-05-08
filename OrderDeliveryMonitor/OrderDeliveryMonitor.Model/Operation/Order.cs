@@ -18,10 +18,25 @@ namespace OrderDeliveryMonitor.Model.Operation
         public DateTime? PreparingEnd { get; set; }
         public DateTime? Finished { get; set; }
 
-        public IEnumerable<OrderItem> Items { get; set; } = new List<OrderItem>();
+        public virtual IEnumerable<OrderItem> Items { get; set; }
 
-        [NotMapped]
-        public string TicketLayout { get; set; }
+        public string TicketLayout => Layout();
+
+        private string Layout()
+        {
+            string sLayout = 
+                $@"
+                    <div class='quote-container'>
+                        <i class='pin'></i>
+                        <blockquote class='note yellow'>
+                            We can't solve problems by using the same kind of thinking we used when we created them.
+                            <cite class='author'>Albert Einstein</cite>
+                        </blockquote>
+                    </div>
+                ";
+
+            return sLayout;
+        }
     }
 
     public enum EOrderCommand

@@ -11,33 +11,33 @@ using nsOrderModel = OrderDeliveryMonitor.Model.Operation;
 
 namespace OrderDeliveryMonitor.Api.Controllers.Operation
 {
-    [Route("Operation/[controller]")]
+    [Route("api/Operation/[controller]")]
     [ApiController]
     public class OrderController : ControllerBase
     {
         private readonly IHubContext<OrderDeliveryMonitorHub> _hubContext;
         private readonly IFOrder fOrder;
 
-        public OrderController(IHubContext<OrderDeliveryMonitorHub> hubContext, IFOrder pfOrder)
+        public OrderController(IHubContext<OrderDeliveryMonitorHub> hubContext, IFOrder pFOrder)
         {
             _hubContext = hubContext;
-            fOrder = pfOrder;
+            fOrder = pFOrder;
         }
 
         // GET: api/Order
         [HttpGet]
         public IEnumerable<nsOrderModel.Order> Get()
         {
-            var vOrders = fOrder.GetList();
+            var vOrders = fOrder.GetList(pInclude: itm => itm.Items);
 
             return vOrders;
         }
 
         // GET: api/Order/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
         public nsOrderModel.Order Get(int id)
         {
-            var vOrder = fOrder.Get(order => order.OrderId == id);
+            var vOrder = fOrder.Get(order => order.OrderId == id, items => items.Items);
 
             return vOrder;
         }
@@ -52,6 +52,22 @@ namespace OrderDeliveryMonitor.Api.Controllers.Operation
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
+        }
+
+        [HttpPatch("{pOrderId}")]
+        public async Task Patch(string pOrderId)
+        {
+            var pOrder =
+                new nsOrderModel.Order
+                {
+                    OrderId = int.Parse(pOrderId),
+                    Process = nsOrderModel.EOrderProcess.Awaiting,
+                    Command = nsOrderModel.EOrderCommand.Received
+                };
+
+            fOrder.Update(pOrder);
+
+            await _hubContext.Clients.All.SendAsync($"");
         }
 
         // DELETE: api/ApiWithActions/5

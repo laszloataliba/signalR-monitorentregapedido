@@ -40,6 +40,10 @@ namespace OrderDeliveryMonitor.Repository.Default
                 this._context.Set<T>().Update(pEntity);
 
                 this._context.SaveChanges();
+
+                //TESTAR PARA ATUALIZAR CAMPOS ESPECÍFICOS.
+                //this._context.Set<T>();
+                //this._context.SaveChanges();
             }
             catch(Exception ex)
             {
@@ -61,11 +65,17 @@ namespace OrderDeliveryMonitor.Repository.Default
             }
         }
 
-        public virtual T Get(Expression<Func<T, bool>> pEntity = null, Expression<Func<T, bool>> pInclude = null)
+        public virtual T Get(Expression<Func<T, bool>> pWhereClause, Expression<Func<T, object>> pInclude = null)
         {
             try
             {
-                IQueryable<T> vQuery = this._context.Set<T>().AsQueryable().Where(pEntity).Include(pInclude);
+                IQueryable<T> vQuery = null;
+
+                if (pInclude != null)
+                    vQuery = this._context.Set<T>()
+                        .AsQueryable()
+                            .Where(pWhereClause)
+                                .Include(pInclude);
 
                 var vEntity = vQuery.SingleOrDefault<T>();
 
@@ -77,11 +87,23 @@ namespace OrderDeliveryMonitor.Repository.Default
             }
         }
 
-        public virtual IEnumerable<T> GetList(Expression<Func<T, bool>> pWhereClause = null, Expression<Func<T, bool>> pInclude = null)
+        public virtual IEnumerable<T> GetList(Expression<Func<T, bool>> pWhereClause = null, Expression<Func<T, object>> pInclude = null)
         {
             try
             {
-                IQueryable<T> vQuery = this._context.Set<T>().AsQueryable().Where(pWhereClause).Include(pInclude);
+                IQueryable<T> vQuery = null;
+
+                if (pWhereClause != null && pInclude != null)
+                    vQuery = this._context.Set<T>().AsQueryable().Where(pWhereClause).Include(pInclude);
+
+                else if (pWhereClause != null)
+                    vQuery = this._context.Set<T>().AsQueryable().Where(pWhereClause);
+
+                else if (pInclude != null)
+                    vQuery = this._context.Set<T>().AsQueryable().Include(pInclude);
+
+                else
+                    vQuery = this._context.Set<T>().AsQueryable();
 
                 var vEntities = vQuery.ToList();
 

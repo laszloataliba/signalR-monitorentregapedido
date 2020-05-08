@@ -1,7 +1,26 @@
 ﻿
 @{
-    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_CrudIndex.cshtml";
 }
 
-<h1>CUSTOMER DASHBOARD</h1>
+@section indexBody {
+
+    <div id="customerDashboardContainer" style="background-color: red; width: 100%; position: absolute; left: 0px; top: 0px; bottom: 0px;">
+
+        <h1>CUSTOMER DASHBOARD</h1>
+
+        <div id="AwaitingContainer">
+            @await Html.PartialAsync("~/Areas/Cockpit/Views/Dashboard/AwaitingContainer.cshtml")
+        </div>
+        <div id="PreparingContainer">
+            @await Html.PartialAsync("~/Areas/Cockpit/Views/Dashboard/PreparingContainer.cshtml")
+        </div>
+        <div id="FinishedContainer">
+            @await Html.PartialAsync("~/Areas/Cockpit/Views/Dashboard/FinishedContainer.cshtml")
+        </div>
+
+    </div>
+}
+
+
 

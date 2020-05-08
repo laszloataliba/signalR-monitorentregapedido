@@ -7,7 +7,6 @@ namespace OrderDeliveryMonitor.Model.Operation
     {
         public int OrderItemId { get; set; }
         public int OrderId { get; set; }
-        public Order Order { get; set; }
         public string Product { get; set; }
         public int Quantity { get; set; }
     }

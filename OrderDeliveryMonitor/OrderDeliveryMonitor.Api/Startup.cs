@@ -61,8 +61,6 @@ namespace OrderDeliveryMonitor.Api
                 signalr.MapHub<OrderDeliveryMonitorHub>($"/{nameof(OrderDeliveryMonitorHub)}");
             });
 
-
-
             app.UseMvc();
         }
     }
