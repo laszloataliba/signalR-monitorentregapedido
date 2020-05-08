@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using OrderDeliveryMonitor.Api.Hubs;
+using OrderDeliveryMonitor.ApplicationConfig;
 using OrderDeliveryMonitor.Facade.Interface.Operation;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using nsOrderModel = OrderDeliveryMonitor.Model.Operation;
 
 namespace OrderDeliveryMonitor.Api.Controllers.Operation
@@ -33,7 +31,6 @@ namespace OrderDeliveryMonitor.Api.Controllers.Operation
             return vOrders;
         }
 
-        // GET: api/Order/5
         [HttpGet("{id}")]
         public nsOrderModel.Order Get(int id)
         {
@@ -42,16 +39,20 @@ namespace OrderDeliveryMonitor.Api.Controllers.Operation
             return vOrder;
         }
 
-        // POST: api/Order
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT: api/Order/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task Put(string id)
         {
+            var pOrder =
+                   new nsOrderModel.Order
+                   {
+                       OrderId = int.Parse(id),
+                       Process = nsOrderModel.EOrderProcess.Awaiting,
+                       Command = nsOrderModel.EOrderCommand.Received
+                   };
+
+            fOrder.Update(pOrder);
+
+            await _hubContext.Clients.All.SendAsync($"{AppUtilities.RELOAD_AWAITING_CONTAINER}");
         }
 
         [HttpPatch("{pOrderId}")]
@@ -67,13 +68,7 @@ namespace OrderDeliveryMonitor.Api.Controllers.Operation
 
             fOrder.Update(pOrder);
 
-            await _hubContext.Clients.All.SendAsync($"");
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            await _hubContext.Clients.All.SendAsync($"{AppUtilities.RELOAD_AWAITING_CONTAINER}");
         }
     }
 }
