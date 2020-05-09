@@ -22,20 +22,124 @@ namespace OrderDeliveryMonitor.Model.Operation
 
         public string TicketLayout => Layout();
 
+        public string CustomerTicketLayout =>
+            $@"
+                <div id='tck{OrderId}' class='quote-container {CommandStyle()}'>
+                    <i class='pin'></i>
+                    <blockquote class='note {ProcessColor()}'>
+                        #{EstacaoVendaCaixa}
+                    </blockquote>
+                </div>
+            ";
+
         private string Layout()
         {
-            string sLayout = 
+            string sLayout =
                 $@"
-                    <div class='quote-container'>
+                    <div id='tck{OrderId}' class='quote-container {CommandStyle()}'>
                         <i class='pin'></i>
-                        <blockquote class='note yellow'>
-                            We can't solve problems by using the same kind of thinking we used when we created them.
-                            <cite class='author'>Albert Einstein</cite>
+                        <blockquote class='note {ProcessColor()}'>
+                            #{EstacaoVendaCaixa}
+                            <cite class='details'>DET</cite>
+                            <cite class='timer' data-startdate='{SetStartTime()}'>{SetTimer()}</cite>
+                            <cite class='command' data-orderid='{OrderId}' onclick='{SetCommand()}'>CMD</cite>
                         </blockquote>
                     </div>
                 ";
 
             return sLayout;
+        }
+
+        private string ProcessColor()
+        {
+            switch (Process)
+            {
+                case EOrderProcess.Preparing:
+                    return "yellow";
+
+                case EOrderProcess.Finished:
+                    return "green";
+
+                default:
+                    return "red";
+            }
+        }
+
+        private string CommandStyle()
+        {
+            switch (Command)
+            {
+                case EOrderCommand.Sent:
+                    return "sent";
+
+                case EOrderCommand.Dragged:
+                    return "dragged";
+
+                case EOrderCommand.Received:
+                    return "received";
+
+                case EOrderCommand.Dropped:
+                    return "dropped";
+
+                case EOrderCommand.None:
+                default:
+                    return "";
+            }
+        }
+
+        private string SetCommand()
+        {
+            switch (Process)
+            {
+                case EOrderProcess.Awaiting:
+                    return "ToPreparingByClick(this)";
+
+                case EOrderProcess.Preparing:
+                    return "ToFinishedByClick(this)";
+
+                case EOrderProcess.Finished:
+                case EOrderProcess.None:
+                default:
+                    return "";
+            }
+        }
+
+        private string SetTimer()
+        {
+            switch (Process)
+            {
+                case EOrderProcess.Awaiting:
+                    return $"{((!AwaitingEnd.HasValue) ? DateTime.Now.Subtract(AwaitingStart.Value).Duration().ToString("mm\\mss\\s") : "")}";
+
+                case EOrderProcess.Preparing:
+                    return $"{((!PreparingEnd.HasValue) ? DateTime.Now.Subtract(PreparingStart.Value).Duration().ToString("mm\\mss\\s") : "")}";
+
+                case EOrderProcess.Finished:
+                    return $"{(Finished.HasValue ? DateTime.Now.Subtract(Finished.Value).Duration().ToString("mm\\mss\\s") : "")}";
+
+                case EOrderProcess.None:
+                default:
+                    return "";
+            }
+        }
+
+        private string SetStartTime()
+        {
+            switch (Process)
+            {
+                case EOrderProcess.Awaiting:
+                    return $"{(AwaitingStart.HasValue ? AwaitingStart.ToString() : "")}";
+
+                case EOrderProcess.Preparing:
+                    return $"{(PreparingStart.HasValue ? PreparingStart.ToString() : "")}";
+
+                case EOrderProcess.Finished:
+                    return $"{(Finished.HasValue ? Finished.ToString() : "")}";
+
+                case EOrderProcess.None:
+                default:
+                    return "";
+            }
         }
     }
 

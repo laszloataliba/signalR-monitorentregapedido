@@ -69,24 +69,38 @@ body {
     width: 200px;
     margin: 0 auto;
     padding: 20px;
-    /*font-family: Satisfy;*/
     font-size: 15px;
     box-shadow: 0 5px 5px 0px rgba(0,0,0,0.3);
 }
 
-.note .author {
+.note .details {
+    display: block;
+    margin: 40px 0 0 0;
+    text-align: left;
+}
+
+.note .timer {
+    display: block;
+    margin: 40px 0 0 0;
+    text-align: center;
+}
+
+.note .command {
     display: block;
     margin: 40px 0 0 0;
     text-align: right;
 }
 
+.red {
+    background: #ee6464;
+}
+
 .yellow {
     background: #eae672;
-    /*-webkit-transform: rotate(2deg);
-    -moz-transform: rotate(2deg);
-    -o-transform: rotate(2deg);
-    -ms-transform: rotate(2deg);
-    transform: rotate(2deg);*/
+}
+
+.green {
+    background: #2eae58;
 }
 
 .pin {
@@ -134,12 +148,12 @@ body {
     -o-transform-origin: 50% 100%;
 }
 
-.nova-promo {
+.received {
     position: relative;
-    animation: promocao 1s 1;
+    animation: item-received 1s 1;
 }
 
-@keyframes promocao {
+@keyframes item-received {
     from {
         left: -1000px;
     }
@@ -149,17 +163,44 @@ body {
     }
 }
 
-.promo-remove {
+.sent {
     position: relative;
-    animation: promo-remove 1s 1;
+    animation: item-sent 1s 1;
 }
 
-@keyframes promo-remove {
+@keyframes item-sent {
     from {
         left: 0px;
     }
 
     to {
         left: 600px;
+    }
+}
+
+.dragged {
+    animation: item-dragged 1s 1;
+}
+
+@keyframes item-dragged {
+    from {
+        width: 200px;
+    }
+
+    to {
+        width: 0px;
+    }
+}
+
+.dropped {
+    animation: item-dropped 1s 1;
+}
+
+@keyframes item-dropped {
+    from {
+        width: 0px;
+    }
+    to {
+        width: 200px;
     }
 }

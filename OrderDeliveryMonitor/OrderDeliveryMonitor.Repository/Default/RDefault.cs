@@ -76,6 +76,8 @@ namespace OrderDeliveryMonitor.Repository.Default
                         .AsQueryable()
                             .Where(pWhereClause)
                                 .Include(pInclude);
+                else
+                    vQuery = this._context.Set<T>().AsQueryable().Where(pWhereClause);
 
                 var vEntity = vQuery.SingleOrDefault<T>();
 

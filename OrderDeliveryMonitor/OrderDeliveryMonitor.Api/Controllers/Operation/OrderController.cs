@@ -39,34 +39,10 @@ namespace OrderDeliveryMonitor.Api.Controllers.Operation
             return vOrder;
         }
 
-        [HttpPut("{id}")]
-        public async Task Put(string id)
+        [HttpPut("{pOrderId}")]
+        public async Task Put(string pOrderId)
         {
-            var pOrder =
-                   new nsOrderModel.Order
-                   {
-                       OrderId = int.Parse(id),
-                       Process = nsOrderModel.EOrderProcess.Awaiting,
-                       Command = nsOrderModel.EOrderCommand.Received
-                   };
-
-            fOrder.Update(pOrder);
-
-            await _hubContext.Clients.All.SendAsync($"{AppUtilities.RELOAD_AWAITING_CONTAINER}");
-        }
-
-        [HttpPatch("{pOrderId}")]
-        public async Task Patch(string pOrderId)
-        {
-            var pOrder =
-                new nsOrderModel.Order
-                {
-                    OrderId = int.Parse(pOrderId),
-                    Process = nsOrderModel.EOrderProcess.Awaiting,
-                    Command = nsOrderModel.EOrderCommand.Received
-                };
-
-            fOrder.Update(pOrder);
+            fOrder.ToAwaiting(new nsOrderModel.Order { OrderId = int.Parse(pOrderId) });
 
             await _hubContext.Clients.All.SendAsync($"{AppUtilities.RELOAD_AWAITING_CONTAINER}");
         }

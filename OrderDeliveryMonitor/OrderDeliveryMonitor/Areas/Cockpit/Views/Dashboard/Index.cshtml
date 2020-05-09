@@ -1,4 +1,5 @@
-﻿
+﻿@model IEnumerable<Order>
+
 @{
     Layout = "~/Views/Shared/_CrudIndex.cshtml";
 }
@@ -6,15 +7,19 @@
 @section indexBody {
 
     <h1>DASHBOARD</h1>
+    
+    <div id="customerDashboardContainer" style="display: flex; flex-direction: row; background-color: gray; width: 100%; position: relative; position: absolute; left: 0px; top: 0px; bottom: 0px;">
+        
+        <div id="AwaitingContainer" style="display: flex; flex-direction: column;">
+            @await Html.PartialAsync(AppUtilities.AWAITING_CONTAINER, Model.Where(o => o.Process == EOrderProcess.Awaiting))
+        </div>
+        <div id="PreparingContainer" style="display: flex; flex-direction: column;">
+            @await Html.PartialAsync(AppUtilities.PREPARING_CONTAINER, Model.Where(o => o.Process == EOrderProcess.Preparing))
+        </div>
+        <div id="FinishedContainer" style="display: flex; flex-direction: column;">
+            @await Html.PartialAsync(AppUtilities.FINISHED_CONTAINER, Model.Where(o => o.Process == EOrderProcess.Finished))
+        </div>
 
-    <div id="AwaitingContainer">
-        @await Html.PartialAsync("AwaitingContainer")
-    </div>
-    <div id="PreparingContainer">
-        @await Html.PartialAsync("PreparingContainer")
-    </div>
-    <div id="FinishedContainer">
-        @await Html.PartialAsync("FinishedContainer")
     </div>
 
     <script type="text/javascript">
@@ -22,41 +27,78 @@
         const signalRconn = SigalRConnection('http://localhost:55317/OrderDeliveryMonitorHub');
 
         setInterval(() => {
-            let dv = document.getElementById('PreparingContainer');
-            
-            console.log('@nameof(AppUtilities.LOAD_AWAITING_CONTAINER)');
+            let $timers = document.querySelectorAll('.timer');
+
+            $timers.forEach(timer => {
+                TimerCalc(timer);
+            });
+
         }, 1000);
-        
-        signalRconn.on('TesteViaWebAPI', function (parametro) {
-            MontaPainel(parametro);
+
+        function TimerCalc(timer) {
+            console.info(timer.dataset.startdate);
+        }
+
+        signalRconn.on('@AppUtilities.RELOAD_AWAITING_CONTAINER', function () {
+            signalRconn.invoke('@AppUtilities.RELOADAWAITINGCONTAINER_METHOD', GetOrders());
         });
 
-        function CallSignalR(e) {
-            console.log(e);
+        signalRconn.on('@AppUtilities.LOAD_AWAITING_CONTAINER', function (pOrders) {
+            SetOrders(pOrders);
+            MountContainer(pOrders, '@AppUtilities.AWAITING_CONTAINER');
+        });
 
-            signalRconn.invoke('TesteViaScript');
+        function SetOrders(pOrders) {
+            debugger;
+            sessionStorage.setItem('Orders', JSON.stringify(pOrders));
+        }
 
-            signalRconn.on('TesteViaJavaScript', function (parametro) {
-                MontaPainel(parametro);
+        function GetOrders() {
+            debugger;
+            return JSON.parse(sessionStorage.getItem('Orders'));
+        }
+
+        function ToPreparingByClick(e) {
+            ToPreparing(e, '@EOrderCommand.Sent');
+        }
+
+        function ToFinishedByClick(e) {
+            ToFinished(e, '@EOrderCommand.Sent');
+        }
+
+        function ToPreparing(e, pCommand) {
+            debugger;
+            let $this = e;
+            let vOrderId = $this.dataset.orderid;
+
+            signalRconn.invoke('@AppUtilities.FROMAWAITINGTOPREPARING_METHOD', GetOrders(), vOrderId, pCommand);
+        }
+
+        signalRconn.on('@AppUtilities.LOAD_PREPARING_CONTAINER', function (pOrders) {
+            debugger;
+            SetOrders();
+            MountContainer(pOrders, '@AppUtilities.PREPARING_CONTAINER');
+        });
+
+        function ToFinished(e, pCommand) {
+            debugger;
+            let $this = e;
+            let vOrderId = $this.dataset.orderid;
+
+            signalRconn.invoke('@AppUtilities.FROMPREPARINGTOFINISHED_METHOD', GetOrders(), vOrderId, pCommand);
+
+            signalRconn.on('@AppUtilities.LOAD_FINISHED_CONTAINER', function (pOrders) {
+                SetOrders(pOrders);
+                MountContainer(pOrders, '@AppUtilities.FINISHED_CONTAINER');
             });
         }
 
-        function MontaPainel(parametro, chave) {
-            let container = document.getElementById('AwaitingContainer');
+        function MountContainer(pOrders, baseContainer) {
+            let container = document.getElementById(baseContainer);
             let textHtml = '';
-            let contador = 0;
-            
-            Array.from(parametro).forEach(postit => {
-                textHtml +=
-                    `
-                    <div class="quote-container ${((++contador) % 2 === 0 ? 'nova-promo' : 'promo-remove')}">
-                        <i class="pin"></i>
-                        <blockquote class="note yellow">
-                            We can't solve problems by using the same kind of thinking we used when we created them.
-                        <cite class="author">Albert Einstein</cite>
-                        </blockquote>
-                    </div>
-                `;
+
+            Array.from(pOrders).forEach(order => {
+                textHtml += order.ticketLayout;
             });
 
             container.innerHTML = textHtml;

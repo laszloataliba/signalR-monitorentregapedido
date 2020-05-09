@@ -38,5 +38,40 @@ namespace OrderDeliveryMonitor.Business.Implementation.Operation
         {
             this._orderRepository.Update(pEntity);
         }
+
+        public void ToAwaiting(Order pOrder)
+        {
+            pOrder = Get(order => order.OrderId == pOrder.OrderId);
+
+            pOrder.Process = EOrderProcess.Awaiting;
+            pOrder.Command = EOrderCommand.Received;
+            pOrder.AwaitingStart = DateTime.Now;
+
+            _orderRepository.ToAwaiting(pOrder);
+        }
+
+        public void ToPreparing(Order pOrder, EOrderCommand pCommand)
+        {
+            pOrder = _orderRepository.Get(order => order.OrderId == pOrder.OrderId);
+
+            pOrder.Process = EOrderProcess.Preparing;
+            pOrder.Command = pCommand;
+            pOrder.AwaitingEnd = DateTime.Now;
+            pOrder.PreparingStart = DateTime.Now;
+
+            _orderRepository.ToPreparing(pOrder);
+        }
+
+        public void ToFinished(Order pOrder, EOrderCommand pCommand)
+        {
+            pOrder = _orderRepository.Get(order => order.OrderId == pOrder.OrderId);
+
+            pOrder.Process = EOrderProcess.Finished;
+            pOrder.Command = pCommand;
+            pOrder.PreparingEnd = DateTime.Now;
+            pOrder.Finished = DateTime.Now;
+
+            _orderRepository.ToFinished(pOrder);
+        }
     }
 }

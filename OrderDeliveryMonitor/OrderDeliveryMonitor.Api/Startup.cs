@@ -31,13 +31,13 @@ namespace OrderDeliveryMonitor.Api
             services.AddCors(options => {
                 options.AddPolicy("AllowCors",
                     builder => builder
-                            .WithOrigins("https://localhost:44327")// Caminho da aplicação Web
+                            .WithOrigins($"{Configuration.GetValue<string>("WebApplicationServerPath")}")
                             .AllowAnyMethod()
                             .AllowAnyHeader()
                             .AllowCredentials()
                         );
             });
-
+            
             services.AddSignalR(cfg => {
                 cfg.EnableDetailedErrors = true;
             });
