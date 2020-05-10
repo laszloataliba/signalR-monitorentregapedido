@@ -59,8 +59,9 @@ body {
 
 
 .quote-container {
-    margin-top: 50px;
+    margin-top: 35px;
     position: relative;
+    /*width: 205px;*/
 }
 
 .note {
@@ -71,6 +72,7 @@ body {
     padding: 20px;
     font-size: 15px;
     box-shadow: 0 5px 5px 0px rgba(0,0,0,0.3);
+    /*height: 200px;*/
 }
 
 .note .details {
@@ -89,6 +91,15 @@ body {
     display: block;
     margin: 40px 0 0 0;
     text-align: right;
+    cursor: pointer;
+}
+
+.red, .yellow, .green {
+    -webkit-transform: rotate(2deg);
+    -moz-transform: rotate(2deg);
+    -o-transform: rotate(2deg);
+    -ms-transform: rotate(2deg);
+    transform: rotate(2deg);
 }
 
 .red {
@@ -204,3 +215,39 @@ body {
         width: 200px;
     }
 }
+
+.flex-container {
+    display: flex;
+    background-color: #ddd5d5;
+    position: absolute;
+    right: 0px;
+    left: 0px;
+    top: 0px;
+    bottom: 0px;
+    flex-flow: row wrap;
+}
+
+.flex-container > div {
+    font-size: 30px;
+    flex-grow: 1 !important;
+}
+
+.flex-container-awainting {
+    background-color: #b69292;
+}
+
+.flex-container-preparing {
+    background-color: #ccbd66;
+}
+
+.flex-container-finished {
+    background-color: #91ce88;
+    flex-flow: row wrap !important;
+}
+
+    .flex-container-awainting > div,
+    .flex-container-preparing > div,
+    .flex-container-finished > div {
+        /*background-color: aquamarine;*/
+        /*width: 300px;*/
+    }
