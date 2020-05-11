@@ -48,7 +48,7 @@
 
     <script type="text/javascript">
         //Campinho da publicação WebAPI contendo o HUB.
-        const signalRconn = SigalRConnection('http://localhost:55317/OrderDeliveryMonitorHub');
+        const signalRconn = SigalRConnection('@AppUtilities.HUBSERVERPATH');
 
         setInterval(() => {
             let $timers = document.querySelectorAll('.timer');

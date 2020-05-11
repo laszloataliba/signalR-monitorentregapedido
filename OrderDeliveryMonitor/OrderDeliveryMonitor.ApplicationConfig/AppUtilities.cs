@@ -1,4 +1,7 @@
-﻿namespace OrderDeliveryMonitor.ApplicationConfig
+﻿using Microsoft.Extensions.Configuration;
+using System.IO;
+
+namespace OrderDeliveryMonitor.ApplicationConfig
 {
     public static class AppUtilities
     {
@@ -18,6 +21,39 @@
         public const string AWAITING_CONTAINER = "AwaitingContainer";
         public const string PREPARING_CONTAINER = "PreparingContainer";
         public const string FINISHED_CONTAINER = "FinishedContainer";
+
+        public static string HUBSERVERPATH = HubServerPath();
+        public static string WEBAPISERVERPATH = WebApiServerPath();
+
+        private static string HubServerPath()
+        {
+            var vConfigBuilder = new ConfigurationBuilder();
+
+            var vPath = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
+
+            vConfigBuilder.AddJsonFile(vPath, false);
+
+            var vRoot = vConfigBuilder.Build();
+
+            var vHubPath = vRoot.GetSection("HubServerPath").Value;
+
+            return vHubPath;
+        }
+
+        private static string WebApiServerPath()
+        {
+            var vConfigBuilder = new ConfigurationBuilder();
+
+            var vPath = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
+
+            vConfigBuilder.AddJsonFile(vPath, false);
+
+            var vRoot = vConfigBuilder.Build();
+
+            var vHubPath = vRoot.GetSection("WebAPIServerPath").Value;
+
+            return vHubPath;
+        }
 
     }
 }

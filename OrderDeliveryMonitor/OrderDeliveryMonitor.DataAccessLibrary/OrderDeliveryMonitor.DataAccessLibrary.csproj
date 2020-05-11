@@ -28,4 +28,10 @@
     <Folder Include="DataBase\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="DataBase\OrderDeliveryMonitor.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

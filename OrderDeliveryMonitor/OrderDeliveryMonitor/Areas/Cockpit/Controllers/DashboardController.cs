@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using OrderDeliveryMonitor.ApplicationConfig;
 using OrderDeliveryMonitor.Model.Operation;
 
 namespace OrderDeliveryMonitor.Areas.Cockpit.Controllers
@@ -18,7 +19,7 @@ namespace OrderDeliveryMonitor.Areas.Cockpit.Controllers
         {
             HttpClient httpClient = new HttpClient();
 
-            httpClient.BaseAddress = new Uri("http://localhost:55317/api/Operation/Order");
+            httpClient.BaseAddress = new Uri($"{AppUtilities.WEBAPISERVERPATH}/api/Operation/Order");
             var result = httpClient.GetStringAsync(httpClient.BaseAddress);
             var content = JsonConvert.DeserializeObject<List<Order>>(result.Result);
 

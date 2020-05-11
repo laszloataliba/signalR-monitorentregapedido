@@ -43,7 +43,7 @@
 
     <script type="text/javascript">
         //Campinho da publicação WebAPI contendo o HUB.
-        const signalRconn = SigalRConnection('http://localhost:55317/OrderDeliveryMonitorHub');
+        const signalRconn = SigalRConnection('@AppUtilities.HUBSERVERPATH');
 
         signalRconn.on('@AppUtilities.LOAD_AWAITING_CONTAINER_FOR_CUSTOMERS', function (pOrders, pOrderId, pCommand) {
 
