@@ -216,38 +216,44 @@ body {
     }
 }
 
-.flex-container {
-    display: flex;
-    background-color: #ddd5d5;
+.painel-main {
+    background-color: lightgray;
     position: absolute;
-    right: 0px;
+    display: flex;
+    flex-direction: column;
     left: 0px;
     top: 0px;
+    right: 0px;
     bottom: 0px;
-    flex-flow: row wrap;
 }
 
-.flex-container > div {
-    font-size: 30px;
-    flex-grow: 1 !important;
+.painel-header {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
 }
 
-.flex-container-awainting {
-    background-color: #b69292;
+.painel-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
 }
 
-.flex-container-preparing {
-    background-color: #ccbd66;
+.container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 0px 0px 0px 0px;
 }
 
-.flex-container-finished {
-    background-color: #91ce88;
-    flex-flow: row wrap !important;
+.container-header {
+    text-align: center;
 }
 
-    .flex-container-awainting > div,
-    .flex-container-preparing > div,
-    .flex-container-finished > div {
-        /*background-color: aquamarine;*/
-        /*width: 300px;*/
-    }
+.container-body {
+    flex-grow: 1;
+    border-left: 1px solid hsla(0, 2%, 53%, 0.30);
+    background-color: lightgray;
+}

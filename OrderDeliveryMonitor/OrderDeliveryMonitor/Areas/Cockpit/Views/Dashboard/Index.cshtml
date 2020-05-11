@@ -6,24 +6,44 @@
 
 @section indexBody {
 
-    <style>
-
-        
-
-    </style>
-
-    <div id="DashboardContainer" class="flex-container">
-
-        <div id="AwaitingContainer" class="flex-container-awainting">
-            @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Awaiting))
+    <div id="DashboardContainer" class="painel-main">
+        <div class="painel-header">
+            <span>
+                :: Painel de Controle ::
+            </span>            
         </div>
-        <div id="PreparingContainer" class="flex-container-preparing">
-            @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Preparing))
+        <div class="painel-body">
+            <div class="container">
+                <div class="container-header">
+                    <span>
+                        :: Red Header
+                    </span>
+                </div>
+                <div id="AwaitingContainer" class="container-body">
+                    @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Awaiting))
+                </div>
+            </div>
+            <div class="container">
+                <div class="container-header">
+                    <span>
+                        :: Yellow Header
+                    </span>
+                </div>
+                <div id="PreparingContainer" class="container-body">
+                    @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Preparing))
+                </div>
+            </div>
+            <div class="container">
+                <div class="container-header">
+                    <span>
+                        :: Green Header
+                    </span>
+                </div>
+                <div id="FinishedContainer" class="container-body">
+                    @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Finished))
+                </div>
+            </div>
         </div>
-        <div id="FinishedContainer" class="flex-container-finished">
-            @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Finished))
-        </div>
-
     </div>
 
     <script type="text/javascript">
