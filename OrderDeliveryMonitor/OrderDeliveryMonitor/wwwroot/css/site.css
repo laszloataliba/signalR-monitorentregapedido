@@ -55,41 +55,27 @@ body {
   line-height: 60px; /* Vertically center the text there */
 }
 
-
-
-
-/*.quote-container {
-    margin-top: 35px;
-    position: relative;
-}
-
-.note {
-    color: #333;
-    position: relative;
-    width: 200px;
-    margin: 0 auto;
-    padding: 20px;
-    font-size: 15px;
-    box-shadow: 0 5px 5px 0px rgba(0,0,0,0.3);
-}*/
+/***********************************************************************************/
+/******************************** LAYOUT PAINEL ************************************/
+/***********************************************************************************/
 
 .quote-container {
-    margin-top: 35px;
     position: relative;
-    margin-right: 5px;
+    margin: 35px 4px 0px 2px;
+    display: flex;
 }
 
 .note {
     color: #333;
     position: relative;
-    width: 200px;
+    width: 150px;
     margin: 0 auto;
     padding: 2px;
     font-size: 15px;
     box-shadow: 0 5px 5px 0px rgba(0,0,0,0.3);
     display: flex;
     flex-flow: column;
-    height: 200px;
+    height: 150px;
 }
 
 .note-body {
@@ -106,16 +92,12 @@ body {
     flex-direction: row;
 }
 
-.details {
-    flex-grow: 1;
-}
-
 .timer {
     flex-grow: 2;
 }
 
-.command {
-    flex-grow: 1;    
+.details, .command {
+    flex-grow: 1;
     cursor: pointer;
 }
 
@@ -261,11 +243,13 @@ body {
 }
 
 .painel-header {
-    text-align: center;
+    text-align: right;
     align-items: center;
     justify-content: center;
     height: 45px;
     font-size: 30px;
+    color: #ffffff;
+    background-color: #bd0d0d;
 }
 
 .painel-body {
@@ -287,14 +271,22 @@ body {
     text-align: center;
     font-weight: bold;
     font-size: 20px;
+    margin-top: 4px;
+    margin-left: 2px;
+    margin-right: 2px;
+    border-radius: 5px 5px 0px 0px;
+    background-color: #fff;
+    text-transform: uppercase;
 }
 
 .container-body {
     flex-grow: 1;
-    border-left: 1px solid hsla(0, 2%, 53%, 0.30);
-    background-color: lightgray;
+    background-color: #fff;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    flex-flow: column wrap;
+    flex-flow: row wrap;
+    margin: 0px 2px 4px 2px;
+    border-radius: 0px 0px 5px 5px;
+    align-content: flex-start;
 }

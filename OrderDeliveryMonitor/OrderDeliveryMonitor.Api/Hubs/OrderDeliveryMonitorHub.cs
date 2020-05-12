@@ -38,8 +38,8 @@ namespace OrderDeliveryMonitor.Api.Hubs
                     }
                 );
 
-            await Clients.Caller.SendAsync($"{AppUtilities.LOAD_AWAITING_CONTAINER}", vOrders);
-            await Clients.Others.SendAsync($"{AppUtilities.LOAD_AWAITING_CONTAINER_FOR_CUSTOMERS}", vOrders);
+            await Clients.Caller.SendAsync($"{AppUtilities.LOAD_AWAITING_CONTAINER}", vOrders.OrderBy(o => o.AwaitingStart.Value).ToList());
+            await Clients.Others.SendAsync($"{AppUtilities.LOAD_AWAITING_CONTAINER_FOR_CUSTOMERS}", vOrders.OrderBy(o => o.AwaitingStart.Value).ToList());
         }
 
         public async Task FromAwaitingToPreparing(int[] pOrders, string pOrderId, EOrderCommand pCommand = EOrderCommand.Sent)
@@ -66,10 +66,10 @@ namespace OrderDeliveryMonitor.Api.Hubs
                         order.Command = (pCommand == EOrderCommand.Sent ? EOrderCommand.Received : EOrderCommand.Dropped);
                 });
 
-            await Clients.All.SendAsync($"{AppUtilities.LOAD_AWAITING_CONTAINER}", vOrders.Where(o => o.Process == EOrderProcess.Awaiting).ToList());
-            await Clients.All.SendAsync($"{AppUtilities.LOAD_PREPARING_CONTAINER}", vOrders.Where(o => o.Process == EOrderProcess.Preparing).ToList());
-            await Clients.Others.SendAsync($"{AppUtilities.LOAD_AWAITING_CONTAINER_FOR_CUSTOMERS}", vOrders.Where(o => o.Process == EOrderProcess.Awaiting).ToList(), pOrderId, pCommand); //Antes de atualizar o container, aplicar a class css pro pOrderId.
-            await Clients.Others.SendAsync($"{AppUtilities.LOAD_PREPARING_CONTAINER_FOR_CUSTOMERS}", vOrders.Where(o => o.Process == EOrderProcess.Preparing).ToList());
+            await Clients.All.SendAsync($"{AppUtilities.LOAD_AWAITING_CONTAINER}", vOrders.Where(o => o.Process == EOrderProcess.Awaiting).OrderBy(o => o.AwaitingStart.Value).ToList());
+            await Clients.All.SendAsync($"{AppUtilities.LOAD_PREPARING_CONTAINER}", vOrders.Where(o => o.Process == EOrderProcess.Preparing).OrderBy(o => o.PreparingStart.Value).ToList());
+            await Clients.Others.SendAsync($"{AppUtilities.LOAD_AWAITING_CONTAINER_FOR_CUSTOMERS}", vOrders.Where(o => o.Process == EOrderProcess.Awaiting).OrderBy(o => o.AwaitingStart.Value).ToList(), pOrderId, pCommand); //Antes de atualizar o container, aplicar a class css pro pOrderId.
+            await Clients.Others.SendAsync($"{AppUtilities.LOAD_PREPARING_CONTAINER_FOR_CUSTOMERS}", vOrders.Where(o => o.Process == EOrderProcess.Preparing).OrderBy(o => o.PreparingStart.Value).ToList());
         }
 
         public async Task FromPreparingToFinished(int[] pOrders, string pOrderId, EOrderCommand pCommand = EOrderCommand.Sent)
@@ -96,10 +96,10 @@ namespace OrderDeliveryMonitor.Api.Hubs
                         order.Command = (pCommand == EOrderCommand.Sent ? EOrderCommand.Received : EOrderCommand.Dropped);
                 });
 
-            await Clients.All.SendAsync($"{AppUtilities.LOAD_PREPARING_CONTAINER}", vOrders.Where(o => o.Process == EOrderProcess.Preparing).ToList());
-            await Clients.All.SendAsync($"{AppUtilities.LOAD_FINISHED_CONTAINER}", vOrders.Where(o => o.Process == EOrderProcess.Finished).ToList());
-            await Clients.Others.SendAsync($"{AppUtilities.LOAD_PREPARING_CONTAINER_FOR_CUSTOMERS}", vOrders.Where(o => o.Process == EOrderProcess.Preparing).ToList(), pOrderId, pCommand); //Antes de atualizar o container, aplicar a class css pro pOrderId.
-            await Clients.Others.SendAsync($"{AppUtilities.LOAD_FINISHED_CONTAINER_FOR_CUSTOMER}", vOrders.Where(o => o.Process == EOrderProcess.Finished).ToList());
+            await Clients.All.SendAsync($"{AppUtilities.LOAD_PREPARING_CONTAINER}", vOrders.Where(o => o.Process == EOrderProcess.Preparing).OrderBy(o => o.PreparingStart.Value).ToList());
+            await Clients.All.SendAsync($"{AppUtilities.LOAD_FINISHED_CONTAINER}", vOrders.Where(o => o.Process == EOrderProcess.Finished).OrderBy(o => o.Finished).ToList());
+            await Clients.Others.SendAsync($"{AppUtilities.LOAD_PREPARING_CONTAINER_FOR_CUSTOMERS}", vOrders.Where(o => o.Process == EOrderProcess.Preparing).OrderBy(o => o.PreparingStart.Value).ToList(), pOrderId, pCommand); //Antes de atualizar o container, aplicar a class css pro pOrderId.
+            await Clients.Others.SendAsync($"{AppUtilities.LOAD_FINISHED_CONTAINER_FOR_CUSTOMER}", vOrders.Where(o => o.Process == EOrderProcess.Finished).OrderBy(o => o.Finished).ToList());
         }
 
         public async Task HideFinishedOrderByTimeOut(string pOrderId)
@@ -108,8 +108,8 @@ namespace OrderDeliveryMonitor.Api.Hubs
 
             vOrders = vOrders.Where(order => DateTime.Now.Subtract(order.Finished.Value).Minutes >= 1).ToList();
 
-            await Clients.All.SendAsync($"{AppUtilities.LOAD_FINISHED_CONTAINER}", vOrders);
-            await Clients.Others.SendAsync($"{AppUtilities.LOAD_FINISHED_CONTAINER_FOR_CUSTOMER}", vOrders, pOrderId); //Antes de atualizar o container, aplicar a class css pro pOrderId.
+            await Clients.All.SendAsync($"{AppUtilities.LOAD_FINISHED_CONTAINER}", vOrders.OrderBy(o => o.Finished).ToList());
+            await Clients.Others.SendAsync($"{AppUtilities.LOAD_FINISHED_CONTAINER_FOR_CUSTOMER}", vOrders.OrderBy(o => o.Finished).ToList(), pOrderId); //Antes de atualizar o container, aplicar a class css pro pOrderId.
         }
     }
 }

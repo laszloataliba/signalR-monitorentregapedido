@@ -6,45 +6,45 @@
 
 @section indexBody {
 
-    <div id="DashboardContainer" class="painel-main">
-        <div class="painel-header">
-            <span>
-                PAINEL DE CONTROLE
-            </span>            
+<div id="DashboardContainer" class="painel-main">
+    <div class="painel-header">
+        <span>
+            LOGO CINEMARK
+        </span>
+    </div>
+    <div class="painel-body">
+        <div class="container">
+            <div class="container-header">
+                <span>
+                    Aguardando...
+                </span>
+            </div>
+            <div id="AwaitingContainer" class="container-body">
+                @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Awaiting).OrderBy(o => o.AwaitingStart.Value).ToList())
+            </div>
         </div>
-        <div class="painel-body">
-            <div class="container">
-                <div class="container-header">
-                    <span>
-                        Aguardando...
-                    </span>
-                </div>
-                <div id="AwaitingContainer" class="container-body">
-                    @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Awaiting))
-                </div>
+        <div class="container">
+            <div class="container-header">
+                <span>
+                    Preparando...
+                </span>
             </div>
-            <div class="container">
-                <div class="container-header">
-                    <span>
-                        Preparando...
-                    </span>
-                </div>
-                <div id="PreparingContainer" class="container-body">
-                    @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Preparing))
-                </div>
+            <div id="PreparingContainer" class="container-body">
+                @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Preparing).OrderBy(o => o.PreparingStart.Value).ToList())
             </div>
-            <div class="container">
-                <div class="container-header">
-                    <span>
-                        PRONTO!
-                    </span>
-                </div>
-                <div id="FinishedContainer" class="container-body">
-                    @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Finished))
-                </div>
+        </div>
+        <div class="container">
+            <div class="container-header">
+                <span>
+                    PRONTO!
+                </span>
+            </div>
+            <div id="FinishedContainer" class="container-body">
+                @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Finished).OrderBy(o => o.Finished).ToList())
             </div>
         </div>
     </div>
+</div>
 
     <script type="text/javascript">
         //Campinho da publicação WebAPI contendo o HUB.
