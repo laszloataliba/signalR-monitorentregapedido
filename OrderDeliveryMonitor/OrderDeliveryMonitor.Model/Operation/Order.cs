@@ -75,7 +75,7 @@ namespace OrderDeliveryMonitor.Model.Operation
                             <div class='note-footer'>
                                 <div class='details'>V</div>
                                 <div class='timer' data-startdate='{SetStartTime()}'>{SetTimer()}</div>
-                                <div class='command' data-orderid='{OrderId}' onclick='{SetCommand()}'>-></div>
+                                <div class='command' data-orderid='{OrderId}' onclick='{SetCommand()}'>></div>
                             </div>
                         </div>
                     </div>

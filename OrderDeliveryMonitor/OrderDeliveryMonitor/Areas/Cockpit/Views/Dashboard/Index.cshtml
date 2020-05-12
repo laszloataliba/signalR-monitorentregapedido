@@ -9,14 +9,14 @@
     <div id="DashboardContainer" class="painel-main">
         <div class="painel-header">
             <span>
-                :: Painel de Controle ::
+                PAINEL DE CONTROLE
             </span>            
         </div>
         <div class="painel-body">
             <div class="container">
                 <div class="container-header">
                     <span>
-                        :: Red Header
+                        Aguardando...
                     </span>
                 </div>
                 <div id="AwaitingContainer" class="container-body">
@@ -26,7 +26,7 @@
             <div class="container">
                 <div class="container-header">
                     <span>
-                        :: Yellow Header
+                        Preparando...
                     </span>
                 </div>
                 <div id="PreparingContainer" class="container-body">
@@ -36,7 +36,7 @@
             <div class="container">
                 <div class="container-header">
                     <span>
-                        :: Green Header
+                        PRONTO!
                     </span>
                 </div>
                 <div id="FinishedContainer" class="container-body">
@@ -85,13 +85,11 @@
             return $orders || null;
         }
 
-        function ToPreparingByClick(e) {
-            ApplyStyle(e);
+        function ToPreparingByClick(e) {            
             ToPreparing(e, '@EOrderCommand.Sent');
         }
 
         function ToFinishedByClick(e) {
-            ApplyStyle(e);
             ToFinished(e, '@EOrderCommand.Sent');
         }
 
@@ -104,6 +102,7 @@
         function ToPreparing(e, pCommand) {
             let $this = e;
             let $orderId = $this.dataset.orderid;
+            ApplyStyle(e);
 
             signalRconn.invoke('@AppUtilities.FROMAWAITINGTOPREPARING_METHOD', GetOrders(), $orderId, pCommand);
 
