@@ -22,28 +22,62 @@ namespace OrderDeliveryMonitor.Model.Operation
 
         public string TicketLayout => Layout();
 
+        //<div id = 'tck{OrderId}' class='quote-container {CommandStyle()}'>
+        //            <i class='pin'></i>
+        //            <blockquote class='note {ProcessColor()}'>
+        //                #{EstacaoVendaCaixa}
+        //            </blockquote>
+        //        </div>
+
         public string CustomerTicketLayout =>
             $@"
                 <div id='tck{OrderId}' class='quote-container {CommandStyle()}'>
                     <i class='pin'></i>
-                    <blockquote class='note {ProcessColor()}'>
-                        #{EstacaoVendaCaixa}
-                    </blockquote>
+                    <div class='note {ProcessColor()}'>
+                        <div class='note-body'>
+                            <span>
+                                #{OrderNumber}
+                            </span>
+                        </div>
+                        <div class='note-footer'>
+                            <div class='details'></div>
+                            <div class='timer'></div>
+                            <div class='command'></div>
+                        </div>
+                    </div>
                 </div>
             ";
+
+        //<div id = 'tck{OrderId}' class='quote-container {CommandStyle()}'>
+        //                <i class='pin'></i>
+        //                <blockquote class='note {ProcessColor()}'>
+        //                    #{EstacaoVendaCaixa}
+        //                    <cite class='details'>DET</cite>
+        //                    <cite class='timer' data-startdate='{SetStartTime()}'>{SetTimer()}</cite>
+        //                    <cite class='command' data-orderid='{OrderId}' onclick='{SetCommand()}'>CMD</cite>
+        //                </blockquote>
+        //            </div>
 
         private string Layout()
         {
             string sLayout =
                 $@"
+                    
+
                     <div id='tck{OrderId}' class='quote-container {CommandStyle()}'>
                         <i class='pin'></i>
-                        <blockquote class='note {ProcessColor()}'>
-                            #{EstacaoVendaCaixa}
-                            <cite class='details'>DET</cite>
-                            <cite class='timer' data-startdate='{SetStartTime()}'>{SetTimer()}</cite>
-                            <cite class='command' data-orderid='{OrderId}' onclick='{SetCommand()}'>CMD</cite>
-                        </blockquote>
+                        <div class='note {ProcessColor()}'>
+                            <div class='note-body'>
+                                <span>
+                                    #{OrderNumber}
+                                </span>
+                            </div>
+                            <div class='note-footer'>
+                                <div class='details'>V</div>
+                                <div class='timer' data-startdate='{SetStartTime()}'>{SetTimer()}</div>
+                                <div class='command' data-orderid='{OrderId}' onclick='{SetCommand()}'>-></div>
+                            </div>
+                        </div>
                     </div>
                 ";
 

@@ -1,18 +1,26 @@
 ﻿@model IEnumerable<Order>
 
-@{ 
+@{
     foreach (var order in Model)
     {
         @Html.Raw(order.TicketLayout);
     }
 }
 
-@*<div class='quote-container'>
-    <i class='pin'></i>
-    <blockquote class='note green'>
-        #0001
-        <cite class='details'>DET</cite>
-        <cite class='timer'>00m00s</cite>
-        <cite class='command'>CMD</cite>
-    </blockquote>
+
+
+@*<div class="quote-container">
+    <i class="pin"></i>
+    <div class="note red">
+        <div class="note-body">
+            <span>
+                #ATM099
+            </span>
+        </div>
+        <div class="note-footer">
+            <div class="details">V</div>
+            <div class="timer">00m00s</div>
+            <div class="command">></div>
+        </div>
+    </div>
 </div>*@

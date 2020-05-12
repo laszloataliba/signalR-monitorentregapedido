@@ -58,10 +58,9 @@ body {
 
 
 
-.quote-container {
+/*.quote-container {
     margin-top: 35px;
     position: relative;
-    /*width: 205px;*/
 }
 
 .note {
@@ -72,25 +71,63 @@ body {
     padding: 20px;
     font-size: 15px;
     box-shadow: 0 5px 5px 0px rgba(0,0,0,0.3);
-    /*height: 200px;*/
+}*/
+
+.quote-container {
+    margin-top: 35px;
+    position: relative;
 }
 
-.note .details {
-    display: block;
-    margin: 40px 0 0 0;
-    text-align: left;
+.note {
+    color: #333;
+    position: relative;
+    width: 200px;
+    margin: 0 auto;
+    padding: 2px;
+    font-size: 15px;
+    box-shadow: 0 5px 5px 0px rgba(0,0,0,0.3);
+    display: flex;
+    flex-flow: column;
+    height: 200px;
 }
 
-.note .timer {
-    display: block;
-    margin: 40px 0 0 0;
-    text-align: center;
+.note-body {
+    flex-grow: 1;
+    font-weight: bold;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.note .command {
-    display: block;
-    margin: 40px 0 0 0;
-    text-align: right;
+.note-footer {
+    display: flex;
+    flex-direction: row;
+}
+
+.details {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.timer {
+    flex-grow: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.command {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
 }
 
@@ -256,4 +293,6 @@ body {
     flex-grow: 1;
     border-left: 1px solid hsla(0, 2%, 53%, 0.30);
     background-color: lightgray;
+    display: flex;
+    flex-flow: column wrap;
 }
