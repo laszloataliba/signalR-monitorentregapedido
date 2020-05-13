@@ -113,7 +113,7 @@ body {
     align-items: center;
 }
 
-.red, .yellow, .green {
+.awaiting, .preparing, .ready {
     -webkit-transform: rotate(2deg);
     -moz-transform: rotate(2deg);
     -o-transform: rotate(2deg);
@@ -121,15 +121,15 @@ body {
     transform: rotate(2deg);
 }
 
-.red {
+.awaiting {
     background: #ee6464;
 }
 
-.yellow {
+.preparing {
     background: #eae672;
 }
 
-.green {
+.ready {
     background: #2eae58;
 }
 

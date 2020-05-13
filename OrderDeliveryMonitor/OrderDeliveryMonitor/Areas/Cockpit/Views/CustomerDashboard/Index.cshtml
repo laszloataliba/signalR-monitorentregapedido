@@ -19,7 +19,7 @@
                     Aguardando...
                 </span>
             </div>
-            <div id="AwaitingContainer" class="container-body">
+            <div id="@AppUtilities.AWAITING_CONTAINER" class="container-body">
                 @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Awaiting).OrderBy(o => o.AwaitingStart.Value).ToList())
             </div>
         </div>
@@ -29,7 +29,7 @@
                     Preparando...
                 </span>
             </div>
-            <div id="PreparingContainer" class="container-body">
+            <div id="@AppUtilities.PREPARING_CONTAINER" class="container-body">
                 @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Preparing).OrderBy(o => o.PreparingStart.Value).ToList())
             </div>
         </div>
@@ -39,8 +39,8 @@
                     PRONTO!
                 </span>
             </div>
-            <div id="FinishedContainer" class="container-body">
-                @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Finished).OrderBy(o => o.Finished).ToList())
+            <div id="@AppUtilities.READY_CONTAINER" class="container-body">
+                @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Ready).OrderBy(o => o.Finished).ToList())
             </div>
         </div>
     </div>
@@ -48,7 +48,7 @@
 
     <script type="text/javascript">
         //Campinho da publicação WebAPI contendo o HUB.
-        const signalRconn = SigalRConnection('@AppUtilities.HUBSERVERPATH');
+        const signalRconn = SigalRConnection('@AppUtilities.HUB_SERVER_PATH');
 
         signalRconn.on('@AppUtilities.LOAD_AWAITING_CONTAINER_FOR_CUSTOMERS', function (pOrders, pOrderId, pCommand) {
 
@@ -74,7 +74,7 @@
             MountContainer(pOrders, '@AppUtilities.PREPARING_CONTAINER');
         });
 
-        signalRconn.on('@AppUtilities.LOAD_FINISHED_CONTAINER_FOR_CUSTOMER', function (pOrders, pOrderId) {
+        signalRconn.on('@AppUtilities.LOAD_READY_CONTAINER_FOR_CUSTOMER', function (pOrders, pOrderId) {
 
             if (pOrderId) {
                 let $ticket = document.getElementById(`tck${pOrderId}`);
@@ -83,7 +83,7 @@
                 $ticket.classList.add($class);
             }
 
-            MountContainer(pOrders, '@AppUtilities.FINISHED_CONTAINER');
+            MountContainer(pOrders, '@AppUtilities.READY_CONTAINER');
         });
 
         function MountContainer(pOrders, baseContainer) {

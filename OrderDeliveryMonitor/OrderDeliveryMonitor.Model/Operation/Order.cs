@@ -62,7 +62,7 @@ namespace OrderDeliveryMonitor.Model.Operation
                                     {SetTimer()}
                                 </div>
                                 <div class='command' 
-                                     style='visibility: {(Process == EOrderProcess.Finished ? "hidden" : "visible")}' 
+                                     style='visibility: {(Process == EOrderProcess.Ready ? "hidden" : "visible")}' 
                                      data-orderid='{OrderId}' 
                                      onclick='{SetCommand()}'>
                                     >
@@ -80,13 +80,13 @@ namespace OrderDeliveryMonitor.Model.Operation
             switch (Process)
             {
                 case EOrderProcess.Preparing:
-                    return "yellow";
+                    return "preparing";
 
-                case EOrderProcess.Finished:
-                    return "green";
+                case EOrderProcess.Ready:
+                    return "ready";
 
                 default:
-                    return "red";
+                    return "awaiting";
             }
         }
 
@@ -122,7 +122,7 @@ namespace OrderDeliveryMonitor.Model.Operation
                 case EOrderProcess.Preparing:
                     return "ToFinishedByClick(this)";
 
-                case EOrderProcess.Finished:
+                case EOrderProcess.Ready:
                 case EOrderProcess.None:
                 default:
                     return "";
@@ -139,7 +139,7 @@ namespace OrderDeliveryMonitor.Model.Operation
                 case EOrderProcess.Preparing:
                     return $"{((!PreparingEnd.HasValue) ? DateTime.Now.Subtract(PreparingStart.Value).Duration().ToString("mm\\mss\\s") : "")}";
 
-                case EOrderProcess.Finished:
+                case EOrderProcess.Ready:
                     return $"{(Finished.HasValue ? DateTime.Now.Subtract(Finished.Value).Duration().ToString("mm\\mss\\s") : "")}";
 
                 case EOrderProcess.None:
@@ -158,7 +158,7 @@ namespace OrderDeliveryMonitor.Model.Operation
                 case EOrderProcess.Preparing:
                     return $"{(PreparingStart.HasValue ? PreparingStart.ToString() : "")}";
 
-                case EOrderProcess.Finished:
+                case EOrderProcess.Ready:
                     return $"{(Finished.HasValue ? Finished.ToString() : "")}";
 
                 case EOrderProcess.None:
@@ -182,6 +182,6 @@ namespace OrderDeliveryMonitor.Model.Operation
         None = 0,
         Awaiting = 10,
         Preparing = 20,
-        Finished = 30
+        Ready = 30
     }
 }

@@ -66,7 +66,7 @@ namespace OrderDeliveryMonitor.Business.Implementation.Operation
         {
             pOrder = _orderRepository.Get(order => order.OrderId == pOrder.OrderId);
 
-            pOrder.Process = EOrderProcess.Finished;
+            pOrder.Process = EOrderProcess.Ready;
             pOrder.Command = pCommand;
             pOrder.PreparingEnd = DateTime.Now;
             pOrder.Finished = DateTime.Now;
