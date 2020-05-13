@@ -45,8 +45,6 @@ namespace OrderDeliveryMonitor.Model.Operation
         {
             string sLayout =
                 $@"
-                    
-
                     <div id='tck{OrderId}' class='quote-container {CommandStyle()}'>
                         <i class='pin'></i>
                         <div class='note {ProcessColor()}'>
@@ -56,9 +54,19 @@ namespace OrderDeliveryMonitor.Model.Operation
                                 </span>
                             </div>
                             <div class='note-footer'>
-                                <div class='details'>V</div>
-                                <div class='timer' data-startdate='{SetStartTime()}'>{SetTimer()}</div>
-                                <div class='command' style='visibility: {(Process == EOrderProcess.Finished ? "hidden" : "visible")}' data-orderid='{OrderId}' onclick='{SetCommand()}'>></div>
+                                <div class='details'>
+                                    >
+                                </div>
+                                <div class='timer' 
+                                     data-startdate='{SetStartTime()}'>
+                                    {SetTimer()}
+                                </div>
+                                <div class='command' 
+                                     style='visibility: {(Process == EOrderProcess.Finished ? "hidden" : "visible")}' 
+                                     data-orderid='{OrderId}' 
+                                     onclick='{SetCommand()}'>
+                                    >
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -6,13 +6,13 @@
 
 @section indexBody {
 
-<div id="DashboardContainer" class="painel-main">
-    <div class="painel-header">
+<div id="DashboardContainer" class="panel-main">
+    <div class="panel-header">
         <span>
             LOGO CINEMARK
         </span>
     </div>
-    <div class="painel-body">
+    <div class="panel-body">
         <div class="container">
             <div class="container-header">
                 <span>
@@ -50,14 +50,14 @@
         //Campinho da publicação WebAPI contendo o HUB.
         const signalRconn = SigalRConnection('@AppUtilities.HUBSERVERPATH');
 
-        setInterval(() => {
-            let $timers = document.querySelectorAll('.timer');
+        //setInterval(() => {
+        //    let $timers = document.querySelectorAll('.timer');
 
-            $timers.forEach(timer => {
-                TimerCalc(timer);
-            });
+        //    $timers.forEach(timer => {
+        //        TimerCalc(timer);
+        //    });
 
-        }, 1000);
+        //}, 1000);
 
         function TimerCalc(timer) {
             console.info(timer.dataset.startdate);
@@ -85,24 +85,25 @@
             return $orders || null;
         }
 
-        function ToPreparingByClick(e) {            
+        function ToPreparingByClick(e) {
+            ApplyStyle(e, '@EOrderCommand.Sent');
             ToPreparing(e, '@EOrderCommand.Sent');
         }
 
         function ToFinishedByClick(e) {
+            ApplyStyle(e, '@EOrderCommand.Sent');
             ToFinished(e, '@EOrderCommand.Sent');
         }
 
-        function ApplyStyle(e) {
+        function ApplyStyle(e, pCommand) {
             let $this = e;
             let $quote = document.getElementById(`tck${$this.dataset.orderid}`);
-            $quote.classList.add('sent');
+            $quote.classList.add(`${(pCommand === '@EOrderCommand.Sent' ? 'sent' : 'dragged')}`);
         }
 
         function ToPreparing(e, pCommand) {
             let $this = e;
             let $orderId = $this.dataset.orderid;
-            ApplyStyle(e);
 
             signalRconn.invoke('@AppUtilities.FROMAWAITINGTOPREPARING_METHOD', GetOrders(), $orderId, pCommand);
 
