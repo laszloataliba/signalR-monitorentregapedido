@@ -1,53 +1,137 @@
-﻿
+﻿@model IEnumerable<Order>
+
 @{
     Layout = "~/Views/Shared/_CrudIndex.cshtml";
 }
 
 @section indexBody {
 
-    <h1>DASHBOARD</h1>
-
-    <div id="dvAjaxHead">
-        @await Html.PartialAsync("AwaitingContainer")
+<div id="DashboardContainer" class="panel-main">
+    <div class="panel-header">
+        <span>
+            :: LOGO CINEMARK
+        </span>
     </div>
+    <div class="panel-body">
+        <div class="container">
+            <div class="container-header">
+                <span>
+                    @Resource.LBL_AWAITING
+                </span>
+            </div>
+            <div id="@AppUtilities.AWAITING_CONTAINER" class="container-body">
+                @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Awaiting).OrderBy(o => o.AwaitingStart.Value).ToList())
+            </div>
+        </div>
+        <div class="container">
+            <div class="container-header">
+                <span>
+                    @Resource.LBL_PREPARING
+                </span>
+            </div>
+            <div id="@AppUtilities.PREPARING_CONTAINER" class="container-body">
+                @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Preparing).OrderBy(o => o.PreparingStart.Value).ToList())
+            </div>
+        </div>
+        <div class="container">
+            <div class="container-header">
+                <span>
+                    @Resource.LBL_READY
+                </span>
+            </div>
+            <div id="@AppUtilities.READY_CONTAINER" class="container-body">
+                @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Ready).OrderBy(o => o.Ready).ToList())
+            </div>
+        </div>
+    </div>
+</div>
 
     <script type="text/javascript">
         //Campinho da publicação WebAPI contendo o HUB.
-        const signalRconn = SigalRConnection('http://localhost:55317/OrderDeliveryMonitorHub');
-        
-        signalRconn.on('TesteViaWebAPI', function (parametro) {
-            MontaPainel(parametro);
+        const signalRconn = SigalRConnection('@AppUtilities.HUB_SERVER_PATH');
+
+        setInterval(() => {
+            let $timers = document.querySelectorAll('.timer');
+
+            $timers.forEach(timer => {
+                TimerCalc(timer);
+            });
+
+        }, 1000);
+
+        function TimerCalc(timer) {
+            console.info(timer.dataset.startdate);
+        }
+
+        signalRconn.on('@AppUtilities.RELOAD_AWAITING_CONTAINER', function () {
+            signalRconn.invoke('@AppUtilities.RELOAD_AWAITING_CONTAINER_METHOD', GetOrders());
         });
 
-        function CallSignalR(e) {
-            console.log(e);
+        signalRconn.on('@AppUtilities.LOAD_AWAITING_CONTAINER', function (pOrders) {
+            MountContainer(pOrders, '@AppUtilities.AWAITING_CONTAINER');
+        });
 
-            signalRconn.invoke('TesteViaScript');
+        function GetOrders() {
+            let $commands = document.querySelectorAll('.command');
+            let $orders = [];
 
-            signalRconn.on('TesteViaJavaScript', function (parametro) {
-                MontaPainel(parametro);
+            if ($commands) {
+                $commands.forEach(cmd => {
+                    let $orderid = cmd.dataset.orderid;
+                    $orders.push($orderid);
+                });
+            }
+
+            return $orders || null;
+        }
+
+        function ToPreparingByClick(e) {
+            ApplyStyle(e, '@EOrderCommand.Sent');
+            ToPreparing(e, '@EOrderCommand.Sent');
+        }
+
+        function ToFinishedByClick(e) {
+            ApplyStyle(e, '@EOrderCommand.Sent');
+            ToFinished(e, '@EOrderCommand.Sent');
+        }
+
+        function ApplyStyle(e, pCommand) {
+            let $this = e;
+            let $quote = document.getElementById(`tck${$this.dataset.orderid}`);
+            $quote.classList.add(`${(pCommand === '@EOrderCommand.Sent' ? 'sent' : 'dragged')}`);
+        }
+
+        function ToPreparing(e, pCommand) {
+            let $this = e;
+            let $orderId = $this.dataset.orderid;
+
+            signalRconn.invoke('@AppUtilities.FROM_AWAITING_TO_PREPARING_METHOD', GetOrders(), $orderId, pCommand);
+
+            signalRconn.on('@AppUtilities.LOAD_PREPARING_CONTAINER', function (pOrders) {
+                MountContainer(pOrders, '@AppUtilities.PREPARING_CONTAINER');
             });
         }
 
-        function MontaPainel(parametro, chave) {
-            let container = document.getElementById('dvAjaxHead');
-            let textHtml = '';
-            let contador = 0;
-            
-            Array.from(parametro).forEach(postit => {
-                textHtml +=
-                    `
-                    <div class="quote-container ${((++contador) % 2 === 0 ? 'nova-promo' : 'promo-remove')}">
-                        <i class="pin"></i>
-                        <blockquote class="note yellow">
-                            We can't solve problems by using the same kind of thinking we used when we created them.
-                        <cite class="author">Albert Einstein</cite>
-                        </blockquote>
-                    </div>
-                `;
+        function ToFinished(e, pCommand) {
+            let $this = e;
+            let $orderId = $this.dataset.orderid;
+
+            signalRconn.invoke('@AppUtilities.FROM_PREPARING_TO_READY_METHOD', GetOrders(), $orderId, pCommand);
+
+            signalRconn.on('@AppUtilities.LOAD_READY_CONTAINER', function (pOrders) {
+                MountContainer(pOrders, '@AppUtilities.READY_CONTAINER');
+            });
+        }
+
+        function MountContainer(pOrders, baseContainer) {
+            let $container = document.getElementById(baseContainer);
+            let $textHtml = '';
+
+            Array.from(pOrders).forEach(order => {
+                $textHtml += order.ticketLayout;
             });
 
-            container.innerHTML = textHtml;
+            $container.innerHTML = $textHtml;
         }
 
     </script>

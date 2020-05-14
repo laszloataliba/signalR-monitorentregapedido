@@ -1,7 +1,104 @@
-﻿
+﻿@model IEnumerable<Order>
+
 @{
-    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_CrudIndex.cshtml";
 }
 
-<h1>CUSTOMER DASHBOARD</h1>
+@section indexBody {
+
+<div id="CustomerDashboardContainer" class="panel-main">
+    <div class="panel-header">
+        <span>
+            :: LOGO CINEMARK
+        </span>
+    </div>
+    <div class="panel-body">
+        <div class="container">
+            <div class="container-header">
+                <span>
+                    @Resource.LBL_AWAITING
+                </span>
+            </div>
+            <div id="@AppUtilities.AWAITING_CONTAINER" class="container-body">
+                @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Awaiting).OrderBy(o => o.AwaitingStart.Value).ToList())
+            </div>
+        </div>
+        <div class="container">
+            <div class="container-header">
+                <span>
+                    @Resource.LBL_PREPARING
+                </span>
+            </div>
+            <div id="@AppUtilities.PREPARING_CONTAINER" class="container-body">
+                @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Preparing).OrderBy(o => o.PreparingStart.Value).ToList())
+            </div>
+        </div>
+        <div class="container">
+            <div class="container-header">
+                <span>
+                    @Resource.LBL_READY
+                </span>
+            </div>
+            <div id="@AppUtilities.READY_CONTAINER" class="container-body">
+                @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Ready).OrderBy(o => o.Ready).ToList())
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script type="text/javascript">
+        //Campinho da publicação WebAPI contendo o HUB.
+        const signalRconn = SigalRConnection('@AppUtilities.HUB_SERVER_PATH');
+
+        signalRconn.on('@AppUtilities.LOAD_AWAITING_CONTAINER_FOR_CUSTOMERS', function (pOrders, pOrderId, pCommand) {
+
+            if (pOrderId) {
+                let $ticket = document.getElementById(`tck${pOrderId}`);
+                let $class = pCommand === '@EOrderCommand.Sent' ? 'sent' : 'dragged';
+
+                $ticket.classList.add($class);
+            }
+
+            MountContainer(pOrders, '@AppUtilities.AWAITING_CONTAINER');
+        });
+
+        signalRconn.on('@AppUtilities.LOAD_PREPARING_CONTAINER_FOR_CUSTOMERS', function (pOrders, pOrderId, pCommand) {
+
+            if (pOrderId) {
+                let $ticket = document.getElementById(`tck${pOrderId}`);
+                let $class = pCommand === '@EOrderCommand.Sent' ? 'sent' : 'dragged';
+
+                $ticket.classList.add($class);
+            }
+
+            MountContainer(pOrders, '@AppUtilities.PREPARING_CONTAINER');
+        });
+
+        signalRconn.on('@AppUtilities.LOAD_READY_CONTAINER_FOR_CUSTOMER', function (pOrders, pOrderId) {
+
+            if (pOrderId) {
+                let $ticket = document.getElementById(`tck${pOrderId}`);
+                let $class = 'dragged';
+
+                $ticket.classList.add($class);
+            }
+
+            MountContainer(pOrders, '@AppUtilities.READY_CONTAINER');
+        });
+
+        function MountContainer(pOrders, baseContainer) {
+            let container = document.getElementById(baseContainer);
+            let textHtml = '';
+
+            Array.from(pOrders).forEach(order => {
+                textHtml += order.customerTicketLayout;
+            });
+
+            container.innerHTML = textHtml;
+        }
+
+    </script>
+}
+
+
 

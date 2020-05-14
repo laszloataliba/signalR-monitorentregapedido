@@ -1,0 +1,8 @@
+﻿@model IEnumerable<Order>
+
+@{ 
+    foreach (var order in Model)
+    {
+        @Html.Raw(order.CustomerTicketLayout);
+    }
+}

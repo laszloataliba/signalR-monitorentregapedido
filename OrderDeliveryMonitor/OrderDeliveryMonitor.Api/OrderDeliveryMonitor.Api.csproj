@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DataBase\**" />
+    <Content Remove="DataBase\**" />
+    <EmbeddedResource Remove="DataBase\**" />
+    <None Remove="DataBase\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
@@ -13,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OrderDeliveryMonitor.ApplicationConfig\OrderDeliveryMonitor.ApplicationConfig.csproj" />
+    <ProjectReference Include="..\OrderDeliveryMonitor.Model\OrderDeliveryMonitor.Model.csproj" />
   </ItemGroup>
 
 </Project>

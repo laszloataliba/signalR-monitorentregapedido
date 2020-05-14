@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using OrderDeliveryMonitor.Facade.Implementation.Operation;
+using OrderDeliveryMonitor.Facade.Interface.Operation;
 
 namespace OrderDeliveryMonitor.ApplicationConfig
 {
@@ -16,7 +18,7 @@ namespace OrderDeliveryMonitor.ApplicationConfig
 
         private static void Configure(IServiceCollection pServices)
         {
-
+            pServices.AddTransient(typeof(IFOrder), typeof(FOrder));
         }
     }
 }

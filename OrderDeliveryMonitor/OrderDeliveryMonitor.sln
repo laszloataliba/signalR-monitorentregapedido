@@ -7,15 +7,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderDeliveryMonitor", "Ord
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderDeliveryMonitor.Api", "OrderDeliveryMonitor.Api\OrderDeliveryMonitor.Api.csproj", "{0CD6B83C-6749-412F-9B61-F5D8BF7781A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderDeliveryMonitor.Model", "OrderDeliveryMonitor.Model\OrderDeliveryMonitor.Model.csproj", "{B58EEB0B-2E80-445A-B638-031A5D66FC2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderDeliveryMonitor.Model", "OrderDeliveryMonitor.Model\OrderDeliveryMonitor.Model.csproj", "{B58EEB0B-2E80-445A-B638-031A5D66FC2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderDeliveryMonitor.Business", "OrderDeliveryMonitor.Business\OrderDeliveryMonitor.Business.csproj", "{A7840402-6CB2-49DE-A4FC-C2ED96F097FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderDeliveryMonitor.Business", "OrderDeliveryMonitor.Business\OrderDeliveryMonitor.Business.csproj", "{A7840402-6CB2-49DE-A4FC-C2ED96F097FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderDeliveryMonitor.Repository", "OrderDeliveryMonitor.Repository\OrderDeliveryMonitor.Repository.csproj", "{9375D238-9ADF-4416-B974-A29011033867}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderDeliveryMonitor.Repository", "OrderDeliveryMonitor.Repository\OrderDeliveryMonitor.Repository.csproj", "{9375D238-9ADF-4416-B974-A29011033867}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderDeliveryMonitor.DataAccessLibrary", "OrderDeliveryMonitor.DataAccessLibrary\OrderDeliveryMonitor.DataAccessLibrary.csproj", "{B7B08A7C-7E29-4A57-9B0E-AFFE6B7BCC0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderDeliveryMonitor.DataAccessLibrary", "OrderDeliveryMonitor.DataAccessLibrary\OrderDeliveryMonitor.DataAccessLibrary.csproj", "{B7B08A7C-7E29-4A57-9B0E-AFFE6B7BCC0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderDeliveryMonitor.ApplicationConfig", "OrderDeliveryMonitor.ApplicationConfig\OrderDeliveryMonitor.ApplicationConfig.csproj", "{56E9A964-2583-437A-8089-F5F9D264FFCE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderDeliveryMonitor.ApplicationConfig", "OrderDeliveryMonitor.ApplicationConfig\OrderDeliveryMonitor.ApplicationConfig.csproj", "{56E9A964-2583-437A-8089-F5F9D264FFCE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderDeliveryMonitor.Facade", "OrderDeliveryMonitor.Facade\OrderDeliveryMonitor.Facade.csproj", "{C1635029-12A0-44E3-91A3-27B17244BBA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderDeliveryMonitor.Resources", "OrderDeliveryMonitor.Resources\OrderDeliveryMonitor.Resources.csproj", "{2E4B27C2-EA95-4B52-9901-AAC664307962}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +55,14 @@ Global
 		{56E9A964-2583-437A-8089-F5F9D264FFCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56E9A964-2583-437A-8089-F5F9D264FFCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56E9A964-2583-437A-8089-F5F9D264FFCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1635029-12A0-44E3-91A3-27B17244BBA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1635029-12A0-44E3-91A3-27B17244BBA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1635029-12A0-44E3-91A3-27B17244BBA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1635029-12A0-44E3-91A3-27B17244BBA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E4B27C2-EA95-4B52-9901-AAC664307962}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E4B27C2-EA95-4B52-9901-AAC664307962}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E4B27C2-EA95-4B52-9901-AAC664307962}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E4B27C2-EA95-4B52-9901-AAC664307962}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
