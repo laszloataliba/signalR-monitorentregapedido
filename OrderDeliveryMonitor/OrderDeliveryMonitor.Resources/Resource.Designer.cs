@@ -61,6 +61,15 @@ namespace OrderDeliveryMonitor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aguardando.
+        /// </summary>
+        public static string LBL_AWAITING {
+            get {
+                return ResourceManager.GetString("LBL_AWAITING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Painel do cliente.
         /// </summary>
         public static string LBL_CUSTOMERDASHBOARD {
@@ -84,6 +93,24 @@ namespace OrderDeliveryMonitor.Resources {
         public static string LBL_LOGIN {
             get {
                 return ResourceManager.GetString("LBL_LOGIN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preparando.
+        /// </summary>
+        public static string LBL_PREPARING {
+            get {
+                return ResourceManager.GetString("LBL_PREPARING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pronto.
+        /// </summary>
+        public static string LBL_READY {
+            get {
+                return ResourceManager.GetString("LBL_READY", resourceCulture);
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OrderDeliveryMonitor.DataAccessLibrary.AppConfig;
+using OrderDeliveryMonitor.DataAccessLibrary.Configuration.Operation;
 using OrderDeliveryMonitor.Model.Operation;
 
 namespace OrderDeliveryMonitor.DataAccessLibrary.Context
@@ -18,6 +19,18 @@ namespace OrderDeliveryMonitor.DataAccessLibrary.Context
             );
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            #region :: Operation ::
+
+            modelBuilder.ApplyConfiguration(new OrderConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderItemConfiguration());
+
+            #endregion :: Operation ::
+
+            base.OnModelCreating(modelBuilder);
+        }
+
         //public OrderDeliveryMonitorDataContext(DbContextOptions<OrderDeliveryMonitorDataContext> options) : 
         //    base(options)
         //{
@@ -31,7 +44,16 @@ namespace OrderDeliveryMonitor.DataAccessLibrary.Context
         //    );
         //}
 
+        #region :: DataSet ::
+
+        #region :: Operation ::
+
         public DbSet<Order> Orders { get; set; }
+        
         public DbSet<OrderItem> OrderItems { get; set; }
+
+        #endregion :: Operation ::
+
+        #endregion :: DataSet ::
     }
 }

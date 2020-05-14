@@ -69,7 +69,7 @@ namespace OrderDeliveryMonitor.Business.Implementation.Operation
             pOrder.Process = EOrderProcess.Ready;
             pOrder.Command = pCommand;
             pOrder.PreparingEnd = DateTime.Now;
-            pOrder.Finished = DateTime.Now;
+            pOrder.Ready = DateTime.Now;
 
             _orderRepository.ToFinished(pOrder);
         }

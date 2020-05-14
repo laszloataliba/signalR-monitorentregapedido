@@ -9,14 +9,14 @@
 <div id="DashboardContainer" class="panel-main">
     <div class="panel-header">
         <span>
-            LOGO CINEMARK
+            :: LOGO CINEMARK
         </span>
     </div>
     <div class="panel-body">
         <div class="container">
             <div class="container-header">
                 <span>
-                    Aguardando...
+                    @Resource.LBL_AWAITING
                 </span>
             </div>
             <div id="@AppUtilities.AWAITING_CONTAINER" class="container-body">
@@ -26,7 +26,7 @@
         <div class="container">
             <div class="container-header">
                 <span>
-                    Preparando...
+                    @Resource.LBL_PREPARING
                 </span>
             </div>
             <div id="@AppUtilities.PREPARING_CONTAINER" class="container-body">
@@ -36,11 +36,11 @@
         <div class="container">
             <div class="container-header">
                 <span>
-                    PRONTO!
+                    @Resource.LBL_READY
                 </span>
             </div>
             <div id="@AppUtilities.READY_CONTAINER" class="container-body">
-                @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Ready).OrderBy(o => o.Finished).ToList())
+                @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Ready).OrderBy(o => o.Ready).ToList())
             </div>
         </div>
     </div>

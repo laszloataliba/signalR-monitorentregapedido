@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="LBL_AWAITING" xml:space="preserve">
+    <value>Aguardando</value>
+  </data>
   <data name="LBL_CUSTOMERDASHBOARD" xml:space="preserve">
     <value>Customer dashboard</value>
   </data>
@@ -125,5 +128,11 @@
   </data>
   <data name="LBL_LOGIN" xml:space="preserve">
     <value>Login</value>
+  </data>
+  <data name="LBL_PREPARING" xml:space="preserve">
+    <value>Preparando</value>
+  </data>
+  <data name="LBL_READY" xml:space="preserve">
+    <value>Pronto</value>
   </data>
 </root>

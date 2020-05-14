@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OrderDeliveryMonitor.Api.Hubs
 {
-    public class OrderDeliveryMonitorHub: Hub
+    public class OrderDeliveryMonitorHub : Hub
     {
         private readonly IFOrder fOrder;
 
@@ -49,7 +49,8 @@ namespace OrderDeliveryMonitor.Api.Hubs
             var vOrders = fOrder.GetList(order => order.Process > EOrderProcess.None, item => item.Items);
 
             vOrders.ToList()
-                .ForEach(order => {
+                .ForEach(order =>
+                {
                     if
                     (
                         (pOrders != null)
@@ -79,7 +80,8 @@ namespace OrderDeliveryMonitor.Api.Hubs
             var vOrders = fOrder.GetList(order => order.Process > EOrderProcess.Awaiting, item => item.Items);
 
             vOrders.ToList()
-                .ForEach(order => {
+                .ForEach(order =>
+                {
                     if
                     (
                         (pOrders != null)
@@ -97,19 +99,19 @@ namespace OrderDeliveryMonitor.Api.Hubs
                 });
 
             await Clients.All.SendAsync($"{AppUtilities.LOAD_PREPARING_CONTAINER}", vOrders.Where(o => o.Process == EOrderProcess.Preparing).OrderBy(o => o.PreparingStart.Value).ToList());
-            await Clients.All.SendAsync($"{AppUtilities.LOAD_READY_CONTAINER}", vOrders.Where(o => o.Process == EOrderProcess.Ready).OrderBy(o => o.Finished).ToList());
+            await Clients.All.SendAsync($"{AppUtilities.LOAD_READY_CONTAINER}", vOrders.Where(o => o.Process == EOrderProcess.Ready).OrderBy(o => o.Ready).ToList());
             await Clients.Others.SendAsync($"{AppUtilities.LOAD_PREPARING_CONTAINER_FOR_CUSTOMERS}", vOrders.Where(o => o.Process == EOrderProcess.Preparing).OrderBy(o => o.PreparingStart.Value).ToList(), pOrderId, pCommand); //Antes de atualizar o container, aplicar a class css pro pOrderId.
-            await Clients.Others.SendAsync($"{AppUtilities.LOAD_READY_CONTAINER_FOR_CUSTOMER}", vOrders.Where(o => o.Process == EOrderProcess.Ready).OrderBy(o => o.Finished).ToList());
+            await Clients.Others.SendAsync($"{AppUtilities.LOAD_READY_CONTAINER_FOR_CUSTOMER}", vOrders.Where(o => o.Process == EOrderProcess.Ready).OrderBy(o => o.Ready).ToList());
         }
 
         public async Task HideReadyOrderByTimeOut(string pOrderId)
         {
             var vOrders = fOrder.GetList(order => order.Process == EOrderProcess.Ready);
 
-            vOrders = vOrders.Where(order => DateTime.Now.Subtract(order.Finished.Value).Minutes >= 1).ToList();
+            vOrders = vOrders.Where(order => DateTime.Now.Subtract(order.Ready.Value).Minutes >= 1).ToList();
 
-            await Clients.All.SendAsync($"{AppUtilities.LOAD_READY_CONTAINER}", vOrders.OrderBy(o => o.Finished).ToList());
-            await Clients.Others.SendAsync($"{AppUtilities.LOAD_READY_CONTAINER_FOR_CUSTOMER}", vOrders.OrderBy(o => o.Finished).ToList(), pOrderId); //Antes de atualizar o container, aplicar a class css pro pOrderId.
+            await Clients.All.SendAsync($"{AppUtilities.LOAD_READY_CONTAINER}", vOrders.OrderBy(o => o.Ready).ToList());
+            await Clients.Others.SendAsync($"{AppUtilities.LOAD_READY_CONTAINER_FOR_CUSTOMER}", vOrders.OrderBy(o => o.Ready).ToList(), pOrderId); //Antes de atualizar o container, aplicar a class css pro pOrderId.
         }
     }
 }

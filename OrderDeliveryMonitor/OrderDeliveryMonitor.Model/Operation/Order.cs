@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OrderDeliveryMonitor.Model.Operation
 {
-    [Table(nameof(Order))]
     public class Order
     {
         public int OrderId { get; set; }
         public string OrderNumber { get; set; }
-        public string EstacaoVendaCaixa { get; set; }
+        public string OrderCode { get; set; }
+        public string Cashier { get; set; }
         public EOrderProcess Process { get; set; } = EOrderProcess.None;
         public EOrderCommand Command { get; set; } = EOrderCommand.None;
         public DateTime? AwaitingStart { get; set; }
         public DateTime? AwaitingEnd { get; set; }
         public DateTime? PreparingStart { get; set; }
         public DateTime? PreparingEnd { get; set; }
-        public DateTime? Finished { get; set; }
+        public DateTime? Ready { get; set; }
 
         public virtual IEnumerable<OrderItem> Items { get; set; }
 
@@ -140,7 +139,7 @@ namespace OrderDeliveryMonitor.Model.Operation
                     return $"{((!PreparingEnd.HasValue) ? DateTime.Now.Subtract(PreparingStart.Value).Duration().ToString("mm\\mss\\s") : "")}";
 
                 case EOrderProcess.Ready:
-                    return $"{(Finished.HasValue ? DateTime.Now.Subtract(Finished.Value).Duration().ToString("mm\\mss\\s") : "")}";
+                    return $"{(Ready.HasValue ? DateTime.Now.Subtract(Ready.Value).Duration().ToString("mm\\mss\\s") : "")}";
 
                 case EOrderProcess.None:
                 default:
@@ -159,7 +158,7 @@ namespace OrderDeliveryMonitor.Model.Operation
                     return $"{(PreparingStart.HasValue ? PreparingStart.ToString() : "")}";
 
                 case EOrderProcess.Ready:
-                    return $"{(Finished.HasValue ? Finished.ToString() : "")}";
+                    return $"{(Ready.HasValue ? Ready.ToString() : "")}";
 
                 case EOrderProcess.None:
                 default:
