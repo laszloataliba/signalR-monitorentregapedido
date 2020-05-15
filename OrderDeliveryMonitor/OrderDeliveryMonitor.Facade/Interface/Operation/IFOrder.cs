@@ -9,6 +9,6 @@ namespace OrderDeliveryMonitor.Facade.Interface.Operation
 
         void ToPreparing(Order pOrder, EOrderCommand pCommand);
 
-        void ToFinished(Order pOrder, EOrderCommand pCommand);
+        void ToReady(Order pOrder, EOrderCommand pCommand);
     }
 }

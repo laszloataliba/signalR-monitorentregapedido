@@ -117,14 +117,62 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CLM_AWAITING_END" xml:space="preserve">
+    <value>Aguardo_Fim</value>
+  </data>
+  <data name="CLM_AWAITING_START" xml:space="preserve">
+    <value>Aguardo_Inicio</value>
+  </data>
+  <data name="CLM_CASHIER_CODE" xml:space="preserve">
+    <value>Caixa_Codigo</value>
+  </data>
+  <data name="CLM_CODE" xml:space="preserve">
+    <value>Codigo</value>
+  </data>
+  <data name="CLM_COMMAND" xml:space="preserve">
+    <value>Comando</value>
+  </data>
+  <data name="CLM_ORDER_CODE" xml:space="preserve">
+    <value>Pedido_Codigo</value>
+  </data>
+  <data name="CLM_ORDER_IDENTIFICATION" xml:space="preserve">
+    <value>Codigo_Busca</value>
+  </data>
+  <data name="CLM_ORDER_NUMBER" xml:space="preserve">
+    <value>Numero</value>
+  </data>
+  <data name="CLM_PREPARING_END" xml:space="preserve">
+    <value>Preparo_Fim</value>
+  </data>
+  <data name="CLM_PREPARING_START" xml:space="preserve">
+    <value>Preparo_Inicio</value>
+  </data>
+  <data name="CLM_PROCESS" xml:space="preserve">
+    <value>Processo</value>
+  </data>
+  <data name="CLM_PRODUCT_NAME" xml:space="preserve">
+    <value>Produto_Nome</value>
+  </data>
+  <data name="CLM_QUANTITY" xml:space="preserve">
+    <value>Quantidade</value>
+  </data>
+  <data name="CLM_READY_END" xml:space="preserve">
+    <value>Pronto_Fim</value>
+  </data>
+  <data name="CLM_READY_START" xml:space="preserve">
+    <value>Pronto_Inicio</value>
+  </data>
+  <data name="CLM_REDEEM_DATE" xml:space="preserve">
+    <value>Data_Resgate</value>
+  </data>
   <data name="LBL_AWAITING" xml:space="preserve">
     <value>Aguardando</value>
   </data>
   <data name="LBL_CUSTOMERDASHBOARD" xml:space="preserve">
-    <value>Customer dashboard</value>
+    <value>Painel do cliente</value>
   </data>
   <data name="LBL_DASHBOARD" xml:space="preserve">
-    <value>Dashboard</value>
+    <value>Painel de controle</value>
   </data>
   <data name="LBL_LOGIN" xml:space="preserve">
     <value>Login</value>
@@ -134,5 +182,11 @@
   </data>
   <data name="LBL_READY" xml:space="preserve">
     <value>Pronto</value>
+  </data>
+  <data name="TBL_ORDER" xml:space="preserve">
+    <value>Pedido</value>
+  </data>
+  <data name="TBL_ORDER_ITEM" xml:space="preserve">
+    <value>PedidoItem</value>
   </data>
 </root>

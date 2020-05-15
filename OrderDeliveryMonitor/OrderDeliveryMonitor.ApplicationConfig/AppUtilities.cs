@@ -22,6 +22,11 @@ namespace OrderDeliveryMonitor.ApplicationConfig
         public const string PREPARING_CONTAINER = "PreparingContainer";
         public const string READY_CONTAINER = "ReadyContainer";
 
+        public const string AWAITING_CLASS = "awaiting";
+        public const string PREPARING_CLASS = "preparing";
+        public const string READY_CLASS = "ready";
+        public const string REDEEMED_CLASS = "ready";
+
         public static string HUB_SERVER_PATH = HubServerPath();
         public static string WEB_API_SERVER_PATH = WebApiServerPath();
 

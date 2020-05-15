@@ -9,6 +9,6 @@ namespace OrderDeliveryMonitor.Repository.Interface.Operation
 
         void ToPreparing(Order pOrder);
 
-        void ToFinished(Order pOrder);
+        void ToReady(Order pOrder);
     }
 }

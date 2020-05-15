@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OrderDeliveryMonitor.Model.Operation;
+using OrderDeliveryMonitor.Resources;
 
 namespace OrderDeliveryMonitor.DataAccessLibrary.Configuration.Operation
 {
@@ -8,49 +9,56 @@ namespace OrderDeliveryMonitor.DataAccessLibrary.Configuration.Operation
     {
         public void Configure(EntityTypeBuilder<Order> builder)
         {
-            builder.ToTable("Pedido");
+            builder.ToTable(Resource.TBL_ORDER);
 
             builder.Property(order => order.OrderId)
-                .HasColumnName("Codigo");
+                .HasColumnName(Resource.CLM_CODE);
 
             builder.HasKey(order => order.OrderId);
 
             builder.Property(order => order.OrderNumber)
-                .IsRequired()
-                    .HasColumnName("Numero");
+                    .HasColumnName(Resource.CLM_ORDER_NUMBER);
 
             builder.Property(order => order.OrderCode)
                 .IsRequired()
-                    .HasColumnName("MovimentoOperacional_Codigo");
+                    .HasColumnName(Resource.CLM_ORDER_IDENTIFICATION);
 
             builder.Property(order => order.Cashier)
-                .HasColumnName("Caixa_Codigo");
+                .HasColumnName(Resource.CLM_CASHIER_CODE);
 
             builder.Property(order => order.Process)
-                .HasColumnName("Processo");
+                .HasColumnName(Resource.CLM_PROCESS);
 
             builder.Property(order => order.Command)
-                .HasColumnName("Comando");
+                .HasColumnName(Resource.CLM_COMMAND);
 
             builder.Property(order => order.AwaitingStart)
                 .IsRequired(false)
-                    .HasColumnName("Aguardo_Inicio");
+                    .HasColumnName(Resource.CLM_AWAITING_START);
 
             builder.Property(order => order.AwaitingEnd)
                 .IsRequired(false)
-                    .HasColumnName("Aguardo_Fim");
+                    .HasColumnName(Resource.CLM_AWAITING_END);
 
             builder.Property(order => order.PreparingStart)
                     .IsRequired(false)
-                        .HasColumnName("Preparo_Inicio");
+                        .HasColumnName(Resource.CLM_PREPARING_START);
 
             builder.Property(order => order.PreparingEnd)
                 .IsRequired(false)
-                    .HasColumnName("Preparo_Fim");
+                    .HasColumnName(Resource.CLM_PREPARING_END);
 
-            builder.Property(order => order.Ready)
+            builder.Property(order => order.ReadyStart)
                 .IsRequired(false)
-                    .HasColumnName("Pronto");
+                    .HasColumnName(Resource.CLM_READY_START);
+
+            builder.Property(order => order.ReadyEnd)
+                .IsRequired(false)
+                    .HasColumnName(Resource.CLM_READY_END);
+
+            builder.Property(order => order.RedeemDate)
+                .IsRequired(false)
+                    .HasColumnName(Resource.CLM_REDEEM_DATE);
 
             builder.HasMany(order => order.Items)
                 .WithOne(orderItem => orderItem.Order)

@@ -47,9 +47,9 @@ namespace OrderDeliveryMonitor.Facade.Implementation.Operation
             this._orderBusiness.ToAwaiting(pOrder);
         }
 
-        public void ToFinished(Order pOrder, EOrderCommand pCommand)
+        public void ToReady(Order pOrder, EOrderCommand pCommand)
         {
-            this._orderBusiness.ToFinished(pOrder, pCommand);
+            this._orderBusiness.ToReady(pOrder, pCommand);
         }
 
         public void ToPreparing(Order pOrder, EOrderCommand pCommand)

@@ -1,9 +1,10 @@
-﻿using System;
+﻿using OrderDeliveryMonitor.Model.Operation;
+using System;
 using System.Collections.Generic;
 
-namespace OrderDeliveryMonitor.Model.Operation
+namespace OrderDeliveryMonitor.Facade.Implementation.Operation.DTO
 {
-    public class Order
+    public class OrderDTO
     {
         public int OrderId { get; set; }
         public string OrderNumber { get; set; }
@@ -16,7 +17,7 @@ namespace OrderDeliveryMonitor.Model.Operation
         public DateTime? PreparingStart { get; set; }
         public DateTime? PreparingEnd { get; set; }
         public DateTime? ReadyStart { get; set; }
-        public DateTime? ReadyEnd { get; set; }
+        public DateTime? ReadEnd { get; set; }
         public DateTime? RedeemDate { get; set; }
 
         public virtual IEnumerable<OrderItem> Items { get; set; }
@@ -167,23 +168,5 @@ namespace OrderDeliveryMonitor.Model.Operation
                     return "";
             }
         }
-    }
-
-    public enum EOrderCommand
-    {
-        None = 0,
-        Sent = 10,
-        Dragged = 20,
-        Received = 30,
-        Dropped = 40
-    }
-
-    public enum EOrderProcess
-    {
-        None = 0,
-        Awaiting = 10,
-        Preparing = 20,
-        Ready = 30,
-        Redeemed = 40
     }
 }

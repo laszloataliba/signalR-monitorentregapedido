@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OrderDeliveryMonitor.Model\OrderDeliveryMonitor.Model.csproj" />
+    <ProjectReference Include="..\OrderDeliveryMonitor.Resources\OrderDeliveryMonitor.Resources.csproj" />
   </ItemGroup>
 
   <ItemGroup>

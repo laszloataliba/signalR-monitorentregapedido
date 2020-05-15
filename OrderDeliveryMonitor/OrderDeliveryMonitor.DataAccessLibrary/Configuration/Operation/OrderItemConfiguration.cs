@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OrderDeliveryMonitor.Model.Operation;
+using OrderDeliveryMonitor.Resources;
 
 namespace OrderDeliveryMonitor.DataAccessLibrary.Configuration.Operation
 {
@@ -8,22 +9,22 @@ namespace OrderDeliveryMonitor.DataAccessLibrary.Configuration.Operation
     {
         public void Configure(EntityTypeBuilder<OrderItem> builder)
         {
-            builder.ToTable("PedidoItem");
+            builder.ToTable(Resource.TBL_ORDER_ITEM);
 
             builder.Property(orderItem => orderItem.OrderItemId)
-                .HasColumnName("Codigo");
+                .HasColumnName(Resource.CLM_CODE);
 
             builder.HasKey(orderItem => orderItem.OrderItemId);
 
             builder.Property(orderItem => orderItem.OrderId)
-                .HasColumnName("Pedido_Codigo");
+                .HasColumnName(Resource.CLM_ORDER_CODE);
 
             builder.Property(orderItem => orderItem.Product)
                 .HasMaxLength(60)
-                    .HasColumnName("Produto_Nome");
+                    .HasColumnName(Resource.CLM_PRODUCT_NAME);
 
             builder.Property(orderItem => orderItem.Quantity)
-                .HasColumnName("Quantidade");
+                .HasColumnName(Resource.CLM_QUANTITY);
         }
     }
 }
