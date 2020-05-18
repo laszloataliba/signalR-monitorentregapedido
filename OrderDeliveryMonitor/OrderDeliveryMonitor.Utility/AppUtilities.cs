@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System.IO;
 
-namespace OrderDeliveryMonitor.ApplicationConfig
+namespace OrderDeliveryMonitor.Utility
 {
     public static class AppUtilities
     {

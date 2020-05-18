@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using OrderDeliveryMonitor.ApplicationConfig;
 using OrderDeliveryMonitor.Facade.Interface.Operation;
 using OrderDeliveryMonitor.Model.Operation;
+using OrderDeliveryMonitor.Utility;
 using System;
 using System.Linq;
 using System.Threading.Tasks;

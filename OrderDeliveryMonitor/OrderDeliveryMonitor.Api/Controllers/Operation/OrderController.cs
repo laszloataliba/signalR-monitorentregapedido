@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using OrderDeliveryMonitor.Api.Hubs;
-using OrderDeliveryMonitor.ApplicationConfig;
 using OrderDeliveryMonitor.Facade.Interface.Operation;
+using OrderDeliveryMonitor.Utility;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using nsOrderModel = OrderDeliveryMonitor.Model.Operation;

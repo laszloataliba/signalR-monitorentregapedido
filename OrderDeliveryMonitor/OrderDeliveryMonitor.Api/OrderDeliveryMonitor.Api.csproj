@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\OrderDeliveryMonitor.ApplicationConfig\OrderDeliveryMonitor.ApplicationConfig.csproj" />
     <ProjectReference Include="..\OrderDeliveryMonitor.Model\OrderDeliveryMonitor.Model.csproj" />
+    <ProjectReference Include="..\OrderDeliveryMonitor.Utility\OrderDeliveryMonitor.Utility.csproj" />
   </ItemGroup>
 
 </Project>

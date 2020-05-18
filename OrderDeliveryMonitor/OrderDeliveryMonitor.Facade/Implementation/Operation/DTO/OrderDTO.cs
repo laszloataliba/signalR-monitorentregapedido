@@ -1,4 +1,5 @@
 ﻿using OrderDeliveryMonitor.Model.Operation;
+using OrderDeliveryMonitor.Utility;
 using System;
 using System.Collections.Generic;
 
@@ -82,13 +83,13 @@ namespace OrderDeliveryMonitor.Facade.Implementation.Operation.DTO
             switch (Process)
             {
                 case EOrderProcess.Preparing:
-                    return "preparing";
+                    return AppUtilities.PREPARING_CLASS;
 
                 case EOrderProcess.Ready:
-                    return "ready";
+                    return AppUtilities.READY_CLASS;
 
                 default:
-                    return "awaiting";
+                    return AppUtilities.AWAITING_CLASS;
             }
         }
 
