@@ -165,6 +165,12 @@
   <data name="CLM_REDEEM_DATE" xml:space="preserve">
     <value>Redeem_Date</value>
   </data>
+  <data name="CLM_SALE_CHANNEL" xml:space="preserve">
+    <value>Sale_Channel</value>
+  </data>
+  <data name="CLM_SELLING_STATION" xml:space="preserve">
+    <value>Selling_Station</value>
+  </data>
   <data name="LBL_AWAITING" xml:space="preserve">
     <value>Awaiting</value>
   </data>

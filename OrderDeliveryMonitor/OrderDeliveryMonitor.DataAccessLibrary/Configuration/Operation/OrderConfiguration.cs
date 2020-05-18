@@ -17,20 +17,30 @@ namespace OrderDeliveryMonitor.DataAccessLibrary.Configuration.Operation
             builder.HasKey(order => order.OrderId);
 
             builder.Property(order => order.OrderNumber)
+                .HasMaxLength(7)
                     .HasColumnName(Resource.CLM_ORDER_NUMBER);
 
             builder.Property(order => order.OrderCode)
                 .IsRequired()
-                    .HasColumnName(Resource.CLM_ORDER_IDENTIFICATION);
+                    .HasMaxLength(20)
+                        .HasColumnName(Resource.CLM_ORDER_IDENTIFICATION);
+
+            builder.Property(order => order.SellingStation)
+                .IsRequired(false)
+                    .HasColumnName(Resource.CLM_SELLING_STATION);
 
             builder.Property(order => order.Cashier)
-                .HasColumnName(Resource.CLM_CASHIER_CODE);
+                .HasMaxLength(100)
+                    .HasColumnName(Resource.CLM_CASHIER_CODE);
 
             builder.Property(order => order.Process)
                 .HasColumnName(Resource.CLM_PROCESS);
 
             builder.Property(order => order.Command)
                 .HasColumnName(Resource.CLM_COMMAND);
+
+            builder.Property(order => order.SaleChannel)
+                .HasColumnName(Resource.CLM_SALE_CHANNEL);
 
             builder.Property(order => order.AwaitingStart)
                 .IsRequired(false)

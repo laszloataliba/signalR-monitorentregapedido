@@ -205,6 +205,24 @@ namespace OrderDeliveryMonitor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Canal_Venda.
+        /// </summary>
+        public static string CLM_SALE_CHANNEL {
+            get {
+                return ResourceManager.GetString("CLM_SALE_CHANNEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Estacao_Venda.
+        /// </summary>
+        public static string CLM_SELLING_STATION {
+            get {
+                return ResourceManager.GetString("CLM_SELLING_STATION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aguardando.
         /// </summary>
         public static string LBL_AWAITING {

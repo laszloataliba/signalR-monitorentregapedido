@@ -8,9 +8,11 @@ namespace OrderDeliveryMonitor.Model.Operation
         public int OrderId { get; set; }
         public string OrderNumber { get; set; }
         public string OrderCode { get; set; }
+        public int? SellingStation { get; set; }
         public string Cashier { get; set; }
         public EOrderProcess Process { get; set; } = EOrderProcess.None;
         public EOrderCommand Command { get; set; } = EOrderCommand.None;
+        public EOrderSaleChannel SaleChannel { get; set; } = EOrderSaleChannel.BoxOffice;
         public DateTime? AwaitingStart { get; set; }
         public DateTime? AwaitingEnd { get; set; }
         public DateTime? PreparingStart { get; set; }
@@ -185,5 +187,13 @@ namespace OrderDeliveryMonitor.Model.Operation
         Preparing = 20,
         Ready = 30,
         Redeemed = 40
+    }
+
+    public enum EOrderSaleChannel
+    {
+        BoxOffice = 10,
+        Hybrid = 20,
+        ATM = 30,
+        APP = 40
     }
 }

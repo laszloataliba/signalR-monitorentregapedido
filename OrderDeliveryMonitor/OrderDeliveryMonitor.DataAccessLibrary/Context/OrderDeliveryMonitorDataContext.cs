@@ -11,13 +11,18 @@ namespace OrderDeliveryMonitor.DataAccessLibrary.Context
         {
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public OrderDeliveryMonitorDataContext(DbContextOptions<OrderDeliveryMonitorDataContext> options) : 
+            base(options)
         {
-            optionsBuilder.UseSqlite(
-                AppConfiguration.ConnectionString,
-                connection => connection.CommandTimeout(AppConfiguration.ConnectionTimeOut)
-            );
         }
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlite(
+        //        AppConfiguration.ConnectionString,
+        //        connection => connection.CommandTimeout(AppConfiguration.ConnectionTimeOut)
+        //    );
+        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -31,25 +36,20 @@ namespace OrderDeliveryMonitor.DataAccessLibrary.Context
             base.OnModelCreating(modelBuilder);
         }
 
-        //public OrderDeliveryMonitorDataContext(DbContextOptions<OrderDeliveryMonitorDataContext> options) : 
-        //    base(options)
-        //{
-        //}
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer(
-        //        AppConfiguration.ConnectionString,
-        //        connection => connection.CommandTimeout(AppConfiguration.ConnectionTimeOut)
-        //    );
-        //}
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(
+                AppConfiguration.ConnectionString,
+                connection => connection.CommandTimeout(AppConfiguration.ConnectionTimeOut)
+            );
+        }
 
         #region :: DataSet ::
 
         #region :: Operation ::
 
         public DbSet<Order> Orders { get; set; }
-        
+
         public DbSet<OrderItem> OrderItems { get; set; }
 
         #endregion :: Operation ::
