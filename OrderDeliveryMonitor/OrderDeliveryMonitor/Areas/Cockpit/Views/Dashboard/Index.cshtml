@@ -72,7 +72,11 @@
             signalRConnection.invoke('@AppUtilities.RELOAD_AWAITING_CONTAINER_METHOD', GetOrders());
         });
 
-        signalRConnection.on('@AppUtilities.LOAD_AWAITING_CONTAINER', (pOrders) => {
+        @*signalRConnection.on('@AppUtilities.LOAD_AWAITING_CONTAINER', (pOrders) => {
+            MountContainer(pOrders, '@AppUtilities.AWAITING_CONTAINER');
+        });*@
+
+        signalRConnection.on('@AppUtilities.LOAD_AWAITING_CONTAINER').then((pOrders) => {
             MountContainer(pOrders, '@AppUtilities.AWAITING_CONTAINER');
         });
 
