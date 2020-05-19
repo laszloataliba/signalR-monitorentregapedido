@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Order>
+﻿@model IEnumerable<OrderDTO>
 
 @{
     Layout = "~/Views/Shared/_CrudIndex.cshtml";
@@ -48,9 +48,13 @@
 
     <script type="text/javascript">
         //Campinho da publicação WebAPI contendo o HUB.
-        const signalRconn = SigalRConnection('@AppUtilities.HUB_SERVER_PATH');
+        SigalRConnection('@AppUtilities.HUB_SERVER_PATH');
 
-        signalRconn.on('@AppUtilities.LOAD_AWAITING_CONTAINER_FOR_CUSTOMERS', function (pOrders, pOrderId, pCommand) {
+        signalRConnection.onclose(async () => {
+            await SignalRConnectionStart();
+        });
+
+        signalRConnection.on('@AppUtilities.LOAD_AWAITING_CONTAINER_FOR_CUSTOMERS', (pOrders, pOrderId, pCommand) => {
 
             if (pOrderId) {
                 let $ticket = document.getElementById(`tck${pOrderId}`);
@@ -62,7 +66,7 @@
             MountContainer(pOrders, '@AppUtilities.AWAITING_CONTAINER');
         });
 
-        signalRconn.on('@AppUtilities.LOAD_PREPARING_CONTAINER_FOR_CUSTOMERS', function (pOrders, pOrderId, pCommand) {
+        signalRConnection.on('@AppUtilities.LOAD_PREPARING_CONTAINER_FOR_CUSTOMERS', (pOrders, pOrderId, pCommand) => {
 
             if (pOrderId) {
                 let $ticket = document.getElementById(`tck${pOrderId}`);
@@ -74,7 +78,7 @@
             MountContainer(pOrders, '@AppUtilities.PREPARING_CONTAINER');
         });
 
-        signalRconn.on('@AppUtilities.LOAD_READY_CONTAINER_FOR_CUSTOMER', function (pOrders, pOrderId) {
+        signalRConnection.on('@AppUtilities.LOAD_READY_CONTAINER_FOR_CUSTOMER', (pOrders, pOrderId) => {
 
             if (pOrderId) {
                 let $ticket = document.getElementById(`tck${pOrderId}`);

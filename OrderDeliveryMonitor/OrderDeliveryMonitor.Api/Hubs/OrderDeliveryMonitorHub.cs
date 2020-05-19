@@ -19,7 +19,7 @@ namespace OrderDeliveryMonitor.Api.Hubs
 
         public async Task ReloadAwaitingContainer(int[] pOrders)
         {
-            var vOrders = fOrder.GetList(order => order.Process == EOrderProcess.Awaiting);
+            var vOrders = fOrder.GetListOrderDTO(order => order.Process == EOrderProcess.Awaiting);
 
             vOrders.ToList()
                 .ForEach(order =>
@@ -46,7 +46,7 @@ namespace OrderDeliveryMonitor.Api.Hubs
         {
             fOrder.ToPreparing(new Order { OrderId = int.Parse(pOrderId) }, pCommand);
 
-            var vOrders = fOrder.GetList(order => order.Process > EOrderProcess.None, item => item.Items);
+            var vOrders = fOrder.GetListOrderDTO(order => order.Process > EOrderProcess.None, item => item.Items);
 
             vOrders.ToList()
                 .ForEach(order =>
@@ -78,7 +78,7 @@ namespace OrderDeliveryMonitor.Api.Hubs
         {
             fOrder.ToReady(new Order { OrderId = int.Parse(pOrderId) }, pCommand);
 
-            var vOrders = fOrder.GetList(order => order.Process > EOrderProcess.Awaiting, item => item.Items);
+            var vOrders = fOrder.GetListOrderDTO(order => order.Process > EOrderProcess.Awaiting, item => item.Items);
 
             vOrders.ToList()
                 .ForEach(order =>
@@ -108,7 +108,7 @@ namespace OrderDeliveryMonitor.Api.Hubs
 
         public async Task HideReadyOrderByTimeOut(string pOrderId)
         {
-            var vOrders = fOrder.GetList(order => order.Process == EOrderProcess.Ready);
+            var vOrders = fOrder.GetListOrderDTO(order => order.Process == EOrderProcess.Ready);
 
             vOrders = vOrders.Where(order => DateTime.Now.Subtract(order.ReadyStart.Value).Minutes >= 1).ToList();
 

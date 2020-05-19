@@ -16,14 +16,6 @@ namespace OrderDeliveryMonitor.DataAccessLibrary.Context
         {
         }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlite(
-        //        AppConfiguration.ConnectionString,
-        //        connection => connection.CommandTimeout(AppConfiguration.ConnectionTimeOut)
-        //    );
-        //}
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             #region :: Operation ::
@@ -38,10 +30,11 @@ namespace OrderDeliveryMonitor.DataAccessLibrary.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(
-                AppConfiguration.ConnectionString,
-                connection => connection.CommandTimeout(AppConfiguration.ConnectionTimeOut)
-            );
+            optionsBuilder
+                .UseSqlServer(
+                    AppConfiguration.ConnectionString,
+                    connection => connection.CommandTimeout(AppConfiguration.ConnectionTimeOut)
+                );
         }
 
         #region :: DataSet ::

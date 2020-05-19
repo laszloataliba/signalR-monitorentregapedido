@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using OrderDeliveryMonitor.Api.Hubs;
 using OrderDeliveryMonitor.ApplicationConfig;
 
@@ -37,14 +31,19 @@ namespace OrderDeliveryMonitor.Api
                             .AllowCredentials()
                         );
             });
-            
-            services.AddSignalR(cfg => {
-                cfg.EnableDetailedErrors = true;
-            });
+
+            services.AddSignalR(cfg =>
+                cfg.EnableDetailedErrors = true
+            ).AddJsonProtocol(options => 
+                options.PayloadSerializerSettings.Converters.Add(new StringEnumConverter(true))
+            );
 
             AppConfig.ConfigureWebApi(services);
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc()
+                .AddJsonOptions(options => 
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                ).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
