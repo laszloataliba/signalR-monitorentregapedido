@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Order>
+﻿@model IEnumerable<OrderDTO>
 
 @{
     Layout = "~/Views/Shared/_CrudIndex.cshtml";
@@ -6,49 +6,54 @@
 
 @section indexBody {
 
-<div id="DashboardContainer" class="panel-main">
-    <div class="panel-header">
-        <span>
-            :: LOGO CINEMARK
-        </span>
+    <div id="DashboardContainer" class="panel-main">
+        <div class="panel-header">
+            <span>
+                :: LOGO CINEMARK
+            </span>
+        </div>
+        <div class="panel-body">
+            <div class="container">
+                <div class="container-header">
+                    <span>
+                        @Resource.LBL_AWAITING
+                    </span>
+                </div>
+                <div id="@AppUtilities.AWAITING_CONTAINER" class="container-body">
+                    @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Awaiting).OrderBy(o => o.AwaitingStart.Value).ToList())
+                </div>
+            </div>
+            <div class="container">
+                <div class="container-header">
+                    <span>
+                        @Resource.LBL_PREPARING
+                    </span>
+                </div>
+                <div id="@AppUtilities.PREPARING_CONTAINER" class="container-body">
+                    @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Preparing).OrderBy(o => o.PreparingStart.Value).ToList())
+                </div>
+            </div>
+            <div class="container">
+                <div class="container-header">
+                    <span>
+                        @Resource.LBL_READY
+                    </span>
+                </div>
+                <div id="@AppUtilities.READY_CONTAINER" class="container-body">
+                    @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Ready).OrderBy(o => o.ReadyStart.Value).ToList())
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="panel-body">
-        <div class="container">
-            <div class="container-header">
-                <span>
-                    @Resource.LBL_AWAITING
-                </span>
-            </div>
-            <div id="@AppUtilities.AWAITING_CONTAINER" class="container-body">
-                @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Awaiting).OrderBy(o => o.AwaitingStart.Value).ToList())
-            </div>
-        </div>
-        <div class="container">
-            <div class="container-header">
-                <span>
-                    @Resource.LBL_PREPARING
-                </span>
-            </div>
-            <div id="@AppUtilities.PREPARING_CONTAINER" class="container-body">
-                @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Preparing).OrderBy(o => o.PreparingStart.Value).ToList())
-            </div>
-        </div>
-        <div class="container">
-            <div class="container-header">
-                <span>
-                    @Resource.LBL_READY
-                </span>
-            </div>
-            <div id="@AppUtilities.READY_CONTAINER" class="container-body">
-                @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Ready).OrderBy(o => o.Ready).ToList())
-            </div>
-        </div>
-    </div>
-</div>
 
     <script type="text/javascript">
         //Campinho da publicação WebAPI contendo o HUB.
-        const signalRconn = SigalRConnection('@AppUtilities.HUB_SERVER_PATH');
+        SigalRConnection('@AppUtilities.HUB_SERVER_PATH');
+        console.log(signalRConnection);
+
+        signalRConnection.onclose(async () => {
+            await SignalRConnectionStart();
+        });
 
         setInterval(() => {
             let $timers = document.querySelectorAll('.timer');
@@ -63,11 +68,15 @@
             console.info(timer.dataset.startdate);
         }
 
-        signalRconn.on('@AppUtilities.RELOAD_AWAITING_CONTAINER', function () {
-            signalRconn.invoke('@AppUtilities.RELOAD_AWAITING_CONTAINER_METHOD', GetOrders());
+        signalRConnection.on('@AppUtilities.RELOAD_AWAITING_CONTAINER', () => {
+            signalRConnection.invoke('@AppUtilities.RELOAD_AWAITING_CONTAINER_METHOD', GetOrders());
         });
 
-        signalRconn.on('@AppUtilities.LOAD_AWAITING_CONTAINER', function (pOrders) {
+        @*signalRConnection.on('@AppUtilities.LOAD_AWAITING_CONTAINER', (pOrders) => {
+            MountContainer(pOrders, '@AppUtilities.AWAITING_CONTAINER');
+        });*@
+
+        signalRConnection.on('@AppUtilities.LOAD_AWAITING_CONTAINER').then((pOrders) => {
             MountContainer(pOrders, '@AppUtilities.AWAITING_CONTAINER');
         });
 
@@ -105,9 +114,9 @@
             let $this = e;
             let $orderId = $this.dataset.orderid;
 
-            signalRconn.invoke('@AppUtilities.FROM_AWAITING_TO_PREPARING_METHOD', GetOrders(), $orderId, pCommand);
+            signalRConnection.invoke('@AppUtilities.FROM_AWAITING_TO_PREPARING_METHOD', GetOrders(), $orderId, pCommand);
 
-            signalRconn.on('@AppUtilities.LOAD_PREPARING_CONTAINER', function (pOrders) {
+            signalRConnection.on('@AppUtilities.LOAD_PREPARING_CONTAINER', (pOrders) => {
                 MountContainer(pOrders, '@AppUtilities.PREPARING_CONTAINER');
             });
         }
@@ -116,9 +125,9 @@
             let $this = e;
             let $orderId = $this.dataset.orderid;
 
-            signalRconn.invoke('@AppUtilities.FROM_PREPARING_TO_READY_METHOD', GetOrders(), $orderId, pCommand);
+            signalRConnection.invoke('@AppUtilities.FROM_PREPARING_TO_READY_METHOD', GetOrders(), $orderId, pCommand);
 
-            signalRconn.on('@AppUtilities.LOAD_READY_CONTAINER', function (pOrders) {
+            signalRConnection.on('@AppUtilities.LOAD_READY_CONTAINER', (pOrders) => {
                 MountContainer(pOrders, '@AppUtilities.READY_CONTAINER');
             });
         }

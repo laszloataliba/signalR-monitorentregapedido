@@ -32,6 +32,7 @@
     <ProjectReference Include="..\OrderDeliveryMonitor.ApplicationConfig\OrderDeliveryMonitor.ApplicationConfig.csproj" />
     <ProjectReference Include="..\OrderDeliveryMonitor.Facade\OrderDeliveryMonitor.Facade.csproj" />
     <ProjectReference Include="..\OrderDeliveryMonitor.Resources\OrderDeliveryMonitor.Resources.csproj" />
+    <ProjectReference Include="..\OrderDeliveryMonitor.Utility\OrderDeliveryMonitor.Utility.csproj" />
   </ItemGroup>
 
 

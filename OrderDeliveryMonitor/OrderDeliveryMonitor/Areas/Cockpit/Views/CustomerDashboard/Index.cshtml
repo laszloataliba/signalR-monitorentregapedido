@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Order>
+﻿@model IEnumerable<OrderDTO>
 
 @{
     Layout = "~/Views/Shared/_CrudIndex.cshtml";
@@ -6,51 +6,55 @@
 
 @section indexBody {
 
-<div id="CustomerDashboardContainer" class="panel-main">
-    <div class="panel-header">
-        <span>
-            :: LOGO CINEMARK
-        </span>
+    <div id="CustomerDashboardContainer" class="panel-main">
+        <div class="panel-header">
+            <span>
+                :: LOGO CINEMARK
+            </span>
+        </div>
+        <div class="panel-body">
+            <div class="container">
+                <div class="container-header">
+                    <span>
+                        @Resource.LBL_AWAITING
+                    </span>
+                </div>
+                <div id="@AppUtilities.AWAITING_CONTAINER" class="container-body">
+                    @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Awaiting).OrderBy(o => o.AwaitingStart.Value).ToList())
+                </div>
+            </div>
+            <div class="container">
+                <div class="container-header">
+                    <span>
+                        @Resource.LBL_PREPARING
+                    </span>
+                </div>
+                <div id="@AppUtilities.PREPARING_CONTAINER" class="container-body">
+                    @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Preparing).OrderBy(o => o.PreparingStart.Value).ToList())
+                </div>
+            </div>
+            <div class="container">
+                <div class="container-header">
+                    <span>
+                        @Resource.LBL_READY
+                    </span>
+                </div>
+                <div id="@AppUtilities.READY_CONTAINER" class="container-body">
+                    @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Ready).OrderBy(o => o.ReadyStart.Value).ToList())
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="panel-body">
-        <div class="container">
-            <div class="container-header">
-                <span>
-                    @Resource.LBL_AWAITING
-                </span>
-            </div>
-            <div id="@AppUtilities.AWAITING_CONTAINER" class="container-body">
-                @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Awaiting).OrderBy(o => o.AwaitingStart.Value).ToList())
-            </div>
-        </div>
-        <div class="container">
-            <div class="container-header">
-                <span>
-                    @Resource.LBL_PREPARING
-                </span>
-            </div>
-            <div id="@AppUtilities.PREPARING_CONTAINER" class="container-body">
-                @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Preparing).OrderBy(o => o.PreparingStart.Value).ToList())
-            </div>
-        </div>
-        <div class="container">
-            <div class="container-header">
-                <span>
-                    @Resource.LBL_READY
-                </span>
-            </div>
-            <div id="@AppUtilities.READY_CONTAINER" class="container-body">
-                @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Ready).OrderBy(o => o.Ready).ToList())
-            </div>
-        </div>
-    </div>
-</div>
 
     <script type="text/javascript">
         //Campinho da publicação WebAPI contendo o HUB.
-        const signalRconn = SigalRConnection('@AppUtilities.HUB_SERVER_PATH');
+        SigalRConnection('@AppUtilities.HUB_SERVER_PATH');
 
-        signalRconn.on('@AppUtilities.LOAD_AWAITING_CONTAINER_FOR_CUSTOMERS', function (pOrders, pOrderId, pCommand) {
+        signalRConnection.onclose(async () => {
+            await SignalRConnectionStart();
+        });
+
+        signalRConnection.on('@AppUtilities.LOAD_AWAITING_CONTAINER_FOR_CUSTOMERS', (pOrders, pOrderId, pCommand) => {
 
             if (pOrderId) {
                 let $ticket = document.getElementById(`tck${pOrderId}`);
@@ -62,7 +66,7 @@
             MountContainer(pOrders, '@AppUtilities.AWAITING_CONTAINER');
         });
 
-        signalRconn.on('@AppUtilities.LOAD_PREPARING_CONTAINER_FOR_CUSTOMERS', function (pOrders, pOrderId, pCommand) {
+        signalRConnection.on('@AppUtilities.LOAD_PREPARING_CONTAINER_FOR_CUSTOMERS', (pOrders, pOrderId, pCommand) => {
 
             if (pOrderId) {
                 let $ticket = document.getElementById(`tck${pOrderId}`);
@@ -74,7 +78,7 @@
             MountContainer(pOrders, '@AppUtilities.PREPARING_CONTAINER');
         });
 
-        signalRconn.on('@AppUtilities.LOAD_READY_CONTAINER_FOR_CUSTOMER', function (pOrders, pOrderId) {
+        signalRConnection.on('@AppUtilities.LOAD_READY_CONTAINER_FOR_CUSTOMER', (pOrders, pOrderId) => {
 
             if (pOrderId) {
                 let $ticket = document.getElementById(`tck${pOrderId}`);

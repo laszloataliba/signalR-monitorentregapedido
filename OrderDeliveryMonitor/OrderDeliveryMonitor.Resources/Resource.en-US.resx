@@ -117,22 +117,82 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CLM_AWAITING_END" xml:space="preserve">
+    <value>Awaiting_End</value>
+  </data>
+  <data name="CLM_AWAITING_START" xml:space="preserve">
+    <value>Awaiting_Start</value>
+  </data>
+  <data name="CLM_CASHIER_CODE" xml:space="preserve">
+    <value>Cashier_Code</value>
+  </data>
+  <data name="CLM_CODE" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="CLM_COMMAND" xml:space="preserve">
+    <value>Command</value>
+  </data>
+  <data name="CLM_ORDER_CODE" xml:space="preserve">
+    <value>Order_Code</value>
+  </data>
+  <data name="CLM_ORDER_IDENTIFICATION" xml:space="preserve">
+    <value>OrderIdentification_Code</value>
+  </data>
+  <data name="CLM_ORDER_NUMBER" xml:space="preserve">
+    <value>Number</value>
+  </data>
+  <data name="CLM_PREPARING_END" xml:space="preserve">
+    <value>Preparing_End</value>
+  </data>
+  <data name="CLM_PREPARING_START" xml:space="preserve">
+    <value>Preparing_Start</value>
+  </data>
+  <data name="CLM_PROCESS" xml:space="preserve">
+    <value>Process</value>
+  </data>
+  <data name="CLM_PRODUCT_NAME" xml:space="preserve">
+    <value>Product_Name</value>
+  </data>
+  <data name="CLM_QUANTITY" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="CLM_READY_END" xml:space="preserve">
+    <value>Ready_End</value>
+  </data>
+  <data name="CLM_READY_START" xml:space="preserve">
+    <value>Ready_Start</value>
+  </data>
+  <data name="CLM_REDEEM_DATE" xml:space="preserve">
+    <value>Redeem_Date</value>
+  </data>
+  <data name="CLM_SALE_CHANNEL" xml:space="preserve">
+    <value>Sale_Channel</value>
+  </data>
+  <data name="CLM_SELLING_STATION" xml:space="preserve">
+    <value>Selling_Station</value>
+  </data>
   <data name="LBL_AWAITING" xml:space="preserve">
-    <value>Aguardando</value>
+    <value>Awaiting</value>
   </data>
   <data name="LBL_CUSTOMERDASHBOARD" xml:space="preserve">
-    <value>Painel do cliente</value>
+    <value>Customer Dashboard</value>
   </data>
   <data name="LBL_DASHBOARD" xml:space="preserve">
-    <value>Painel de controle</value>
+    <value>Dashboard</value>
   </data>
   <data name="LBL_LOGIN" xml:space="preserve">
     <value>Login</value>
   </data>
   <data name="LBL_PREPARING" xml:space="preserve">
-    <value>Preparando</value>
+    <value>Preparing</value>
   </data>
   <data name="LBL_READY" xml:space="preserve">
-    <value>Pronto</value>
+    <value>Ready</value>
+  </data>
+  <data name="TBL_ORDER" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="TBL_ORDER_ITEM" xml:space="preserve">
+    <value>OrderItem</value>
   </data>
 </root>

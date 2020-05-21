@@ -61,6 +61,168 @@ namespace OrderDeliveryMonitor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aguardo_Fim.
+        /// </summary>
+        public static string CLM_AWAITING_END {
+            get {
+                return ResourceManager.GetString("CLM_AWAITING_END", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aguardo_Inicio.
+        /// </summary>
+        public static string CLM_AWAITING_START {
+            get {
+                return ResourceManager.GetString("CLM_AWAITING_START", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Caixa_Codigo.
+        /// </summary>
+        public static string CLM_CASHIER_CODE {
+            get {
+                return ResourceManager.GetString("CLM_CASHIER_CODE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Codigo.
+        /// </summary>
+        public static string CLM_CODE {
+            get {
+                return ResourceManager.GetString("CLM_CODE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comando.
+        /// </summary>
+        public static string CLM_COMMAND {
+            get {
+                return ResourceManager.GetString("CLM_COMMAND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pedido_Codigo.
+        /// </summary>
+        public static string CLM_ORDER_CODE {
+            get {
+                return ResourceManager.GetString("CLM_ORDER_CODE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Codigo_Busca.
+        /// </summary>
+        public static string CLM_ORDER_IDENTIFICATION {
+            get {
+                return ResourceManager.GetString("CLM_ORDER_IDENTIFICATION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Numero.
+        /// </summary>
+        public static string CLM_ORDER_NUMBER {
+            get {
+                return ResourceManager.GetString("CLM_ORDER_NUMBER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preparo_Fim.
+        /// </summary>
+        public static string CLM_PREPARING_END {
+            get {
+                return ResourceManager.GetString("CLM_PREPARING_END", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preparo_Inicio.
+        /// </summary>
+        public static string CLM_PREPARING_START {
+            get {
+                return ResourceManager.GetString("CLM_PREPARING_START", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Processo.
+        /// </summary>
+        public static string CLM_PROCESS {
+            get {
+                return ResourceManager.GetString("CLM_PROCESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Produto_Nome.
+        /// </summary>
+        public static string CLM_PRODUCT_NAME {
+            get {
+                return ResourceManager.GetString("CLM_PRODUCT_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade.
+        /// </summary>
+        public static string CLM_QUANTITY {
+            get {
+                return ResourceManager.GetString("CLM_QUANTITY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pronto_Fim.
+        /// </summary>
+        public static string CLM_READY_END {
+            get {
+                return ResourceManager.GetString("CLM_READY_END", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pronto_Inicio.
+        /// </summary>
+        public static string CLM_READY_START {
+            get {
+                return ResourceManager.GetString("CLM_READY_START", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data_Resgate.
+        /// </summary>
+        public static string CLM_REDEEM_DATE {
+            get {
+                return ResourceManager.GetString("CLM_REDEEM_DATE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Canal_Venda.
+        /// </summary>
+        public static string CLM_SALE_CHANNEL {
+            get {
+                return ResourceManager.GetString("CLM_SALE_CHANNEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Estacao_Venda.
+        /// </summary>
+        public static string CLM_SELLING_STATION {
+            get {
+                return ResourceManager.GetString("CLM_SELLING_STATION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aguardando.
         /// </summary>
         public static string LBL_AWAITING {
@@ -111,6 +273,24 @@ namespace OrderDeliveryMonitor.Resources {
         public static string LBL_READY {
             get {
                 return ResourceManager.GetString("LBL_READY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pedido.
+        /// </summary>
+        public static string TBL_ORDER {
+            get {
+                return ResourceManager.GetString("TBL_ORDER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PedidoItem.
+        /// </summary>
+        public static string TBL_ORDER_ITEM {
+            get {
+                return ResourceManager.GetString("TBL_ORDER_ITEM", resourceCulture);
             }
         }
     }

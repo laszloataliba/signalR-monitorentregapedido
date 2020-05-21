@@ -16,7 +16,7 @@ namespace OrderDeliveryMonitor.Repository.Implementation.Operation
             base.Update(pOrder);
         }
 
-        public void ToFinished(Order pOrder)
+        public void ToReady(Order pOrder)
         {
             base.Update(pOrder);
         }

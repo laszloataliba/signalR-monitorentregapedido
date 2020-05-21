@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using OrderDeliveryMonitor.ApplicationConfig;
-using OrderDeliveryMonitor.Model.Operation;
+using OrderDeliveryMonitor.Facade.Implementation.Operation.DTO;
+using OrderDeliveryMonitor.Utility;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace OrderDeliveryMonitor.Areas.Cockpit.Controllers
 {
@@ -12,13 +13,13 @@ namespace OrderDeliveryMonitor.Areas.Cockpit.Controllers
     public class CustomerDashboardController : Controller
     {
         // GET: CustomerDashboard
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             HttpClient httpClient = new HttpClient();
 
             httpClient.BaseAddress = new Uri($"{AppUtilities.WEB_API_SERVER_PATH}/api/Operation/Order");
-            var result = httpClient.GetStringAsync(httpClient.BaseAddress);
-            var content = JsonConvert.DeserializeObject<List<Order>>(result.Result);
+            var result = await httpClient.GetStringAsync(httpClient.BaseAddress);
+            var content = JsonConvert.DeserializeObject<List<OrderDTO>>(result);
 
             return View(content);
         }

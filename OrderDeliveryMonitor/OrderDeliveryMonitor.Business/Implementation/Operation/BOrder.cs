@@ -62,16 +62,16 @@ namespace OrderDeliveryMonitor.Business.Implementation.Operation
             _orderRepository.ToPreparing(pOrder);
         }
 
-        public void ToFinished(Order pOrder, EOrderCommand pCommand)
+        public void ToReady(Order pOrder, EOrderCommand pCommand)
         {
             pOrder = _orderRepository.Get(order => order.OrderId == pOrder.OrderId);
 
             pOrder.Process = EOrderProcess.Ready;
             pOrder.Command = pCommand;
             pOrder.PreparingEnd = DateTime.Now;
-            pOrder.Ready = DateTime.Now;
+            pOrder.ReadyStart = DateTime.Now;
 
-            _orderRepository.ToFinished(pOrder);
+            _orderRepository.ToReady(pOrder);
         }
     }
 }

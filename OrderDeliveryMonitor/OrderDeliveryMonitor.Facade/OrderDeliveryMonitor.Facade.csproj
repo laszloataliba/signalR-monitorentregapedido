@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\OrderDeliveryMonitor.Business\OrderDeliveryMonitor.Business.csproj" />
     <ProjectReference Include="..\OrderDeliveryMonitor.Model\OrderDeliveryMonitor.Model.csproj" />
+    <ProjectReference Include="..\OrderDeliveryMonitor.Utility\OrderDeliveryMonitor.Utility.csproj" />
   </ItemGroup>
 
 </Project>
