@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using OrderDeliveryMonitor.Api.Hubs;
 using OrderDeliveryMonitor.ApplicationConfig;
 
@@ -32,18 +30,11 @@ namespace OrderDeliveryMonitor.Api
                         );
             });
 
-            services.AddSignalR(cfg =>
-                cfg.EnableDetailedErrors = true
-            ).AddJsonProtocol(options => 
-                options.PayloadSerializerSettings.Converters.Add(new StringEnumConverter(true))
-            );
+            services.AddSignalR(cfg => cfg.EnableDetailedErrors = true);
 
             AppConfig.ConfigureWebApi(services);
 
-            services.AddMvc()
-                .AddJsonOptions(options => 
-                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                ).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

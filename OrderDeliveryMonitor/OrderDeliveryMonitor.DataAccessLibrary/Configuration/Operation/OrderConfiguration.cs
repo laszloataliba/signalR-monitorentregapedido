@@ -39,9 +39,6 @@ namespace OrderDeliveryMonitor.DataAccessLibrary.Configuration.Operation
             builder.Property(order => order.Command)
                 .HasColumnName(Resource.CLM_COMMAND);
 
-            builder.Property(order => order.SaleChannel)
-                .HasColumnName(Resource.CLM_SALE_CHANNEL);
-
             builder.Property(order => order.AwaitingStart)
                 .IsRequired(false)
                     .HasColumnName(Resource.CLM_AWAITING_START);

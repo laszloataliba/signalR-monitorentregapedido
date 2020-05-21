@@ -49,7 +49,6 @@
     <script type="text/javascript">
         //Campinho da publicação WebAPI contendo o HUB.
         SigalRConnection('@AppUtilities.HUB_SERVER_PATH');
-        console.log(signalRConnection);
 
         signalRConnection.onclose(async () => {
             await SignalRConnectionStart();
@@ -72,11 +71,7 @@
             signalRConnection.invoke('@AppUtilities.RELOAD_AWAITING_CONTAINER_METHOD', GetOrders());
         });
 
-        @*signalRConnection.on('@AppUtilities.LOAD_AWAITING_CONTAINER', (pOrders) => {
-            MountContainer(pOrders, '@AppUtilities.AWAITING_CONTAINER');
-        });*@
-
-        signalRConnection.on('@AppUtilities.LOAD_AWAITING_CONTAINER').then((pOrders) => {
+        signalRConnection.on('@AppUtilities.LOAD_AWAITING_CONTAINER', (pOrders) => {
             MountContainer(pOrders, '@AppUtilities.AWAITING_CONTAINER');
         });
 

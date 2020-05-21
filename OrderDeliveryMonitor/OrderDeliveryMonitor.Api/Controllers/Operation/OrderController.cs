@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using OrderDeliveryMonitor.Api.Hubs;
+using OrderDeliveryMonitor.Facade.Implementation.Operation.DTO;
 using OrderDeliveryMonitor.Facade.Interface.Operation;
 using OrderDeliveryMonitor.Utility;
 using System.Collections.Generic;
@@ -24,17 +25,17 @@ namespace OrderDeliveryMonitor.Api.Controllers.Operation
 
         // GET: api/Order
         [HttpGet]
-        public IEnumerable<nsOrderModel.Order> Get()
+        public IEnumerable<OrderDTO> Get()
         {
-            var vOrders = fOrder.GetList(pInclude: itm => itm.Items);
+            var vOrders = fOrder.GetListOrderDTO(pInclude: itm => itm.Items);
 
             return vOrders;
         }
 
         [HttpGet("{id}")]
-        public nsOrderModel.Order Get(int id)
+        public OrderDTO Get(int id)
         {
-            var vOrder = fOrder.Get(order => order.OrderId == id, items => items.Items);
+            var vOrder = fOrder.GetOrderDTO(order => order.OrderId == id, items => items.Items);
 
             return vOrder;
         }
