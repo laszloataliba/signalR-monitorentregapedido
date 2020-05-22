@@ -9,13 +9,13 @@ using OrderDeliveryMonitor.Api.Hubs;
 
 namespace OrderDeliveryMonitor.Api.Controllers.Security
 {
-    [Route("api/Security/[controller]")]
+    [Route("api/Security/Users")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly IHubContext<OrderDeliveryMonitorHub> _hubContext;
 
-        public UserController(IHubContext<OrderDeliveryMonitorHub> hubContext)
+        public UsersController(IHubContext<OrderDeliveryMonitorHub> hubContext)
         {
             _hubContext = hubContext;
         }
