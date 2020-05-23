@@ -8,15 +8,40 @@ using System.Threading.Tasks;
 
 namespace OrderDeliveryMonitor.Api.Hubs
 {
+    /// <summary>
+    /// Hub for real time communication.
+    /// </summary>
     public class OrderDeliveryMonitorHub : Hub
     {
+        #region :: Fields ::
+
+        /// <summary>
+        /// Order model facade object.
+        /// </summary>
         private readonly IFOrder fOrder;
 
+        #endregion :: Fields ::
+
+        #region :: Methods ::
+
+        /// <summary>
+        /// Constructor method.
+        /// </summary>
+        /// <param name="pFOrder">Order model facade parameter.</param>
         public OrderDeliveryMonitorHub(IFOrder pFOrder)
         {
             fOrder = pFOrder;
         }
 
+        #endregion :: Methods ::
+
+        #region :: Hub methods ::
+
+        /// <summary>
+        /// Orders already in monitoring and/or putted on waiting status.
+        /// </summary>
+        /// <param name="pOrders">Orders already in monitoring.</param>
+        /// <returns>Reloads the respective containers with orders on waiting status.</returns>
         public async Task ReloadAwaitingContainer(int[] pOrders)
         {
             var vOrders = fOrder.GetListOrderDTO(order => order.Process == EOrderProcess.Awaiting);
@@ -42,6 +67,13 @@ namespace OrderDeliveryMonitor.Api.Hubs
             await Clients.Others.SendAsync($"{AppUtilities.LOAD_AWAITING_CONTAINER_FOR_CUSTOMERS}", vOrders.OrderBy(o => o.AwaitingStart.Value).ToList());
         }
 
+        /// <summary>
+        /// Changes order status to preparing and shows orders already in monitoring and/or putted on preparing status.
+        /// </summary>
+        /// <param name="pOrders">Orders already in monitoring.</param>
+        /// <param name="pOrderId">Order identifier.</param>
+        /// <param name="pCommand">Command to control applying styles.</param>
+        /// <returns>Reloads the orders containers according to its respective status.</returns>
         public async Task FromAwaitingToPreparing(int[] pOrders, string pOrderId, EOrderCommand pCommand = EOrderCommand.Sent)
         {
             fOrder.ToPreparing(new Order { OrderId = int.Parse(pOrderId) }, pCommand);
@@ -74,6 +106,13 @@ namespace OrderDeliveryMonitor.Api.Hubs
             await Clients.Others.SendAsync($"{AppUtilities.LOAD_PREPARING_CONTAINER_FOR_CUSTOMERS}", vOrders.Where(o => o.Process == EOrderProcess.Preparing).OrderBy(o => o.PreparingStart.Value).ToList());
         }
 
+        /// <summary>
+        /// Changes order status to ready/redeemed and shows orders already in monitoring and/or putted on ready/redeemed status.
+        /// </summary>
+        /// <param name="pOrders">Orders already in monitoring.</param>
+        /// <param name="pOrderId">Order identifier.</param>
+        /// <param name="pCommand">Command to control applying styles.</param>
+        /// <returns>Reloads the orders containers according to its respective status.</returns>
         public async Task FromPreparingToReady(int[] pOrders, string pOrderId, EOrderCommand pCommand = EOrderCommand.Sent)
         {
             fOrder.ToReady(new Order { OrderId = int.Parse(pOrderId) }, pCommand);
@@ -106,6 +145,11 @@ namespace OrderDeliveryMonitor.Api.Hubs
             await Clients.Others.SendAsync($"{AppUtilities.LOAD_READY_CONTAINER_FOR_CUSTOMER}", vOrders.Where(o => o.Process == EOrderProcess.Ready).OrderBy(o => o.ReadyStart.Value).ToList());
         }
 
+        /// <summary>
+        /// Reloads the containers for orders on ready/redeemed status that achieve its timed out defined.
+        /// </summary>
+        /// <param name="pOrderId">Order identifier.</param>
+        /// <returns>Reloads the containers for orders on ready/redeemed status.</returns>
         public async Task HideReadyOrderByTimeOut(string pOrderId)
         {
             var vOrders = fOrder.GetListOrderDTO(order => order.Process == EOrderProcess.Ready);
@@ -115,5 +159,7 @@ namespace OrderDeliveryMonitor.Api.Hubs
             await Clients.All.SendAsync($"{AppUtilities.LOAD_READY_CONTAINER}", vOrders.OrderBy(o => o.ReadyStart.Value).ToList());
             await Clients.Others.SendAsync($"{AppUtilities.LOAD_READY_CONTAINER_FOR_CUSTOMER}", vOrders.OrderBy(o => o.ReadyStart.Value).ToList(), pOrderId); //Antes de atualizar o container, aplicar a class css pro pOrderId.
         }
+
+        #endregion :: Hub methods ::
     }
 }

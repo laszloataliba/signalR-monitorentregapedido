@@ -25,6 +25,8 @@ namespace OrderDeliveryMonitor.DataAccessLibrary.Configuration.Operation
 
             builder.Property(orderItem => orderItem.Quantity)
                 .HasColumnName(Resource.CLM_QUANTITY);
+
+            builder.Ignore(orderItem => orderItem.Order);
         }
     }
 }
