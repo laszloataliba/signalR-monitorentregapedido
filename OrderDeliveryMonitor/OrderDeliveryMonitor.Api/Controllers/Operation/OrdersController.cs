@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Newtonsoft.Json;
 using OrderDeliveryMonitor.Api.Hubs;
 using OrderDeliveryMonitor.Facade.Interface.Operation;
 using OrderDeliveryMonitor.Model.Operation;
@@ -49,11 +50,15 @@ namespace OrderDeliveryMonitor.Api.Controllers.Operation
         #region :: Actions ::
 
         /// <summary>
-        /// Recovers the orders that is on waiting status.
+        /// Recovers the orders according to given parameters.
         /// </summary>
+        /// <param name="pProcess">Process that requested query must follow to recover an order list.</param>
+        /// <param name="pPagination">Pagination parameters.</param>
         /// <returns>Order list.</returns>
         [HttpGet]
-        public IActionResult Get([FromQuery] Pagination pPagination = null)
+        public IActionResult Get(
+            EOrderProcess pProcess = EOrderProcess.Awaiting, 
+            [FromQuery] Pagination pPagination = null)
         {
             try
             {
@@ -62,8 +67,11 @@ namespace OrderDeliveryMonitor.Api.Controllers.Operation
                         pPagination: pPagination
                     );
 
-                if (vOrders == null || vOrders.Count() == 0 || pPagination.CurrentPage > pPagination.TotalPages)
+                if (vOrders == null || vOrders.Count() == 0 || (pPagination != null && (pPagination.CurrentPage > pPagination.TotalPages)))
                     return NotFound();
+
+                if (pPagination != null)
+                    Response.Headers.Add($"X-{nameof(Pagination)}", JsonConvert.SerializeObject(pPagination));
 
                 return Ok(vOrders);
             }
