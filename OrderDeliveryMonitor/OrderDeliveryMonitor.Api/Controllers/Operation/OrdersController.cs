@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using OrderDeliveryMonitor.Api.Hubs;
-using OrderDeliveryMonitor.Facade.Implementation.Operation.DTO;
 using OrderDeliveryMonitor.Facade.Interface.Operation;
 using OrderDeliveryMonitor.Model.Operation;
 using OrderDeliveryMonitor.Utility;
-using System.Collections.Generic;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OrderDeliveryMonitor.Api.Controllers.Operation
@@ -53,11 +53,24 @@ namespace OrderDeliveryMonitor.Api.Controllers.Operation
         /// </summary>
         /// <returns>Order list.</returns>
         [HttpGet]
-        public IEnumerable<OrderDTO> Get()
+        public IActionResult Get([FromQuery] Pagination pPagination = null)
         {
-            var vOrders = fOrder.GetListOrderDTO(pInclude: itm => itm.Items);
+            try
+            {
+                var vOrders = fOrder.GetListOrderDTO(
+                        pInclude: itm => itm.Items,
+                        pPagination: pPagination
+                    );
 
-            return vOrders;
+                if (vOrders == null || vOrders.Count() == 0 || pPagination.CurrentPage > pPagination.TotalPages)
+                    return NotFound();
+
+                return Ok(vOrders);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         /// <summary>
@@ -66,11 +79,18 @@ namespace OrderDeliveryMonitor.Api.Controllers.Operation
         /// <param name="pOrderId">Order identifier.</param>
         /// <returns>Order data.</returns>
         [HttpGet("{pOrderId}")]
-        public OrderDTO Get(string pOrderId)
+        public IActionResult Get(string pOrderId)
         {
-            var vOrder = fOrder.GetOrderDTO(order => order.OrderId == int.Parse(pOrderId), items => items.Items);
+            try
+            {
+                var vOrder = fOrder.GetOrderDTO(order => order.OrderId == int.Parse(pOrderId), items => items.Items);
 
-            return vOrder;
+                return Ok(vOrder);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         /// <summary>
@@ -79,11 +99,20 @@ namespace OrderDeliveryMonitor.Api.Controllers.Operation
         /// <param name="pOrderId">Order identifier.</param>
         /// <returns></returns>
         [HttpPut("{pOrderId}")]
-        public async Task Put(string pOrderId)
+        public async Task<IActionResult> Put(string pOrderId)
         {
-            fOrder.ToAwaiting(new Order { OrderId = int.Parse(pOrderId) });
+            try
+            {
+                fOrder.ToAwaiting(new Order { OrderId = int.Parse(pOrderId) });
 
-            await _hubContext.Clients.All.SendAsync($"{AppUtilities.RELOAD_AWAITING_CONTAINER}");
+                await _hubContext.Clients.All.SendAsync($"{AppUtilities.RELOAD_AWAITING_CONTAINER}");
+
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         #endregion :: Actions ::

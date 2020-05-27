@@ -3,6 +3,7 @@ using OrderDeliveryMonitor.Business.Interface.Operation;
 using OrderDeliveryMonitor.Facade.Implementation.Operation.DTO;
 using OrderDeliveryMonitor.Facade.Interface.Operation;
 using OrderDeliveryMonitor.Model.Operation;
+using OrderDeliveryMonitor.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -33,9 +34,9 @@ namespace OrderDeliveryMonitor.Facade.Implementation.Operation
             return this._orderBusiness.Get(pWhereClause, pInclude);
         }
 
-        public IEnumerable<Order> GetList(Expression<Func<Order, bool>> pWhereClause = null, Expression<Func<Order, object>> pInclude = null)
+        public IEnumerable<Order> GetList(Expression<Func<Order, bool>> pWhereClause = null, Expression<Func<Order, object>> pInclude = null, Pagination pPagination = null)
         {
-            return this._orderBusiness.GetList(pWhereClause, pInclude);
+            return this._orderBusiness.GetList(pWhereClause, pInclude, pPagination);
         }
 
         public void Update(Order pEntity)
@@ -83,11 +84,14 @@ namespace OrderDeliveryMonitor.Facade.Implementation.Operation
                 };
         }
 
-        public IEnumerable<OrderDTO> GetListOrderDTO(Expression<Func<Order, bool>> pWhereClause = null, Expression<Func<Order, object>> pInclude = null)
+        public IEnumerable<OrderDTO> GetListOrderDTO(
+            Expression<Func<Order, bool>> pWhereClause = null, 
+            Expression<Func<Order, object>> pInclude = null, 
+            Pagination pPagination = null)
         {
             List<OrderDTO> oOrderDTOs = new List<OrderDTO>();
 
-            var oOrders = this._orderBusiness.GetList(pWhereClause, pInclude);
+            var oOrders = this._orderBusiness.GetList(pWhereClause, pInclude, pPagination);
 
             foreach (var order in oOrders)
                 oOrderDTOs.Add(

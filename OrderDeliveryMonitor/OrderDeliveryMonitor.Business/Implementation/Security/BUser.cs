@@ -1,6 +1,7 @@
 ﻿using OrderDeliveryMonitor.Business.Interface.Security;
 using OrderDeliveryMonitor.Business.Validation.Security;
 using OrderDeliveryMonitor.Model.Security;
+using OrderDeliveryMonitor.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -29,9 +30,9 @@ namespace OrderDeliveryMonitor.Business.Implementation.Security
             return _userRepository.Get(pWhereClause, pInclude);
         }
 
-        public IEnumerable<User> GetList(Expression<Func<User, bool>> pWhereClause = null, Expression<Func<User, object>> pInclude = null)
+        public IEnumerable<User> GetList(Expression<Func<User, bool>> pWhereClause = null, Expression<Func<User, object>> pInclude = null, Pagination pPagination = null)
         {
-            return _userRepository.GetList(pWhereClause, pInclude);
+            return _userRepository.GetList(pWhereClause, pInclude, pPagination);
         }
 
         public void Update(User pEntity)

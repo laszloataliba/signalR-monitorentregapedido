@@ -1,6 +1,7 @@
 ﻿using OrderDeliveryMonitor.Business.Interface.Operation;
 using OrderDeliveryMonitor.Business.Validation.Operation;
 using OrderDeliveryMonitor.Model.Operation;
+using OrderDeliveryMonitor.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -29,9 +30,9 @@ namespace OrderDeliveryMonitor.Business.Implementation.Operation
             return this._orderRepository.Get(pWhereClause, pInclude);
         }
 
-        public IEnumerable<Order> GetList(Expression<Func<Order, bool>> pWhereClause = null, Expression<Func<Order, object>> pInclude = null)
+        public IEnumerable<Order> GetList(Expression<Func<Order, bool>> pWhereClause = null, Expression<Func<Order, object>> pInclude = null, Pagination pPagination = null)
         {
-            return this._orderRepository.GetList(pWhereClause, pInclude);
+            return this._orderRepository.GetList(pWhereClause, pInclude, pPagination);
         }
 
         public void Update(Order pEntity)
