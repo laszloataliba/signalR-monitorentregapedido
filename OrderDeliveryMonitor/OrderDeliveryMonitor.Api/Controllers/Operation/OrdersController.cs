@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
 using OrderDeliveryMonitor.Api.Hubs;
 using OrderDeliveryMonitor.Facade.Interface.Operation;
 using OrderDeliveryMonitor.Model.Operation;
+using OrderDeliveryMonitor.Resources;
 using OrderDeliveryMonitor.Utility;
 using System;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace OrderDeliveryMonitor.Api.Controllers.Operation
@@ -57,18 +60,19 @@ namespace OrderDeliveryMonitor.Api.Controllers.Operation
         /// <returns>Order list.</returns>
         [HttpGet]
         public IActionResult Get(
-            EOrderProcess pProcess = EOrderProcess.Awaiting, 
+            EOrderProcess pProcess = EOrderProcess.None, 
             [FromQuery] Pagination pPagination = null)
         {
             try
             {
                 var vOrders = fOrder.GetListOrderDTO(
+                        pWhereClause: order => (order.Process > 0 && (order.Process == pProcess || pProcess == EOrderProcess.None)),
                         pInclude: itm => itm.Items,
                         pPagination: pPagination
                     );
 
                 if (vOrders == null || vOrders.Count() == 0 || (pPagination != null && (pPagination.CurrentPage > pPagination.TotalPages)))
-                    return NotFound();
+                    return NotFound(new { ErrorMessage = Resource.MSG_RECORDS_NOT_FOUND });
 
                 if (pPagination != null)
                     Response.Headers.Add($"X-{nameof(Pagination)}", JsonConvert.SerializeObject(pPagination));
@@ -77,7 +81,15 @@ namespace OrderDeliveryMonitor.Api.Controllers.Operation
             }
             catch(Exception ex)
             {
-                return BadRequest(ex);
+                return 
+                    StatusCode
+                    (
+                        StatusCodes.Status500InternalServerError,
+                        new
+                        {
+                            ErrorMessage = ex.Message
+                        }
+                    );
             }
         }
 
@@ -97,7 +109,15 @@ namespace OrderDeliveryMonitor.Api.Controllers.Operation
             }
             catch(Exception ex)
             {
-                return BadRequest(ex);
+                return 
+                    StatusCode
+                    (
+                        StatusCodes.Status500InternalServerError,
+                        new
+                        {
+                            ErrorMessage = ex.Message
+                        }
+                    );
             }
         }
 
@@ -119,7 +139,15 @@ namespace OrderDeliveryMonitor.Api.Controllers.Operation
             }
             catch(Exception ex)
             {
-                return BadRequest(ex);
+                return 
+                    StatusCode
+                    (
+                        StatusCodes.Status500InternalServerError,
+                        new
+                        {
+                            ErrorMessage = ex.Message
+                        }
+                    );
             }
         }
 

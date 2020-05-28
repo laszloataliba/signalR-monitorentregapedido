@@ -189,6 +189,9 @@
   <data name="LBL_READY" xml:space="preserve">
     <value>Ready</value>
   </data>
+  <data name="MSG_RECORDS_NOT_FOUND" xml:space="preserve">
+    <value>Records not found</value>
+  </data>
   <data name="TBL_ORDER" xml:space="preserve">
     <value>Order</value>
   </data>

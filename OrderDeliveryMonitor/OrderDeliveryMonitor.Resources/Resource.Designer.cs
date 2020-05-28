@@ -277,6 +277,15 @@ namespace OrderDeliveryMonitor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nenhum registro encontrado.
+        /// </summary>
+        public static string MSG_RECORDS_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("MSG_RECORDS_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pedido.
         /// </summary>
         public static string TBL_ORDER {

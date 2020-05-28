@@ -152,10 +152,17 @@ namespace OrderDeliveryMonitor.Repository.Default
                 if (pPagination != null)
                 {
                     pPagination.TotalRecords = vQuery.Count();
-                    pPagination.TotalPages = 
-                        (int)Math.Ceiling((double)vQuery.Count() / pPagination.PageSize);
+                    pPagination.CurrentPage = pPagination.CurrentPage > 0 ? pPagination.CurrentPage : 1;
 
-                    vQuery = vQuery.Skip(pPagination.Skip).Take(pPagination.Take);
+                    if (pPagination.PageSize == 0)
+                        pPagination.PageSize = pPagination.TotalRecords;
+
+                    if (pPagination.TotalRecords > 0)
+                        pPagination.TotalPages =
+                            (int)Math.Ceiling((double)pPagination.TotalRecords / pPagination.PageSize);
+
+                    if (pPagination.Take > 0)
+                        vQuery = vQuery.Skip(pPagination.Skip).Take(pPagination.Take);
                 }
 
                 var vEntities = vQuery.ToList();

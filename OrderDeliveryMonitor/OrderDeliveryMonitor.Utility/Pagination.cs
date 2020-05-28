@@ -1,4 +1,6 @@
-﻿namespace OrderDeliveryMonitor.Utility
+﻿using Newtonsoft.Json;
+
+namespace OrderDeliveryMonitor.Utility
 {
     /// <summary>
     /// Helper class for pagination.
@@ -8,22 +10,18 @@
         /// <summary>
         /// Constructor method.
         /// </summary>
-        /// <param name="pPageSize">Desired quantity of records per page.</param>
-        /// <param name="pCurrentPage">Desired page to be shown.</param>
-        public Pagination(int pPageSize = 10, int pCurrentPage = 1)
+        public Pagination()
         {
-            PageSize = pPageSize;
-            CurrentPage = pCurrentPage;
         }
 
         /// <summary>
         /// Records per page.
         /// </summary>
-        public int PageSize { get; private set; }
+        public int PageSize { get; set; }
         /// <summary>
         /// Current page identifier.
         /// </summary>
-        public int CurrentPage { get; private set; }
+        public int CurrentPage { get; set; }
         /// <summary>
         /// Total records.
         /// </summary>
@@ -35,10 +33,12 @@
         /// <summary>
         /// Quantity of records to be taken in the request.
         /// </summary>
+        [JsonIgnore]
         public int Take => PageSize;
         /// <summary>
         /// Quantity of records to be skipped.
         /// </summary>
+        [JsonIgnore]
         public int Skip => ((CurrentPage - 1) * PageSize);
     }
 }
