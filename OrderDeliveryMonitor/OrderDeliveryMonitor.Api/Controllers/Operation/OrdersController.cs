@@ -9,7 +9,6 @@ using OrderDeliveryMonitor.Resources;
 using OrderDeliveryMonitor.Utility;
 using System;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace OrderDeliveryMonitor.Api.Controllers.Operation
