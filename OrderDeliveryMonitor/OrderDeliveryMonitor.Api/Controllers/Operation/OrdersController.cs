@@ -133,12 +133,12 @@ namespace OrderDeliveryMonitor.Api.Controllers.Operation
         /// </summary>
         /// <param name="pOrderCode">Order identifier.</param>
         /// <returns></returns>
-        [HttpPut("{pOrderCode}")]
-        public async Task<IActionResult> Put(string pOrderCode)
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] Order pOrderCode)
         {
             try
             {
-                await fOrder.ToAwaiting(new Order { OrderCode = pOrderCode });
+                await fOrder.ToAwaiting(new Order { OrderCode = pOrderCode.OrderCode });
 
                 await _hubContext.Clients.All.SendAsync($"{Utilities.RELOAD_AWAITING_CONTAINER}");
 
