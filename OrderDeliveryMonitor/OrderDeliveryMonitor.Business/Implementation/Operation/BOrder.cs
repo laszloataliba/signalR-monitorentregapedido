@@ -1,9 +1,11 @@
 ﻿using OrderDeliveryMonitor.Business.Interface.Operation;
 using OrderDeliveryMonitor.Business.Validation.Operation;
 using OrderDeliveryMonitor.Model.Operation;
+using OrderDeliveryMonitor.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace OrderDeliveryMonitor.Business.Implementation.Operation
 {
@@ -29,9 +31,19 @@ namespace OrderDeliveryMonitor.Business.Implementation.Operation
             return this._orderRepository.Get(pWhereClause, pInclude);
         }
 
-        public IEnumerable<Order> GetList(Expression<Func<Order, bool>> pWhereClause = null, Expression<Func<Order, object>> pInclude = null)
+        public async Task<Order> GetAsync(Expression<Func<Order, bool>> pWhereClause, Expression<Func<Order, object>> pInclude = null)
         {
-            return this._orderRepository.GetList(pWhereClause, pInclude);
+            return GetOrder(await _orderRepository.GetAsync(pWhereClause, pInclude));
+        }
+
+        public IEnumerable<Order> GetList(Expression<Func<Order, bool>> pWhereClause = null, Expression<Func<Order, object>> pInclude = null, Pagination pPagination = null)
+        {
+            return this._orderRepository.GetList(pWhereClause, pInclude, pPagination);
+        }
+
+        public async Task<IEnumerable<Order>> GetListAsync(Expression<Func<Order, bool>> pWhereClause = null, Expression<Func<Order, object>> pInclude = null, Pagination pPagination = null)
+        {
+            return await _orderRepository.GetListAsync(pWhereClause, pInclude, pPagination);
         }
 
         public void Update(Order pEntity)
@@ -39,39 +51,44 @@ namespace OrderDeliveryMonitor.Business.Implementation.Operation
             this._orderRepository.Update(pEntity);
         }
 
-        public void ToAwaiting(Order pOrder)
+        public async Task UpdateAsync(Order pEntity)
         {
-            pOrder = Get(order => order.OrderId == pOrder.OrderId);
+            await _orderRepository.UpdateAsync(pEntity);
+        }
+
+        public async Task ToAwaiting(Order pOrder)
+        {
+            pOrder = GetOrder(pOrder.OrderCode);
 
             pOrder.Process = EOrderProcess.Awaiting;
             pOrder.Command = EOrderCommand.Received;
             pOrder.AwaitingStart = DateTime.Now;
 
-            _orderRepository.ToAwaiting(pOrder);
+            await _orderRepository.ToAwaiting(pOrder);
         }
 
-        public void ToPreparing(Order pOrder, EOrderCommand pCommand)
+        public async Task ToPreparing(Order pOrder, EOrderCommand pCommand)
         {
-            pOrder = _orderRepository.Get(order => order.OrderId == pOrder.OrderId);
+            pOrder = GetOrder(pOrder.OrderId);
 
             pOrder.Process = EOrderProcess.Preparing;
             pOrder.Command = pCommand;
             pOrder.AwaitingEnd = DateTime.Now;
             pOrder.PreparingStart = DateTime.Now;
 
-            _orderRepository.ToPreparing(pOrder);
+            await _orderRepository.ToPreparing(pOrder);
         }
 
-        public void ToReady(Order pOrder, EOrderCommand pCommand)
+        public async Task ToReady(Order pOrder, EOrderCommand pCommand)
         {
-            pOrder = _orderRepository.Get(order => order.OrderId == pOrder.OrderId);
+            pOrder = GetOrder(pOrder.OrderId);
 
             pOrder.Process = EOrderProcess.Ready;
             pOrder.Command = pCommand;
             pOrder.PreparingEnd = DateTime.Now;
             pOrder.ReadyStart = DateTime.Now;
 
-            _orderRepository.ToReady(pOrder);
+            await _orderRepository.ToReady(pOrder);
         }
     }
 }

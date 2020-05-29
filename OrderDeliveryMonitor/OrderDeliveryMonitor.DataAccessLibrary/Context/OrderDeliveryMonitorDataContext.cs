@@ -33,7 +33,10 @@ namespace OrderDeliveryMonitor.DataAccessLibrary.Context
             optionsBuilder
                 .UseSqlServer(
                     AppConfiguration.ConnectionString,
-                    connection => connection.CommandTimeout(AppConfiguration.ConnectionTimeOut)
+                    options => {
+                        options.CommandTimeout(AppConfiguration.ConnectionTimeOut);
+                        options.EnableRetryOnFailure();
+                    }
                 );
         }
 

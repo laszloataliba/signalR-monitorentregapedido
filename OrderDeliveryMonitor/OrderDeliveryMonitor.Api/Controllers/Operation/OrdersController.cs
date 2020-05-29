@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Newtonsoft.Json;
 using OrderDeliveryMonitor.Api.Hubs;
-using OrderDeliveryMonitor.Facade.Implementation.Operation.DTO;
 using OrderDeliveryMonitor.Facade.Interface.Operation;
 using OrderDeliveryMonitor.Model.Operation;
+using OrderDeliveryMonitor.Resources;
 using OrderDeliveryMonitor.Utility;
-using System.Collections.Generic;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OrderDeliveryMonitor.Api.Controllers.Operation
@@ -49,41 +52,114 @@ namespace OrderDeliveryMonitor.Api.Controllers.Operation
         #region :: Actions ::
 
         /// <summary>
-        /// Recovers the orders that is on waiting status.
+        /// Recovers the orders according to given parameters.
         /// </summary>
+        /// <param name="pProcess">Process that requested query must follow to recover an order list.</param>
+        /// <param name="pPagination">Pagination parameters.</param>
         /// <returns>Order list.</returns>
         [HttpGet]
-        public IEnumerable<OrderDTO> Get()
+        public async Task<IActionResult> Get(
+            EOrderProcess pProcess = EOrderProcess.None,
+            [FromQuery] Pagination pPagination = null)
         {
-            var vOrders = fOrder.GetListOrderDTO(pInclude: itm => itm.Items);
+            try
+            {
+                var vOrders = await fOrder.GetListOrderDTO(
+                        pWhereClause: order => (order.Process > 0 && (order.Process == pProcess || pProcess == EOrderProcess.None)),
+                        pInclude: itm => itm.Items,
+                        pPagination: pPagination
+                    );
 
-            return vOrders;
+                if (vOrders == null || vOrders.Count() == 0 || (pPagination != null && (pPagination.CurrentPage > pPagination.TotalPages)))
+                    return NotFound(new { ErrorMessage = Resource.MSG_RECORDS_NOT_FOUND });
+
+                if (pPagination != null)
+                    Response.Headers.Add($"X-{nameof(Pagination)}", JsonConvert.SerializeObject(pPagination));
+
+                return Ok(vOrders);
+            }
+            catch (CustomException ex)
+            {
+                return StatusCode(ex.StatusCode, new { ErrorMessage = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return
+                    StatusCode
+                    (
+                        StatusCodes.Status500InternalServerError,
+                        new
+                        {
+                            ErrorMessage = ex.Message
+                        }
+                    );
+            }
         }
 
         /// <summary>
         /// Recovers the order data by given identifier.
         /// </summary>
-        /// <param name="pOrderId">Order identifier.</param>
+        /// <param name="pOrderCode">Order identifier.</param>
         /// <returns>Order data.</returns>
-        [HttpGet("{pOrderId}")]
-        public OrderDTO Get(string pOrderId)
+        [HttpGet("{pOrderCode}")]
+        public async Task<IActionResult> Get(string pOrderCode)
         {
-            var vOrder = fOrder.GetOrderDTO(order => order.OrderId == int.Parse(pOrderId), items => items.Items);
+            try
+            {
+                var vOrder = await fOrder.GetOrderDTO(order => order.OrderCode == pOrderCode, items => items.Items);
 
-            return vOrder;
+                return Ok(vOrder);
+            }
+            catch (CustomException ex)
+            {
+                return StatusCode(ex.StatusCode, new { ErroMessage = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return
+                    StatusCode
+                    (
+                        StatusCodes.Status500InternalServerError,
+                        new
+                        {
+                            ErrorMessage = ex.Message
+                        }
+                    );
+            }
         }
 
         /// <summary>
         /// Changes order status.
         /// </summary>
-        /// <param name="pOrderId">Order identifier.</param>
+        /// <param name="pOrderCode">Order identifier.</param>
         /// <returns></returns>
-        [HttpPut("{pOrderId}")]
-        public async Task Put(string pOrderId)
+        [HttpPut("{pOrderCode}")]
+        public async Task<IActionResult> Put(string pOrderCode)
         {
-            fOrder.ToAwaiting(new Order { OrderId = int.Parse(pOrderId) });
+            try
+            {
+                await fOrder.ToAwaiting(new Order { OrderCode = pOrderCode });
 
-            await _hubContext.Clients.All.SendAsync($"{AppUtilities.RELOAD_AWAITING_CONTAINER}");
+                await _hubContext.Clients.All.SendAsync($"{Utilities.RELOAD_AWAITING_CONTAINER}");
+
+                return Ok();
+            }
+            catch (CustomException ex)
+            {
+                return StatusCode(ex.StatusCode, new { ErrorMessage = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return
+                    StatusCode
+                    (
+                        StatusCodes.Status500InternalServerError,
+                        new
+                        {
+                            ErrorMessage = ex.Message
+                        }
+                    );
+            }
         }
 
         #endregion :: Actions ::

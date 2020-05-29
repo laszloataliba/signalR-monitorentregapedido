@@ -19,11 +19,13 @@ namespace OrderDeliveryMonitor.DataAccessLibrary.Configuration.Operation
             builder.Property(order => order.OrderNumber)
                 .HasMaxLength(7)
                     .HasColumnName(Resource.CLM_ORDER_NUMBER);
-
+            
             builder.Property(order => order.OrderCode)
                 .IsRequired()
                     .HasMaxLength(20)
                         .HasColumnName(Resource.CLM_ORDER_IDENTIFICATION);
+
+            builder.HasIndex(order => order.OrderCode);
 
             builder.Property(order => order.SellingStation)
                 .IsRequired(false)
@@ -32,6 +34,14 @@ namespace OrderDeliveryMonitor.DataAccessLibrary.Configuration.Operation
             builder.Property(order => order.Cashier)
                 .HasMaxLength(100)
                     .HasColumnName(Resource.CLM_CASHIER_CODE);
+
+            builder.Property(order => order.UserId)
+                .HasMaxLength(60)
+                    .HasColumnName(Resource.CLM_USER_ID);
+
+            builder.Property(order => order.SaleChannel)
+                .HasMaxLength(3)
+                    .HasColumnName(Resource.CLM_SALE_CHANNEL);
 
             builder.Property(order => order.Process)
                 .HasColumnName(Resource.CLM_PROCESS);

@@ -44,7 +44,7 @@ namespace OrderDeliveryMonitor.Api.Hubs
         /// <returns>Reloads the respective containers with orders on waiting status.</returns>
         public async Task ReloadAwaitingContainer(int[] pOrders)
         {
-            var vOrders = fOrder.GetListOrderDTO(order => order.Process == EOrderProcess.Awaiting);
+            var vOrders = await fOrder.GetListOrderDTO(order => order.Process == EOrderProcess.Awaiting);
 
             vOrders.ToList()
                 .ForEach(order =>
@@ -63,8 +63,8 @@ namespace OrderDeliveryMonitor.Api.Hubs
                     }
                 );
 
-            await Clients.Caller.SendAsync($"{AppUtilities.LOAD_AWAITING_CONTAINER}", vOrders.OrderBy(o => o.AwaitingStart.Value).ToList());
-            await Clients.Others.SendAsync($"{AppUtilities.LOAD_AWAITING_CONTAINER_FOR_CUSTOMERS}", vOrders.OrderBy(o => o.AwaitingStart.Value).ToList());
+            await Clients.Caller.SendAsync($"{Utilities.LOAD_AWAITING_CONTAINER}", vOrders.OrderBy(o => o.AwaitingStart.Value).ToList());
+            await Clients.Others.SendAsync($"{Utilities.LOAD_AWAITING_CONTAINER_FOR_CUSTOMERS}", vOrders.OrderBy(o => o.AwaitingStart.Value).ToList());
         }
 
         /// <summary>
@@ -74,11 +74,11 @@ namespace OrderDeliveryMonitor.Api.Hubs
         /// <param name="pOrderId">Order identifier.</param>
         /// <param name="pCommand">Command to control applying styles.</param>
         /// <returns>Reloads the orders containers according to its respective status.</returns>
-        public async Task FromAwaitingToPreparing(int[] pOrders, string pOrderId, EOrderCommand pCommand = EOrderCommand.Sent)
+        public async Task FromAwaitingToPreparing(int[] pOrders, int pOrderId, EOrderCommand pCommand = EOrderCommand.Sent)
         {
-            fOrder.ToPreparing(new Order { OrderId = int.Parse(pOrderId) }, pCommand);
+            await fOrder.ToPreparing(new Order { OrderId = pOrderId }, pCommand);
 
-            var vOrders = fOrder.GetListOrderDTO(order => order.Process > EOrderProcess.None, item => item.Items);
+            var vOrders = await fOrder.GetListOrderDTO(order => order.Process > EOrderProcess.None, item => item.Items);
 
             vOrders.ToList()
                 .ForEach(order =>
@@ -95,15 +95,15 @@ namespace OrderDeliveryMonitor.Api.Hubs
                             order.Command = EOrderCommand.None;
                         }
 
-                        if (order.OrderId == int.Parse(pOrderId))
+                        if (order.OrderId == pOrderId)
                             order.Command = (pCommand == EOrderCommand.Sent ? EOrderCommand.Received : EOrderCommand.Dropped);
                     }
                 );
 
-            await Clients.All.SendAsync($"{AppUtilities.LOAD_AWAITING_CONTAINER}", vOrders.Where(o => o.Process == EOrderProcess.Awaiting).OrderBy(o => o.AwaitingStart.Value).ToList());
-            await Clients.All.SendAsync($"{AppUtilities.LOAD_PREPARING_CONTAINER}", vOrders.Where(o => o.Process == EOrderProcess.Preparing).OrderBy(o => o.PreparingStart.Value).ToList());
-            await Clients.Others.SendAsync($"{AppUtilities.LOAD_AWAITING_CONTAINER_FOR_CUSTOMERS}", vOrders.Where(o => o.Process == EOrderProcess.Awaiting).OrderBy(o => o.AwaitingStart.Value).ToList(), pOrderId, pCommand); //Antes de atualizar o container, aplicar a class css pro pOrderId.
-            await Clients.Others.SendAsync($"{AppUtilities.LOAD_PREPARING_CONTAINER_FOR_CUSTOMERS}", vOrders.Where(o => o.Process == EOrderProcess.Preparing).OrderBy(o => o.PreparingStart.Value).ToList());
+            await Clients.All.SendAsync($"{Utilities.LOAD_AWAITING_CONTAINER}", vOrders.Where(o => o.Process == EOrderProcess.Awaiting).OrderBy(o => o.AwaitingStart.Value).ToList());
+            await Clients.All.SendAsync($"{Utilities.LOAD_PREPARING_CONTAINER}", vOrders.Where(o => o.Process == EOrderProcess.Preparing).OrderBy(o => o.PreparingStart.Value).ToList());
+            await Clients.Others.SendAsync($"{Utilities.LOAD_AWAITING_CONTAINER_FOR_CUSTOMERS}", vOrders.Where(o => o.Process == EOrderProcess.Awaiting).OrderBy(o => o.AwaitingStart.Value).ToList(), pOrderId, pCommand); //Antes de atualizar o container, aplicar a class css pro pOrderId.
+            await Clients.Others.SendAsync($"{Utilities.LOAD_PREPARING_CONTAINER_FOR_CUSTOMERS}", vOrders.Where(o => o.Process == EOrderProcess.Preparing).OrderBy(o => o.PreparingStart.Value).ToList());
         }
 
         /// <summary>
@@ -113,11 +113,11 @@ namespace OrderDeliveryMonitor.Api.Hubs
         /// <param name="pOrderId">Order identifier.</param>
         /// <param name="pCommand">Command to control applying styles.</param>
         /// <returns>Reloads the orders containers according to its respective status.</returns>
-        public async Task FromPreparingToReady(int[] pOrders, string pOrderId, EOrderCommand pCommand = EOrderCommand.Sent)
+        public async Task FromPreparingToReady(int[] pOrders, int pOrderId, EOrderCommand pCommand = EOrderCommand.Sent)
         {
-            fOrder.ToReady(new Order { OrderId = int.Parse(pOrderId) }, pCommand);
+            await fOrder.ToReady(new Order { OrderId = pOrderId }, pCommand);
 
-            var vOrders = fOrder.GetListOrderDTO(order => order.Process > EOrderProcess.Awaiting, item => item.Items);
+            var vOrders = await fOrder.GetListOrderDTO(order => order.Process > EOrderProcess.Awaiting, item => item.Items);
 
             vOrders.ToList()
                 .ForEach(order =>
@@ -134,15 +134,15 @@ namespace OrderDeliveryMonitor.Api.Hubs
                             order.Command = EOrderCommand.None;
                         }
 
-                        if (order.OrderId == int.Parse(pOrderId))
+                        if (order.OrderId == pOrderId)
                             order.Command = (pCommand == EOrderCommand.Sent ? EOrderCommand.Received : EOrderCommand.Dropped);
                     }
                 );
 
-            await Clients.All.SendAsync($"{AppUtilities.LOAD_PREPARING_CONTAINER}", vOrders.Where(o => o.Process == EOrderProcess.Preparing).OrderBy(o => o.PreparingStart.Value).ToList());
-            await Clients.All.SendAsync($"{AppUtilities.LOAD_READY_CONTAINER}", vOrders.Where(o => o.Process == EOrderProcess.Ready).OrderBy(o => o.ReadyStart.Value).ToList());
-            await Clients.Others.SendAsync($"{AppUtilities.LOAD_PREPARING_CONTAINER_FOR_CUSTOMERS}", vOrders.Where(o => o.Process == EOrderProcess.Preparing).OrderBy(o => o.PreparingStart.Value).ToList(), pOrderId, pCommand); //Antes de atualizar o container, aplicar a class css pro pOrderId.
-            await Clients.Others.SendAsync($"{AppUtilities.LOAD_READY_CONTAINER_FOR_CUSTOMER}", vOrders.Where(o => o.Process == EOrderProcess.Ready).OrderBy(o => o.ReadyStart.Value).ToList());
+            await Clients.All.SendAsync($"{Utilities.LOAD_PREPARING_CONTAINER}", vOrders.Where(o => o.Process == EOrderProcess.Preparing).OrderBy(o => o.PreparingStart.Value).ToList());
+            await Clients.All.SendAsync($"{Utilities.LOAD_READY_CONTAINER}", vOrders.Where(o => o.Process == EOrderProcess.Ready).OrderBy(o => o.ReadyStart.Value).ToList());
+            await Clients.Others.SendAsync($"{Utilities.LOAD_PREPARING_CONTAINER_FOR_CUSTOMERS}", vOrders.Where(o => o.Process == EOrderProcess.Preparing).OrderBy(o => o.PreparingStart.Value).ToList(), pOrderId, pCommand); //Antes de atualizar o container, aplicar a class css pro pOrderId.
+            await Clients.Others.SendAsync($"{Utilities.LOAD_READY_CONTAINER_FOR_CUSTOMER}", vOrders.Where(o => o.Process == EOrderProcess.Ready).OrderBy(o => o.ReadyStart.Value).ToList());
         }
 
         /// <summary>
@@ -150,14 +150,14 @@ namespace OrderDeliveryMonitor.Api.Hubs
         /// </summary>
         /// <param name="pOrderId">Order identifier.</param>
         /// <returns>Reloads the containers for orders on ready/redeemed status.</returns>
-        public async Task HideReadyOrderByTimeOut(string pOrderId)
+        public async Task HideReadyOrderByTimeOut(int pOrderId)
         {
-            var vOrders = fOrder.GetListOrderDTO(order => order.Process == EOrderProcess.Ready);
+            var vOrders = await fOrder.GetListOrderDTO(order => order.Process == EOrderProcess.Ready);
 
             vOrders = vOrders.Where(order => DateTime.Now.Subtract(order.ReadyStart.Value).Minutes >= 1).ToList();
 
-            await Clients.All.SendAsync($"{AppUtilities.LOAD_READY_CONTAINER}", vOrders.OrderBy(o => o.ReadyStart.Value).ToList());
-            await Clients.Others.SendAsync($"{AppUtilities.LOAD_READY_CONTAINER_FOR_CUSTOMER}", vOrders.OrderBy(o => o.ReadyStart.Value).ToList(), pOrderId); //Antes de atualizar o container, aplicar a class css pro pOrderId.
+            await Clients.All.SendAsync($"{Utilities.LOAD_READY_CONTAINER}", vOrders.OrderBy(o => o.ReadyStart.Value).ToList());
+            await Clients.Others.SendAsync($"{Utilities.LOAD_READY_CONTAINER_FOR_CUSTOMER}", vOrders.OrderBy(o => o.ReadyStart.Value).ToList(), pOrderId); //Antes de atualizar o container, aplicar a class css pro pOrderId.
         }
 
         #endregion :: Hub methods ::

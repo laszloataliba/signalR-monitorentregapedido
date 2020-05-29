@@ -12,6 +12,8 @@ namespace OrderDeliveryMonitor.Facade.Implementation.Operation.DTO
         public string OrderCode { get; set; }
         public int? SellingStation { get; set; }
         public string Cashier { get; set; }
+        public string UserId { get; set; }
+        public string SaleChannel { get; set; } = EOrderSaleChannel.APC.ToString();
         public EOrderProcess Process { get; set; } = EOrderProcess.None;
         public EOrderCommand Command { get; set; } = EOrderCommand.None;
         public DateTime? AwaitingStart { get; set; }
@@ -84,13 +86,13 @@ namespace OrderDeliveryMonitor.Facade.Implementation.Operation.DTO
             switch (Process)
             {
                 case EOrderProcess.Preparing:
-                    return AppUtilities.PREPARING_CLASS;
+                    return Utilities.PREPARING_CLASS;
 
                 case EOrderProcess.Ready:
-                    return AppUtilities.READY_CLASS;
+                    return Utilities.READY_CLASS;
 
                 default:
-                    return AppUtilities.AWAITING_CLASS;
+                    return Utilities.AWAITING_CLASS;
             }
         }
 
