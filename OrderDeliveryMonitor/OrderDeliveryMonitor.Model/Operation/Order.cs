@@ -10,6 +10,8 @@ namespace OrderDeliveryMonitor.Model.Operation
         public string OrderCode { get; set; }
         public int? SellingStation { get; set; }
         public string Cashier { get; set; }
+        public string UserId { get; set; }
+        public string SaleChannel { get; set; } = EOrderSaleChannel.APC.ToString();
         public EOrderProcess Process { get; set; } = EOrderProcess.None;
         public EOrderCommand Command { get; set; } = EOrderCommand.None;
         public DateTime? AwaitingStart { get; set; }
@@ -39,5 +41,15 @@ namespace OrderDeliveryMonitor.Model.Operation
         Preparing = 20,
         Ready = 30,
         Redeemed = 40
+    }
+
+    public enum EOrderSaleChannel
+    {
+        ALL,
+        BIL,
+        ATM,
+        BOM,
+        APC,
+        HIB
     }
 }

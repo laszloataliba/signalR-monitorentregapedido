@@ -19,7 +19,7 @@
                         @Resource.LBL_AWAITING
                     </span>
                 </div>
-                <div id="@AppUtilities.AWAITING_CONTAINER" class="container-body">
+                <div id="@Utilities.AWAITING_CONTAINER" class="container-body">
                     @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Awaiting).OrderBy(o => o.AwaitingStart.Value).ToList())
                 </div>
             </div>
@@ -29,7 +29,7 @@
                         @Resource.LBL_PREPARING
                     </span>
                 </div>
-                <div id="@AppUtilities.PREPARING_CONTAINER" class="container-body">
+                <div id="@Utilities.PREPARING_CONTAINER" class="container-body">
                     @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Preparing).OrderBy(o => o.PreparingStart.Value).ToList())
                 </div>
             </div>
@@ -39,7 +39,7 @@
                         @Resource.LBL_READY
                     </span>
                 </div>
-                <div id="@AppUtilities.READY_CONTAINER" class="container-body">
+                <div id="@Utilities.READY_CONTAINER" class="container-body">
                     @await Html.PartialAsync("Ticket", Model.Where(o => o.Process == EOrderProcess.Ready).OrderBy(o => o.ReadyStart.Value).ToList())
                 </div>
             </div>
@@ -48,13 +48,13 @@
 
     <script type="text/javascript">
         //Campinho da publicação WebAPI contendo o HUB.
-        SigalRConnection('@AppUtilities.HUB_SERVER_PATH');
+        SigalRConnection('@Utilities.HUB_SERVER_PATH');
 
         signalRConnection.onclose(async () => {
             await SignalRConnectionStart();
         });
 
-        signalRConnection.on('@AppUtilities.LOAD_AWAITING_CONTAINER_FOR_CUSTOMERS', (pOrders, pOrderId, pCommand) => {
+        signalRConnection.on('@Utilities.LOAD_AWAITING_CONTAINER_FOR_CUSTOMERS', (pOrders, pOrderId, pCommand) => {
 
             if (pOrderId) {
                 let $ticket = document.getElementById(`tck${pOrderId}`);
@@ -63,10 +63,10 @@
                 $ticket.classList.add($class);
             }
 
-            MountContainer(pOrders, '@AppUtilities.AWAITING_CONTAINER');
+            MountContainer(pOrders, '@Utilities.AWAITING_CONTAINER');
         });
 
-        signalRConnection.on('@AppUtilities.LOAD_PREPARING_CONTAINER_FOR_CUSTOMERS', (pOrders, pOrderId, pCommand) => {
+        signalRConnection.on('@Utilities.LOAD_PREPARING_CONTAINER_FOR_CUSTOMERS', (pOrders, pOrderId, pCommand) => {
 
             if (pOrderId) {
                 let $ticket = document.getElementById(`tck${pOrderId}`);
@@ -75,10 +75,10 @@
                 $ticket.classList.add($class);
             }
 
-            MountContainer(pOrders, '@AppUtilities.PREPARING_CONTAINER');
+            MountContainer(pOrders, '@Utilities.PREPARING_CONTAINER');
         });
 
-        signalRConnection.on('@AppUtilities.LOAD_READY_CONTAINER_FOR_CUSTOMER', (pOrders, pOrderId) => {
+        signalRConnection.on('@Utilities.LOAD_READY_CONTAINER_FOR_CUSTOMER', (pOrders, pOrderId) => {
 
             if (pOrderId) {
                 let $ticket = document.getElementById(`tck${pOrderId}`);
@@ -87,7 +87,7 @@
                 $ticket.classList.add($class);
             }
 
-            MountContainer(pOrders, '@AppUtilities.READY_CONTAINER');
+            MountContainer(pOrders, '@Utilities.READY_CONTAINER');
         });
 
         function MountContainer(pOrders, baseContainer) {

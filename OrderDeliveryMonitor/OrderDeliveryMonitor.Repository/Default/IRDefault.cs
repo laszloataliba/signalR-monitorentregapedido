@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace OrderDeliveryMonitor.Repository.Default
 {
@@ -15,5 +16,8 @@ namespace OrderDeliveryMonitor.Repository.Default
         void BeginTransaction();
         void CommitTransaction();
         void RollbackTransaction();
+        Task<IEnumerable<T>> GetListAsync(Expression<Func<T, bool>> pWhereClause = null, Expression<Func<T, object>> pInclude = null, Pagination pPagination = null);
+        Task<T> GetAsync(Expression<Func<T, bool>> pWhereClause, Expression<Func<T, object>> pInclude = null);
+        Task UpdateAsync(T pEntity);
     }
 }

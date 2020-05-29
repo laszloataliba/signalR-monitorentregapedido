@@ -7,6 +7,7 @@ using OrderDeliveryMonitor.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace OrderDeliveryMonitor.Facade.Implementation.Operation
 {
@@ -29,6 +30,11 @@ namespace OrderDeliveryMonitor.Facade.Implementation.Operation
             this._orderBusiness.Delete(pEntity);
         }
 
+        public async Task<Order> GetAsync(Expression<Func<Order, bool>> pWhereClause, Expression<Func<Order, object>> pInclude = null)
+        {
+            return await _orderBusiness.GetAsync(pWhereClause, pInclude);
+        }
+
         public Order Get(Expression<Func<Order, bool>> pWhereClause, Expression<Func<Order, object>> pInclude = null)
         {
             return this._orderBusiness.Get(pWhereClause, pInclude);
@@ -39,29 +45,39 @@ namespace OrderDeliveryMonitor.Facade.Implementation.Operation
             return this._orderBusiness.GetList(pWhereClause, pInclude, pPagination);
         }
 
+        public async Task<IEnumerable<Order>> GetListAsync(Expression<Func<Order, bool>> pWhereClause = null, Expression<Func<Order, object>> pInclude = null, Pagination pPagination = null)
+        {
+            return await _orderBusiness.GetListAsync(pWhereClause, pInclude, pPagination);
+        }
+
+        public async Task UpdateAsync(Order pEntity)
+        {
+            await _orderBusiness.UpdateAsync(pEntity);
+        }
+
         public void Update(Order pEntity)
         {
             this._orderBusiness.Update(pEntity);
         }
 
-        public void ToAwaiting(Order pOrder)
+        public async Task ToAwaiting(Order pOrder)
         {
-            this._orderBusiness.ToAwaiting(pOrder);
+            await this._orderBusiness.ToAwaiting(pOrder);
         }
 
-        public void ToReady(Order pOrder, EOrderCommand pCommand)
+        public async Task ToReady(Order pOrder, EOrderCommand pCommand)
         {
-            this._orderBusiness.ToReady(pOrder, pCommand);
+            await this._orderBusiness.ToReady(pOrder, pCommand);
         }
 
-        public void ToPreparing(Order pOrder, EOrderCommand pCommand)
+        public async Task ToPreparing(Order pOrder, EOrderCommand pCommand)
         {
-            this._orderBusiness.ToPreparing(pOrder, pCommand);
+            await this._orderBusiness.ToPreparing(pOrder, pCommand);
         }
 
-        public OrderDTO GetOrderDTO(Expression<Func<Order, bool>> pWhereClause, Expression<Func<Order, object>> pInclude = null)
+        public async Task<OrderDTO> GetOrderDTO(Expression<Func<Order, bool>> pWhereClause, Expression<Func<Order, object>> pInclude = null)
         {
-            var oOrder = this._orderBusiness.Get(pWhereClause, pInclude);
+            var oOrder = await this._orderBusiness.GetAsync(pWhereClause, pInclude);
 
             return
                 new OrderDTO
@@ -84,14 +100,14 @@ namespace OrderDeliveryMonitor.Facade.Implementation.Operation
                 };
         }
 
-        public IEnumerable<OrderDTO> GetListOrderDTO(
-            Expression<Func<Order, bool>> pWhereClause = null, 
-            Expression<Func<Order, object>> pInclude = null, 
+        public async Task<IEnumerable<OrderDTO>> GetListOrderDTO(
+            Expression<Func<Order, bool>> pWhereClause = null,
+            Expression<Func<Order, object>> pInclude = null,
             Pagination pPagination = null)
         {
             List<OrderDTO> oOrderDTOs = new List<OrderDTO>();
 
-            var oOrders = this._orderBusiness.GetList(pWhereClause, pInclude, pPagination);
+            var oOrders = await this._orderBusiness.GetListAsync(pWhereClause, pInclude, pPagination);
 
             foreach (var order in oOrders)
                 oOrderDTOs.Add(

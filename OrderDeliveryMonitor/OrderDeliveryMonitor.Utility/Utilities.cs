@@ -3,7 +3,7 @@ using System.IO;
 
 namespace OrderDeliveryMonitor.Utility
 {
-    public static class AppUtilities
+    public static class Utilities
     {
         public const string RELOAD_AWAITING_CONTAINER = "ReloadAwaitingContainer";        
         public const string LOAD_AWAITING_CONTAINER = "LoadAwaitingContainer";

@@ -171,6 +171,9 @@
   <data name="CLM_SELLING_STATION" xml:space="preserve">
     <value>Selling_Station</value>
   </data>
+  <data name="CLM_USER_ID" xml:space="preserve">
+    <value>Login</value>
+  </data>
   <data name="LBL_AWAITING" xml:space="preserve">
     <value>Awaiting</value>
   </data>
@@ -188,6 +191,12 @@
   </data>
   <data name="LBL_READY" xml:space="preserve">
     <value>Ready</value>
+  </data>
+  <data name="MSG_ORDER_INCORRECT_ID" xml:space="preserve">
+    <value>The code {0} is invalid or incorrect.</value>
+  </data>
+  <data name="MSG_ORDER_NOT_FOUND" xml:space="preserve">
+    <value>Order not found.</value>
   </data>
   <data name="MSG_RECORDS_NOT_FOUND" xml:space="preserve">
     <value>Records not found</value>

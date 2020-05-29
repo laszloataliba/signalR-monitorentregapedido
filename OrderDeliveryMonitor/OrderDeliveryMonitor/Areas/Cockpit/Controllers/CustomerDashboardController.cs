@@ -17,7 +17,7 @@ namespace OrderDeliveryMonitor.Areas.Cockpit.Controllers
         {
             HttpClient httpClient = new HttpClient();
 
-            httpClient.BaseAddress = new Uri($"{AppUtilities.WEB_API_SERVER_PATH}/api/Operation/Order");
+            httpClient.BaseAddress = new Uri($"{Utilities.WEB_API_SERVER_PATH}/api/Operation/Orders");
             var result = await httpClient.GetStringAsync(httpClient.BaseAddress);
             var content = JsonConvert.DeserializeObject<List<OrderDTO>>(result);
 

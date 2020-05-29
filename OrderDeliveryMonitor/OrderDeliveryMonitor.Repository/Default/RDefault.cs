@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace OrderDeliveryMonitor.Repository.Default
 {
@@ -52,6 +53,16 @@ namespace OrderDeliveryMonitor.Repository.Default
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pEntity"></param>
+        /// <returns></returns>
+        public virtual async Task UpdateAsync(T pEntity)
+        {
+            await Task.Run(() => Update(pEntity));
+        }
+
+        /// <summary>
         /// Updates the record in data base.
         /// </summary>
         /// <param name="pEntity"></param>
@@ -92,6 +103,17 @@ namespace OrderDeliveryMonitor.Repository.Default
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pWhereClause"></param>
+        /// <param name="pInclude"></param>
+        /// <returns></returns>
+        public virtual async Task<T> GetAsync(Expression<Func<T, bool>> pWhereClause, Expression<Func<T, object>> pInclude = null)
+        {
+            return await Task.Run(() => Get(pWhereClause, pInclude));
+        }
+
+        /// <summary>
         /// Gets a specific record in data base, according to the given parameters.
         /// </summary>
         /// <param name="pWhereClause">Condition clause.</param>
@@ -119,6 +141,18 @@ namespace OrderDeliveryMonitor.Repository.Default
             {
                 throw ex;
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pWhereClause"></param>
+        /// <param name="pInclude"></param>
+        /// <param name="pPagination"></param>
+        /// <returns></returns>
+        public virtual async Task<IEnumerable<T>> GetListAsync(Expression<Func<T, bool>> pWhereClause = null, Expression<Func<T, object>> pInclude = null, Pagination pPagination = null)
+        {
+            return await Task.Run(() => GetList(pWhereClause, pInclude, pPagination));
         }
 
         /// <summary>

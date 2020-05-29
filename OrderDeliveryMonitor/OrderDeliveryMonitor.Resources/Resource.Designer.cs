@@ -223,6 +223,15 @@ namespace OrderDeliveryMonitor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        public static string CLM_USER_ID {
+            get {
+                return ResourceManager.GetString("CLM_USER_ID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aguardando.
         /// </summary>
         public static string LBL_AWAITING {
@@ -273,6 +282,24 @@ namespace OrderDeliveryMonitor.Resources {
         public static string LBL_READY {
             get {
                 return ResourceManager.GetString("LBL_READY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O código {0} é inválido ou incorreto..
+        /// </summary>
+        public static string MSG_ORDER_INCORRECT_ID {
+            get {
+                return ResourceManager.GetString("MSG_ORDER_INCORRECT_ID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pedido não encontrado..
+        /// </summary>
+        public static string MSG_ORDER_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("MSG_ORDER_NOT_FOUND", resourceCulture);
             }
         }
         
