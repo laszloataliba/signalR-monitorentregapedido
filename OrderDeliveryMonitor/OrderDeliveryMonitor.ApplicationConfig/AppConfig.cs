@@ -18,7 +18,7 @@ namespace OrderDeliveryMonitor.ApplicationConfig
 
         private static void Configure(IServiceCollection pServices)
         {
-            pServices.AddTransient(typeof(IFOrder), typeof(FOrder));
+            pServices.AddScoped(typeof(IFOrder), typeof(FOrder));
         }
     }
 }

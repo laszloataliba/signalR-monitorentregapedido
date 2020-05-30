@@ -58,7 +58,7 @@ namespace OrderDeliveryMonitor.Api.Controllers.Operation
         /// <param name="pPagination">Pagination parameters.</param>
         /// <returns>Order list.</returns>
         [HttpGet]
-        public async Task<IActionResult> Get(
+        public async Task<IActionResult> GetAll(
             EOrderProcess pProcess = EOrderProcess.None,
             [FromQuery] Pagination pPagination = null)
         {
@@ -132,9 +132,9 @@ namespace OrderDeliveryMonitor.Api.Controllers.Operation
         /// Changes order status.
         /// </summary>
         /// <param name="pOrderCode">Order identifier.</param>
-        /// <returns></returns>
+        /// <returns>Result.</returns>
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody] Order pOrderCode)
+        public async Task<IActionResult> PutInLine([FromBody] Order pOrderCode)
         {
             try
             {

@@ -6,6 +6,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using OrderDeliveryMonitor.ApplicationConfig;
+using OrderDeliveryMonitor.Services.Operation.Implementation;
+using OrderDeliveryMonitor.Services.Operation.Interface;
+using OrderDeliveryMonitor.Utility;
+using System;
 
 namespace OrderDeliveryMonitor
 {
@@ -29,6 +33,11 @@ namespace OrderDeliveryMonitor
             });
 
             AppConfig.ConfigureWebApplication(services);
+            
+            //Order services
+            services.AddHttpClient<IOrderService, OrderService>(order => {
+                order.BaseAddress = new Uri($"{Utilities.WEB_API_SERVER_PATH}/api/Operation/Orders");
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

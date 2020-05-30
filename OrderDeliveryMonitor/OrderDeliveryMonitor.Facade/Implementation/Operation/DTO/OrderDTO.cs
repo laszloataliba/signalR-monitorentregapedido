@@ -8,8 +8,8 @@ namespace OrderDeliveryMonitor.Facade.Implementation.Operation.DTO
     public class OrderDTO
     {
         public int OrderId { get; set; }
-        public string OrderNumber { get; set; }
         public string OrderCode { get; set; }
+        public string OrderNumber { get; set; }
         public int? SellingStation { get; set; }
         public string Cashier { get; set; }
         public string UserId { get; set; }
@@ -24,7 +24,7 @@ namespace OrderDeliveryMonitor.Facade.Implementation.Operation.DTO
         public DateTime? ReadEnd { get; set; }
         public DateTime? RedeemDate { get; set; }
 
-        public virtual IEnumerable<OrderItem> Items { get; set; }
+        public IEnumerable<OrderItem> Items { get; set; }
 
         public string TicketLayout => Layout();
 

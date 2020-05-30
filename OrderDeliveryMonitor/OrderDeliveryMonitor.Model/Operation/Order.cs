@@ -6,8 +6,8 @@ namespace OrderDeliveryMonitor.Model.Operation
     public class Order
     {
         public int OrderId { get; set; }
-        public string OrderNumber { get; set; }
         public string OrderCode { get; set; }
+        public string OrderNumber { get; set; }
         public int? SellingStation { get; set; }
         public string Cashier { get; set; }
         public string UserId { get; set; }
