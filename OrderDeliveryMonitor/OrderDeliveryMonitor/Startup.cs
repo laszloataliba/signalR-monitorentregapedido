@@ -36,7 +36,7 @@ namespace OrderDeliveryMonitor
             
             //Order services
             services.AddHttpClient<IOrderService, OrderService>(order => {
-                order.BaseAddress = new Uri($"{Utilities.WEB_API_SERVER_PATH}/api/Operation/Orders");
+                order.BaseAddress = new Uri($"{Utilities.WEB_API_SERVER_PATH}/api/v1/Operation/Orders");
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
