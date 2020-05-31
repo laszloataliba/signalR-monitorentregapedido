@@ -41,7 +41,7 @@ namespace OrderDeliveryMonitor.Api
             services.AddApiVersioning(version => {
                 version.ReportApiVersions = true;
                 version.AssumeDefaultVersionWhenUnspecified = true;
-                //version.DefaultApiVersion = new ApiVersion(1, 0);
+                version.DefaultApiVersion = new ApiVersion(1, 0);
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

@@ -3,8 +3,8 @@
 namespace OrderDeliveryMonitor.Api.V2.Controllers.Operation
 {
     [ApiController, 
-     Route("api/v{version:apiVersion}/Operation/[controller]"), 
-     ApiVersion("2.0")]
+     ApiVersion("2.0"),
+     Route("api/v{version:apiVersion}/Operation/[controller]")]
     public class OrdersController : ControllerBase
     {
         [HttpGet]

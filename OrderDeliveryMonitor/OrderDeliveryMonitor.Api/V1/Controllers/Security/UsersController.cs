@@ -9,8 +9,8 @@ namespace OrderDeliveryMonitor.Api.V1.Controllers.Security
     /// 
     /// </summary>
     [ApiController,
-     Route("api/v{version:apiVersion}/Security/[controller]"),
-     ApiVersion("1.0")]
+     ApiVersion("1.0"),
+     Route("api/v{version:apiVersion}/Security/[controller]")]
     public class UsersController : ControllerBase
     {
         #region :: Fields ::
@@ -40,13 +40,13 @@ namespace OrderDeliveryMonitor.Api.V1.Controllers.Security
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "User - value1", "User - value2" };
         }
 
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            return "value";
+            return "User - value";
         }
 
         [HttpPost]

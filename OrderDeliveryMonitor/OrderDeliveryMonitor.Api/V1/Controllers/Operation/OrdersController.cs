@@ -17,8 +17,8 @@ namespace OrderDeliveryMonitor.Api.V1.Controllers.Operation
     /// Order controller.
     /// </summary>
     [ApiController,
-     Route("api/v{version:apiVersion}/Operation/[controller]"),
-     ApiVersion("1.0")]
+     ApiVersion("1.0"),
+     Route("api/v{version:apiVersion}/Operation/[controller]")]
     public class OrdersController : ControllerBase
     {
         #region :: Fields ::
