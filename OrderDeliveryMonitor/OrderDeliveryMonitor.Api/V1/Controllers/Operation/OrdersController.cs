@@ -11,13 +11,14 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OrderDeliveryMonitor.Api.Controllers.Operation
+namespace OrderDeliveryMonitor.Api.V1.Controllers.Operation
 {
     /// <summary>
     /// Order controller.
     /// </summary>
-    [Route("api/Operation/Orders"),
-     ApiController]
+    [ApiController,
+     Route("api/v{version:apiVersion}/Operation/[controller]"),
+     ApiVersion("1.0")]
     public class OrdersController : ControllerBase
     {
         #region :: Fields ::

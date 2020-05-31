@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using OrderDeliveryMonitor.Api.Hubs;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace OrderDeliveryMonitor.Api.Controllers
+namespace OrderDeliveryMonitor.Api.V1.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [ApiController,
+     Route("api/v{version:apiVersion}/[controller]"),
+     ApiVersion("1.0")]
     public class ValuesController : ControllerBase
     {
         private readonly IHubContext<OrderDeliveryMonitorHub> _hubContext;

@@ -14,6 +14,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
   </ItemGroup>
@@ -22,6 +24,10 @@
     <ProjectReference Include="..\OrderDeliveryMonitor.ApplicationConfig\OrderDeliveryMonitor.ApplicationConfig.csproj" />
     <ProjectReference Include="..\OrderDeliveryMonitor.Model\OrderDeliveryMonitor.Model.csproj" />
     <ProjectReference Include="..\OrderDeliveryMonitor.Utility\OrderDeliveryMonitor.Utility.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="V2\Controllers\Security\" />
   </ItemGroup>
 
 </Project>

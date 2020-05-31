@@ -3,13 +3,14 @@ using Microsoft.AspNetCore.SignalR;
 using OrderDeliveryMonitor.Api.Hubs;
 using System.Collections.Generic;
 
-namespace OrderDeliveryMonitor.Api.Controllers.Security
+namespace OrderDeliveryMonitor.Api.V1.Controllers.Security
 {
     /// <summary>
     /// 
     /// </summary>
-    [Route("api/Security/Users"),
-     ApiController]
+    [ApiController,
+     Route("api/v{version:apiVersion}/Security/[controller]"),
+     ApiVersion("1.0")]
     public class UsersController : ControllerBase
     {
         #region :: Fields ::

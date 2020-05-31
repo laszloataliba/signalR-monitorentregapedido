@@ -20,6 +20,7 @@ namespace OrderDeliveryMonitor.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Adding CORS middleware.
             services.AddCors(options => {
                 options.AddPolicy("AllowCors",
                     builder => builder
@@ -30,9 +31,18 @@ namespace OrderDeliveryMonitor.Api
                         );
             });
 
+            //Adding signalR middleware.
             services.AddSignalR(cfg => cfg.EnableDetailedErrors = true);
 
+            //Dependency injection.
             AppConfig.ConfigureWebApi(services);
+
+            //API versioning middleware.
+            services.AddApiVersioning(version => {
+                version.ReportApiVersions = true;
+                version.AssumeDefaultVersionWhenUnspecified = true;
+                //version.DefaultApiVersion = new ApiVersion(1, 0);
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
