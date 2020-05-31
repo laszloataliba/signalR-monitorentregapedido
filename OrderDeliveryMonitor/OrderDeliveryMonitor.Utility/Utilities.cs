@@ -30,6 +30,9 @@ namespace OrderDeliveryMonitor.Utility
         public static string HUB_SERVER_PATH = HubServerPath();
         public static string WEB_API_SERVER_PATH = WebApiServerPath();
 
+        public static string ORDER_SERVICE_VERSION = OrderServiceVersion();
+        public static string USER_SERVICE_VERSION = UserServiceVersion();
+
         private static string HubServerPath()
         {
             var vConfigBuilder = new ConfigurationBuilder();
@@ -55,10 +58,39 @@ namespace OrderDeliveryMonitor.Utility
 
             var vRoot = vConfigBuilder.Build();
 
-            var vHubPath = vRoot.GetSection("WebAPIServerPath").Value;
+            var vServicePath = vRoot.GetSection("WebAPIServerPath").Value;
 
-            return vHubPath;
+            return vServicePath;
         }
 
+        private static string OrderServiceVersion()
+        {
+            var vConfigBuilder = new ConfigurationBuilder();
+
+            var vPath = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
+
+            vConfigBuilder.AddJsonFile(vPath, false);
+
+            var vRoot = vConfigBuilder.Build();
+
+            var vOrderServiceVersion = vRoot.GetSection("OrderServiceVersion").Value;
+
+            return vOrderServiceVersion;
+        }
+
+        private static string UserServiceVersion()
+        {
+            var vConfigBuilder = new ConfigurationBuilder();
+
+            var vPath = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
+
+            vConfigBuilder.AddJsonFile(vPath, false);
+
+            var vRoot = vConfigBuilder.Build();
+
+            var vUserServiceVersion = vRoot.GetSection("UserServiceVersion").Value;
+
+            return vUserServiceVersion;
+        }
     }
 }
