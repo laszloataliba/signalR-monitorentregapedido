@@ -1,0 +1,223 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OrderDeliveryMonitor.Model</name>
+    </assembly>
+    <members>
+        <member name="T:OrderDeliveryMonitor.Model.Operation.Order">
+            <summary>
+            Order model.
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Model.Operation.Order.OrderId">
+            <summary>
+            Order relational key.
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Model.Operation.Order.OrderCode">
+            <summary>
+            Order Code identifier.
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Model.Operation.Order.OrderNumber">
+            <summary>
+            Number to identify order.
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Model.Operation.Order.SellingStation">
+            <summary>
+            Identification for selling station.
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Model.Operation.Order.Cashier">
+            <summary>
+            Cashier identifier.
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Model.Operation.Order.UserId">
+            <summary>
+            Operator identifier.
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Model.Operation.Order.SaleChannel">
+            <summary>
+            Sale channel identification.
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Model.Operation.Order.Process">
+            <summary>
+            Current process (Awaiting | Preparing | Ready - Redeemed).
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Model.Operation.Order.Command">
+            <summary>
+            Style controller.
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Model.Operation.Order.AwaitingStart">
+            <summary>
+            The moment when check-in is made.
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Model.Operation.Order.AwaitingEnd">
+            <summary>
+            When operator moves the order to preparing process.
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Model.Operation.Order.PreparingStart">
+            <summary>
+            Moment when the order is moved to preparing process.
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Model.Operation.Order.PreparingEnd">
+            <summary>
+            When operator moves the order to ready.
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Model.Operation.Order.ReadyStart">
+            <summary>
+            Moment when the order is moved to ready.
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Model.Operation.Order.ReadyEnd">
+            <summary>
+            Moment when operator delivers the order to customer.
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Model.Operation.Order.RedeemDate">
+            <summary>
+            When order is redeemed by customer.
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Model.Operation.Order.Items">
+            <summary>
+            Product list attached to order.
+            </summary>
+        </member>
+        <member name="T:OrderDeliveryMonitor.Model.Operation.EOrderCommand">
+            <summary>
+            Style controller.
+            </summary>
+        </member>
+        <member name="F:OrderDeliveryMonitor.Model.Operation.EOrderCommand.None">
+            <summary>
+            No effect css class.
+            </summary>
+        </member>
+        <member name="F:OrderDeliveryMonitor.Model.Operation.EOrderCommand.Sent">
+            <summary>
+            Applied when operator clicks to change process.
+            </summary>
+        </member>
+        <member name="F:OrderDeliveryMonitor.Model.Operation.EOrderCommand.Dragged">
+            <summary>
+            Applied when operator drags to change process.
+            </summary>
+        </member>
+        <member name="F:OrderDeliveryMonitor.Model.Operation.EOrderCommand.Received">
+            <summary>
+            Applied when process has changed by click.
+            </summary>
+        </member>
+        <member name="F:OrderDeliveryMonitor.Model.Operation.EOrderCommand.Dropped">
+            <summary>
+            Applied when process has changed by dragging.
+            </summary>
+        </member>
+        <member name="T:OrderDeliveryMonitor.Model.Operation.EOrderProcess">
+            <summary>
+            Order process.
+            </summary>
+        </member>
+        <member name="F:OrderDeliveryMonitor.Model.Operation.EOrderProcess.None">
+            <summary>
+            Order was not putted in line yet(waiting for checkin).
+            </summary>
+        </member>
+        <member name="F:OrderDeliveryMonitor.Model.Operation.EOrderProcess.Awaiting">
+            <summary>
+            Order is waiting for preparation.
+            </summary>
+        </member>
+        <member name="F:OrderDeliveryMonitor.Model.Operation.EOrderProcess.Preparing">
+            <summary>
+            Order is being prepared.
+            </summary>
+        </member>
+        <member name="F:OrderDeliveryMonitor.Model.Operation.EOrderProcess.Ready">
+            <summary>
+            Order is ready to redeem.
+            </summary>
+        </member>
+        <member name="F:OrderDeliveryMonitor.Model.Operation.EOrderProcess.Redeemed">
+            <summary>
+            Order redeemed.
+            </summary>
+        </member>
+        <member name="T:OrderDeliveryMonitor.Model.Operation.EOrderSaleChannel">
+            <summary>
+            Sale channel.
+            </summary>
+        </member>
+        <member name="F:OrderDeliveryMonitor.Model.Operation.EOrderSaleChannel.ALL">
+            <summary>
+            All.
+            </summary>
+        </member>
+        <member name="F:OrderDeliveryMonitor.Model.Operation.EOrderSaleChannel.BIL">
+            <summary>
+            Box office.
+            </summary>
+        </member>
+        <member name="F:OrderDeliveryMonitor.Model.Operation.EOrderSaleChannel.ATM">
+            <summary>
+            ATM.
+            </summary>
+        </member>
+        <member name="F:OrderDeliveryMonitor.Model.Operation.EOrderSaleChannel.BOM">
+            <summary>
+            Bomboniere.
+            </summary>
+        </member>
+        <member name="F:OrderDeliveryMonitor.Model.Operation.EOrderSaleChannel.APC">
+            <summary>
+            e-Commerce.
+            </summary>
+        </member>
+        <member name="F:OrderDeliveryMonitor.Model.Operation.EOrderSaleChannel.HIB">
+            <summary>
+            Hybrid box office.
+            </summary>
+        </member>
+        <member name="T:OrderDeliveryMonitor.Model.Operation.OrderItem">
+            <summary>
+            Model for Order items.
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Model.Operation.OrderItem.OrderItemId">
+            <summary>
+            Order item relational key.
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Model.Operation.OrderItem.OrderId">
+            <summary>
+            Order identification.
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Model.Operation.OrderItem.Order">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Model.Operation.OrderItem.Product">
+            <summary>
+            Product desciption.
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Model.Operation.OrderItem.Quantity">
+            <summary>
+            Product quantity.
+            </summary>
+        </member>
+    </members>
+</doc>

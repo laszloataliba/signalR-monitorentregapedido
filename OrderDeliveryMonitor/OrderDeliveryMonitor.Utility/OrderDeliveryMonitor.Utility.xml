@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OrderDeliveryMonitor.Utility</name>
+    </assembly>
+    <members>
+        <member name="T:OrderDeliveryMonitor.Utility.Pagination">
+            <summary>
+            Helper class for pagination.
+            </summary>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Utility.Pagination.#ctor">
+            <summary>
+            Constructor method.
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Utility.Pagination.PageSize">
+            <summary>
+            Records per page.
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Utility.Pagination.CurrentPage">
+            <summary>
+            Current page identifier.
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Utility.Pagination.TotalRecords">
+            <summary>
+            Total records.
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Utility.Pagination.TotalPages">
+            <summary>
+            Total pages.
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Utility.Pagination.Take">
+            <summary>
+            Quantity of records to be taken in the request.
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Utility.Pagination.Skip">
+            <summary>
+            Quantity of records to be skipped.
+            </summary>
+        </member>
+    </members>
+</doc>

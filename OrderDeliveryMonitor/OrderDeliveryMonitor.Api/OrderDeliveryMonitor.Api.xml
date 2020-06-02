@@ -1,0 +1,188 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OrderDeliveryMonitor.Api</name>
+    </assembly>
+    <members>
+        <member name="T:OrderDeliveryMonitor.Api.Helpers.Swagger.ActionDescriptorExtensions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Api.Helpers.Swagger.ActionDescriptorExtensions.GetApiVersion(Microsoft.AspNetCore.Mvc.Abstractions.ActionDescriptor)">
+            <summary>
+            
+            </summary>
+            <param name="actionDescriptor"></param>
+            <returns></returns>
+        </member>
+        <member name="T:OrderDeliveryMonitor.Api.Helpers.Swagger.ApiVersionOperationFilter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Api.Helpers.Swagger.ApiVersionOperationFilter.Apply(Swashbuckle.AspNetCore.Swagger.Operation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+            
+            </summary>
+            <param name="operation"></param>
+            <param name="context"></param>
+        </member>
+        <member name="T:OrderDeliveryMonitor.Api.Hubs.OrderDeliveryMonitorHub">
+            <summary>
+            Hub for real time communication.
+            </summary>
+        </member>
+        <member name="F:OrderDeliveryMonitor.Api.Hubs.OrderDeliveryMonitorHub.fOrder">
+            <summary>
+            Order model facade object.
+            </summary>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Api.Hubs.OrderDeliveryMonitorHub.#ctor(OrderDeliveryMonitor.Facade.Interface.Operation.IFOrder)">
+            <summary>
+            Constructor method.
+            </summary>
+            <param name="pFOrder">Order model facade parameter.</param>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Api.Hubs.OrderDeliveryMonitorHub.ReloadAwaitingContainer(System.Int32[])">
+            <summary>
+            Orders already in monitoring and/or putted on waiting status.
+            </summary>
+            <param name="pOrders">Orders already in monitoring.</param>
+            <returns>Reloads the respective containers with orders on waiting status.</returns>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Api.Hubs.OrderDeliveryMonitorHub.FromAwaitingToPreparing(System.Int32[],System.Int32,OrderDeliveryMonitor.Model.Operation.EOrderCommand)">
+            <summary>
+            Changes order status to preparing and shows orders already in monitoring and/or putted on preparing status.
+            </summary>
+            <param name="pOrders">Orders already in monitoring.</param>
+            <param name="pOrderId">Order identifier.</param>
+            <param name="pCommand">Command to control applying styles.</param>
+            <returns>Reloads the orders containers according to its respective status.</returns>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Api.Hubs.OrderDeliveryMonitorHub.FromPreparingToReady(System.Int32[],System.Int32,OrderDeliveryMonitor.Model.Operation.EOrderCommand)">
+            <summary>
+            Changes order status to ready/redeemed and shows orders already in monitoring and/or putted on ready/redeemed status.
+            </summary>
+            <param name="pOrders">Orders already in monitoring.</param>
+            <param name="pOrderId">Order identifier.</param>
+            <param name="pCommand">Command to control applying styles.</param>
+            <returns>Reloads the orders containers according to its respective status.</returns>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Api.Hubs.OrderDeliveryMonitorHub.HideReadyOrderByTimeOut(System.Int32)">
+            <summary>
+            Reloads the containers for orders on ready/redeemed status that achieve its timed out defined.
+            </summary>
+            <param name="pOrderId">Order identifier.</param>
+            <returns>Reloads the containers for orders on ready/redeemed status.</returns>
+        </member>
+        <member name="T:OrderDeliveryMonitor.Api.Startup">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Api.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Api.Startup.Configuration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Api.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Api.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
+            <summary>
+            
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
+        <member name="T:OrderDeliveryMonitor.Api.V1.Controllers.Operation.OrdersController">
+            <summary>
+            API to handling monitored orders.
+            </summary>
+        </member>
+        <member name="F:OrderDeliveryMonitor.Api.V1.Controllers.Operation.OrdersController._hubContext">
+            <summary>
+            Hub access object.
+            </summary>
+        </member>
+        <member name="F:OrderDeliveryMonitor.Api.V1.Controllers.Operation.OrdersController.fOrder">
+            <summary>
+            Order model facade object.
+            </summary>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Api.V1.Controllers.Operation.OrdersController.#ctor(Microsoft.AspNetCore.SignalR.IHubContext{OrderDeliveryMonitor.Api.Hubs.OrderDeliveryMonitorHub},OrderDeliveryMonitor.Facade.Interface.Operation.IFOrder)">
+            <summary>
+            Constructor method.
+            </summary>
+            <param name="hubContext">Hub access obejct parameter.</param>
+            <param name="pFOrder">Order model facade parameter.</param>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Api.V1.Controllers.Operation.OrdersController.GetAll(OrderDeliveryMonitor.Model.Operation.EOrderProcess,OrderDeliveryMonitor.Utility.Pagination)">
+            <summary>
+            Recovers the orders according to given parameters.
+            </summary>
+            <param name="pProcess">Process that requested query must follow to recover an order list.</param>
+            <param name="pPagination">Pagination parameters.</param>
+            <returns>Order list.</returns>
+            <response code="200">When api works correctly.</response>
+            <response code="404">When orders were not found.</response>
+            <response code="500">If an unexpected error occurs.</response>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Api.V1.Controllers.Operation.OrdersController.Get(System.String)">
+            <summary>
+            Recovers the order data by given identifier.
+            </summary>
+            <param name="pOrderCode">Order identifier.</param>
+            <returns>Order data.</returns>
+            <response code="200">When api works correctly.</response>
+            <response code="400">If an invalid identifier is given.</response>
+            <response code="404">When order were not found.</response>
+            <response code="500">If an unexpected error occurs.</response>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Api.V1.Controllers.Operation.OrdersController.PutInLine(OrderDeliveryMonitor.Model.Operation.Order)">
+            <summary>
+            Performs the check-in for the order according to the identifier provided.
+            </summary>
+            <remarks>
+            Sample request:
+            
+                PUT /Orders
+                {
+                   "OrderCode": "xxxxxxxxxx"
+                }
+            </remarks>
+            <param name="pOrderCode">Order identifier.</param>
+            <returns>No content.</returns>
+            <response code="204">When api works correctly.</response>
+            <response code="400">If an invalid identifier is given.</response>
+            <response code="404">When order were not found.</response>
+            <response code="500">If an unexpected error occurs.</response>
+        </member>
+        <member name="T:OrderDeliveryMonitor.Api.V1.Controllers.Security.UsersController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:OrderDeliveryMonitor.Api.V1.Controllers.Security.UsersController._hubContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Api.V1.Controllers.Security.UsersController.#ctor(Microsoft.AspNetCore.SignalR.IHubContext{OrderDeliveryMonitor.Api.Hubs.OrderDeliveryMonitorHub})">
+            <summary>
+            
+            </summary>
+            <param name="hubContext"></param>
+        </member>
+    </members>
+</doc>

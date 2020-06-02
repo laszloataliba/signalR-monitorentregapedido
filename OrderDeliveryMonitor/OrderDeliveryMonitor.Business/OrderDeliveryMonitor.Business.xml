@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OrderDeliveryMonitor.Business</name>
+    </assembly>
+    <members>
+        <member name="M:OrderDeliveryMonitor.Business.Validation.Operation.BOrderValidation.GetOrder(System.String)">
+            <summary>
+            Validates the given code and returns order data according to its code.
+            </summary>
+            <param name="pOrderCode">Order code.</param>
+            <returns>Order data.</returns>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Business.Validation.Operation.BOrderValidation.GetOrder(System.Int32)">
+            <summary>
+            Validates the given identifier and returns order data according to its key.
+            </summary>
+            <param name="pOrderId">Order identifier(DbIdentity).</param>
+            <returns>Order data.</returns>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Business.Validation.Operation.BOrderValidation.GetOrder(OrderDeliveryMonitor.Model.Operation.Order)">
+            <summary>
+            Validates and returns order data.
+            </summary>
+            <param name="pOrder">Order data.</param>
+            <returns>Order data.</returns>
+        </member>
+    </members>
+</doc>

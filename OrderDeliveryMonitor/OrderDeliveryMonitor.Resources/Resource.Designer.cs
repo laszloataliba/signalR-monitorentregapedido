@@ -232,6 +232,24 @@ namespace OrderDeliveryMonitor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Api&apos;s referentes à movimentação dos pedidos monitorados no caixa express..
+        /// </summary>
+        public static string LBL_APPLICATION_DOC_DESCRIPTION {
+            get {
+                return ResourceManager.GetString("LBL_APPLICATION_DOC_DESCRIPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Caixa Express.
+        /// </summary>
+        public static string LBL_APPLICATION_NAME {
+            get {
+                return ResourceManager.GetString("LBL_APPLICATION_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aguardando.
         /// </summary>
         public static string LBL_AWAITING {
@@ -282,6 +300,15 @@ namespace OrderDeliveryMonitor.Resources {
         public static string LBL_READY {
             get {
                 return ResourceManager.GetString("LBL_READY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Versão.
+        /// </summary>
+        public static string LBL_VERSION {
+            get {
+                return ResourceManager.GetString("LBL_VERSION", resourceCulture);
             }
         }
         

@@ -14,10 +14,11 @@ using System.Threading.Tasks;
 namespace OrderDeliveryMonitor.Api.V1.Controllers.Operation
 {
     /// <summary>
-    /// Order controller.
+    /// API to handling monitored orders.
     /// </summary>
     [ApiController,
      ApiVersion("1.0"),
+     Produces("application/json", "application/xml"),
      Route("api/v{version:apiVersion}/Operation/[controller]")]
     public class OrdersController : ControllerBase
     {
@@ -58,7 +59,14 @@ namespace OrderDeliveryMonitor.Api.V1.Controllers.Operation
         /// <param name="pProcess">Process that requested query must follow to recover an order list.</param>
         /// <param name="pPagination">Pagination parameters.</param>
         /// <returns>Order list.</returns>
-        [HttpGet]
+        /// <response code="200">When api works correctly.</response>
+        /// <response code="404">When orders were not found.</response>
+        /// <response code="500">If an unexpected error occurs.</response>
+        [HttpGet,
+         Consumes("application/json"),
+         ProducesResponseType(StatusCodes.Status200OK),
+         ProducesResponseType(StatusCodes.Status404NotFound),
+         ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAll(
             EOrderProcess pProcess = EOrderProcess.None,
             [FromQuery] Pagination pPagination = null)
@@ -102,7 +110,16 @@ namespace OrderDeliveryMonitor.Api.V1.Controllers.Operation
         /// </summary>
         /// <param name="pOrderCode">Order identifier.</param>
         /// <returns>Order data.</returns>
-        [HttpGet("{pOrderCode}")]
+        /// <response code="200">When api works correctly.</response>
+        /// <response code="400">If an invalid identifier is given.</response>
+        /// <response code="404">When order were not found.</response>
+        /// <response code="500">If an unexpected error occurs.</response>
+        [HttpGet("{pOrderCode}"),
+         Consumes("application/json"),
+         ProducesResponseType(StatusCodes.Status200OK),
+         ProducesResponseType(StatusCodes.Status400BadRequest),
+         ProducesResponseType(StatusCodes.Status404NotFound),
+         ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(string pOrderCode)
         {
             try
@@ -130,11 +147,28 @@ namespace OrderDeliveryMonitor.Api.V1.Controllers.Operation
         }
 
         /// <summary>
-        /// Changes order status.
+        /// Performs the check-in for the order according to the identifier provided.
         /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     PUT /Orders
+        ///     {
+        ///        "OrderCode": "xxxxxxxxxx"
+        ///     }
+        /// </remarks>
         /// <param name="pOrderCode">Order identifier.</param>
-        /// <returns>Result.</returns>
-        [HttpPut]
+        /// <returns>No content.</returns>
+        /// <response code="204">When api works correctly.</response>
+        /// <response code="400">If an invalid identifier is given.</response>
+        /// <response code="404">When order were not found.</response>
+        /// <response code="500">If an unexpected error occurs.</response>
+        [HttpPut,
+         Consumes("application/json"),
+         ProducesResponseType(StatusCodes.Status204NoContent),
+         ProducesResponseType(StatusCodes.Status400BadRequest),
+         ProducesResponseType(StatusCodes.Status404NotFound),
+         ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> PutInLine([FromBody] Order pOrderCode)
         {
             try
@@ -143,7 +177,7 @@ namespace OrderDeliveryMonitor.Api.V1.Controllers.Operation
 
                 await _hubContext.Clients.All.SendAsync($"{Utilities.RELOAD_AWAITING_CONTAINER}");
 
-                return Ok();
+                return NoContent();
             }
             catch (CustomException ex)
             {
