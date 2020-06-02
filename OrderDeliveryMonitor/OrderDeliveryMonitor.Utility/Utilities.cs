@@ -5,6 +5,11 @@ namespace OrderDeliveryMonitor.Utility
 {
     public static class Utilities
     {
+        static Utilities()
+        {
+            SetAppSettingsKeys();
+        }
+
         public const string RELOAD_AWAITING_CONTAINER = "ReloadAwaitingContainer";        
         public const string LOAD_AWAITING_CONTAINER = "LoadAwaitingContainer";
         public const string LOAD_AWAITING_CONTAINER_FOR_CUSTOMERS = "LoadAwaitingContainerForCustomers";
@@ -27,10 +32,12 @@ namespace OrderDeliveryMonitor.Utility
         public const string READY_CLASS = "ready";
         public const string REDEEMED_CLASS = "ready";
 
-        public static string HUB_SERVER_PATH = HubServerPath();
-        public static string WEB_API_SERVER_PATH = WebApiServerPath();
+        public static string HUB_SERVER_PATH = "";
+        public static string WEB_API_SERVER_PATH = "";
+        public static string ORDER_SERVICE_VERSION = "";
+        public static string USER_SERVICE_VERSION = "";
 
-        private static string HubServerPath()
+        private static void SetAppSettingsKeys()
         {
             var vConfigBuilder = new ConfigurationBuilder();
 
@@ -40,25 +47,10 @@ namespace OrderDeliveryMonitor.Utility
 
             var vRoot = vConfigBuilder.Build();
 
-            var vHubPath = vRoot.GetSection("HubServerPath").Value;
-
-            return vHubPath;
+            HUB_SERVER_PATH = vRoot.GetSection("HubServerPath").Value;
+            WEB_API_SERVER_PATH = vRoot.GetSection("WebAPIServerPath").Value;
+            ORDER_SERVICE_VERSION = vRoot.GetSection("OrderServiceVersion").Value;
+            USER_SERVICE_VERSION = vRoot.GetSection("UserServiceVersion").Value;
         }
-
-        private static string WebApiServerPath()
-        {
-            var vConfigBuilder = new ConfigurationBuilder();
-
-            var vPath = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
-
-            vConfigBuilder.AddJsonFile(vPath, false);
-
-            var vRoot = vConfigBuilder.Build();
-
-            var vHubPath = vRoot.GetSection("WebAPIServerPath").Value;
-
-            return vHubPath;
-        }
-
     }
 }

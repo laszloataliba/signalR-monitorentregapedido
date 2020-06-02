@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OrderDeliveryMonitor.Repository</name>
+    </assembly>
+    <members>
+        <member name="T:OrderDeliveryMonitor.Repository.Default.RDefault`1">
+            <summary>
+            Default generic repository class.
+            </summary>
+            <typeparam name="T">Object name.</typeparam>
+        </member>
+        <member name="F:OrderDeliveryMonitor.Repository.Default.RDefault`1._context">
+            <summary>
+            Context object. Provides the access to database inside this class.
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.Repository.Default.RDefault`1.Context">
+            <summary>
+            Context object. Provides access to database for objects that inherits this class.
+            </summary>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Repository.Default.RDefault`1.#ctor">
+            <summary>
+            RDefault constructor method.
+            </summary>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Repository.Default.RDefault`1.Create(`0)">
+            <summary>
+            Creates the record in data base.
+            </summary>
+            <param name="pEntity"></param>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Repository.Default.RDefault`1.UpdateAsync(`0)">
+            <summary>
+            
+            </summary>
+            <param name="pEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Repository.Default.RDefault`1.Update(`0)">
+            <summary>
+            Updates the record in data base.
+            </summary>
+            <param name="pEntity"></param>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Repository.Default.RDefault`1.Delete(`0)">
+            <summary>
+            Deletes the record in data base.
+            </summary>
+            <param name="pEntity"></param>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Repository.Default.RDefault`1.GetAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+            <summary>
+            
+            </summary>
+            <param name="pWhereClause"></param>
+            <param name="pInclude"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Repository.Default.RDefault`1.Get(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+            <summary>
+            Gets a specific record in data base, according to the given parameters.
+            </summary>
+            <param name="pWhereClause">Condition clause.</param>
+            <param name="pInclude">Object to be included in the query.</param>
+            <returns>Object requested.</returns>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Repository.Default.RDefault`1.GetListAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}},OrderDeliveryMonitor.Utility.Pagination)">
+            <summary>
+            
+            </summary>
+            <param name="pWhereClause"></param>
+            <param name="pInclude"></param>
+            <param name="pPagination"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Repository.Default.RDefault`1.GetList(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}},OrderDeliveryMonitor.Utility.Pagination)">
+            <summary>
+            Gets a list of records from data base, according to the given parameters.
+            </summary>
+            <param name="pWhereClause">Condition clause.</param>
+            <param name="pInclude">Object to be included in the query.</param>
+            <param name="pPagination">Pagination object.</param>
+            <returns>List of requested objects.</returns>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Repository.Default.RDefault`1.BeginTransaction">
+            <summary>
+            Method that starts the control of the current transaction in data base.
+            </summary>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Repository.Default.RDefault`1.CommitTransaction">
+            <summary>
+            Method that commits the current transaction controlled in data base.
+            </summary>
+        </member>
+        <member name="M:OrderDeliveryMonitor.Repository.Default.RDefault`1.RollbackTransaction">
+            <summary>
+            Method that rollbacks the current transaction controlled in data base.
+            </summary>
+        </member>
+    </members>
+</doc>

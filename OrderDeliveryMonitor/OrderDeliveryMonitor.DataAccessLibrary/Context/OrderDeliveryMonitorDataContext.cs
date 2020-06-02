@@ -2,6 +2,7 @@
 using OrderDeliveryMonitor.DataAccessLibrary.AppConfig;
 using OrderDeliveryMonitor.DataAccessLibrary.Configuration.Operation;
 using OrderDeliveryMonitor.Model.Operation;
+using System;
 
 namespace OrderDeliveryMonitor.DataAccessLibrary.Context
 {
@@ -35,7 +36,11 @@ namespace OrderDeliveryMonitor.DataAccessLibrary.Context
                     AppConfiguration.ConnectionString,
                     options => {
                         options.CommandTimeout(AppConfiguration.ConnectionTimeOut);
-                        options.EnableRetryOnFailure();
+                        options.EnableRetryOnFailure(
+                                maxRetryCount: 10, 
+                                maxRetryDelay: TimeSpan.FromSeconds(30), 
+                                errorNumbersToAdd: null
+                            );
                     }
                 );
         }

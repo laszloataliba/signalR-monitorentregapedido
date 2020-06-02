@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OrderDeliveryMonitor.DataAccessLibrary</name>
+    </assembly>
+    <members>
+        <member name="F:OrderDeliveryMonitor.DataAccessLibrary.AppConfig.AppConfiguration._connectionTimeOut">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:OrderDeliveryMonitor.DataAccessLibrary.AppConfig.AppConfiguration.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:OrderDeliveryMonitor.DataAccessLibrary.AppConfig.AppConfiguration.#cctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.DataAccessLibrary.AppConfig.AppConfiguration.ConnectionString">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:OrderDeliveryMonitor.DataAccessLibrary.AppConfig.AppConfiguration.ConnectionTimeOut">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:OrderDeliveryMonitor.DataAccessLibrary.AppConfig.AppConfiguration.GetConnectionString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
